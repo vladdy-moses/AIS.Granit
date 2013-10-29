@@ -11,7 +11,7 @@ namespace UD_Granit.Models
     {
         public DataContext() : base("DefaultConnection") { }
 
-        public DbSet<User> Users;
+        public DbSet<User> Users { set; get; }
     }
 
     public class User
