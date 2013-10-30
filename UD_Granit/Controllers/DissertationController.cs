@@ -3,11 +3,14 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Web;
 using System.Web.Mvc;
+using UD_Granit.Models;
 
 namespace UD_Granit.Controllers
 {
     public class DissertationController : Controller
     {
+        private DataContext db = new DataContext();
+
         //
         // GET: /Default1/
 
@@ -21,7 +24,12 @@ namespace UD_Granit.Controllers
 
         public ActionResult Details(int id)
         {
-            return View();
+            Dissertation dissertation = db.Dissertations.Find(id);
+            if (dissertation == null)
+            {
+                return HttpNotFound();
+            }
+            return View(dissertation);
         }
 
         //
