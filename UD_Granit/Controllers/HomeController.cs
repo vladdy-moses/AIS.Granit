@@ -14,11 +14,12 @@ namespace UD_Granit.Controllers
 
         public ActionResult Index()
         {
+            /*
             DataContext d = new DataContext();
             d.Users.Add(new User() { Email = "1@2.3", Password = "123", FirstName = "Ivanov", SecondName = "Vasya" });
             d.SaveChanges();
             d.Dispose();
-
+            */
             return View();
         }
     }
