@@ -19,5 +19,9 @@ namespace UD_Granit.Models
 
         public DbSet<Dissertation> Dissertations { set; get; }
         public DbSet<Reply> Replies { set; get; }
+
+        public DbSet<Session> Sessions { set; get; }
+        public DbSet<SessionDefence> SessionsDefence { set; get; }
+        public DbSet<SessionСonsideration> SessionsСonsideration { set; get; }
     }
 }
