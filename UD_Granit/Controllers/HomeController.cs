@@ -9,17 +9,21 @@ namespace UD_Granit.Controllers
 {
     public class HomeController : Controller
     {
+        private DataContext db = new DataContext();
+
         //
         // GET: /Home/
 
         public ActionResult Index()
         {
-            /*
-            DataContext d = new DataContext();
-            d.Users.Add(new User() { Email = "1@2.3", Password = "123", FirstName = "Ivanov", SecondName = "Vasya" });
-            d.SaveChanges();
-            d.Dispose();
-            */
+            var q = from u in db.Users where u.Role == UserRole.Administrator select u.User_Id;
+            if (q.Count() == 0)
+            {
+                User u = new User() { Email = "v.moiseev94@gmail.com", FirstName = "Moiseev", SecondName = "Vladislav", Password = "123456", Role = UserRole.Administrator };
+                db.Users.Add(u);
+                db.SaveChanges();
+            }
+
             return View();
         }
     }

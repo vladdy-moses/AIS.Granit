@@ -36,5 +36,7 @@ namespace UD_Granit.Models
         public DateTime Date_Sending { set; get; }
 
         public DateTime Date_Preliminary_Defense { set; get; }
+
+        public virtual ICollection<Reply> Replies { set; get; }
     }
 }
