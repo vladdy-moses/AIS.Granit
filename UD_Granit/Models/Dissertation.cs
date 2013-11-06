@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
 using System.Linq;
 using System.Web;
 
@@ -9,8 +10,9 @@ namespace UD_Granit.Models
     public class Dissertation
     {
         [Key]
+        [ForeignKey("Applicant")]
         public int Dissertation_Id { private set; get; }
-
+        public Applicant Applicant { set; get; }
         /// <summary>
         /// Тип диисертации
         /// </summary>
@@ -38,5 +40,7 @@ namespace UD_Granit.Models
         public DateTime Date_Preliminary_Defense { set; get; }
 
         public virtual ICollection<Reply> Replies { set; get; }
+
+        
     }
 }

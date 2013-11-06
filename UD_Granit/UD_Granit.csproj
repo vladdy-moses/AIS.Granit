@@ -117,19 +117,19 @@
   <ItemGroup>
     <Compile Include="Controllers\DissertationController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
+    <Compile Include="App_Start\FilterConfig.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
-    <Compile Include="Models\Applicant.cs" />
+    <Compile Include="Models\Users.cs" />
     <Compile Include="Models\DataContext.cs" />
     <Compile Include="Models\Dissertation.cs" />
     <Compile Include="Models\Reply.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-  </ItemGroup>
-  <ItemGroup>
-    <Compile Include="App_Start\FilterConfig.cs" />
     <Compile Include="App_Start\RouteConfig.cs" />
     <Compile Include="App_Start\WebApiConfig.cs" />
+  </ItemGroup>
+  <ItemGroup>
     <Content Include="Global.asax" />
     <Content Include="Web.config" />
     <Content Include="Web.Debug.config">
