@@ -50,7 +50,7 @@ namespace UD_Granit.Controllers
                 }
             }
             */
-            return View("Index", (Session["Lite"] == null) ? null : "_LayoutLite");
+            return View("Index");
         }
 
 
