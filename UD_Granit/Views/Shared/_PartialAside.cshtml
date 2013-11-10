@@ -1,0 +1,16 @@
+﻿<div class="section">
+    <h3>Меню</h3>
+    @Url.Action("Index", "Dissertation");
+</div>
+
+<div class="section">
+    <h3>Авторизация</h3>
+    @if (Session["AttachedUser"] == null)
+    {
+        <p>Вы не авторизованы в системе. Чтобы выполнить вход, пожалуйста, введите свои учётные данные на <a href="@Url.Action("Login", "Account")">специальной странице</a>.</p>
+    }
+    else
+    {
+        <a>fdsfs</a>
+    }
+</div>

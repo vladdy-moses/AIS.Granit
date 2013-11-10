@@ -126,6 +126,7 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Controllers\AccountController.cs" />
     <Compile Include="Controllers\DissertationController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="App_Start\FilterConfig.cs" />
@@ -172,7 +173,11 @@
     <Content Include="Views\_ViewStart.cshtml" />
   </ItemGroup>
   <ItemGroup>
+    <Content Include="Views\Shared\_PartialHeader.cshtml" />
     <None Include="Views\Shared\_Layout.cshtml" />
+    <Content Include="Views\Shared\_PartialAside.cshtml" />
+    <Content Include="Views\Shared\_PartialArticle.cshtml" />
+    <Content Include="Views\Shared\_PartialFooter.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="Views\Home\Index.cshtml" />
