@@ -1,6 +1,10 @@
 ﻿<div class="section">
     <h3>Меню</h3>
-    @Url.Action("Index", "Dissertation");
+    <ul class="menu">
+        <li><a href="@Url.Action("Index", "Home")">Главная страница</a></li>
+        <li><a href="@Url.Action("Index", "Dissertation")">Просмотр диссертаций</a></li>
+        <li><a href="@Url.Action("Index", "Council")">Информация о совете</a></li>
+    </ul>
 </div>
 
 <div class="section">

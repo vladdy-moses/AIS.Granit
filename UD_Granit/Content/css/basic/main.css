@@ -19,15 +19,36 @@ p {
 
 header {
     height: 100px;
-    background-color: white;
+
+    background: #ffffff; /* Old browsers */
+    background: -moz-linear-gradient(top,  #ffffff 0%, #e5e5e5 100%); /* FF3.6+ */
+    background: -webkit-gradient(linear, left top, left bottom, color-stop(0%,#ffffff), color-stop(100%,#e5e5e5)); /* Chrome,Safari4+ */
+    background: -webkit-linear-gradient(top,  #ffffff 0%,#e5e5e5 100%); /* Chrome10+,Safari5.1+ */
+    background: -o-linear-gradient(top,  #ffffff 0%,#e5e5e5 100%); /* Opera 11.10+ */
+    background: -ms-linear-gradient(top,  #ffffff 0%,#e5e5e5 100%); /* IE10+ */
+    background: linear-gradient(to bottom,  #ffffff 0%,#e5e5e5 100%); /* W3C */
+    filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#ffffff', endColorstr='#e5e5e5',GradientType=0 ); /* IE6-9 */
+    
     margin-bottom: 20px;
     padding: 5px;
     box-shadow: rgb(0,0,0) 0 0 10px;
 }
 
+hgroup {
+    width: 968px;
+    margin: 25px auto;
+}
+
 hgroup * {
     padding: 0;
     margin: 0;
+    font-family: Arial, Verdana;
+}
+
+hgroup h4 {
+    font-weight: normal;
+    font-style: italic;
+    color: #999;
 }
 
 aside {
@@ -36,6 +57,21 @@ aside {
     border-left: 1px dashed #666;
     padding-left: 5px;
 }
+
+ul.menu {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+}
+
+    ul.menu a {
+        text-decoration: none;
+        color: black;
+    }
+
+        ul.menu a:hover {
+            color: #999;
+        }
 
 article {
     margin-right: 215px;
@@ -74,6 +110,10 @@ footer {
     margin-top: 20px;
     box-shadow: rgb(0,0,0) 0 0 10px;
 }
+
+    footer p {
+        margin: 0;
+    }
 
 #FooterWrapper {
     width: 968px;
