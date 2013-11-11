@@ -27,8 +27,10 @@ namespace UD_Granit.Models
         public int User_Id { set; get; }
 
         [Required]
+        [Display(Name = "Электронный адрес", Prompt = "Email")]
         public string Email { set; get; }
         [Required]
+        [Display(Name = "Пароль", Prompt = "Пароль")]
         public string Password { set; get; }
 
         [Required]
