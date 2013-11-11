@@ -1,0 +1,29 @@
+﻿@model UD_Granit.Models.User
+
+@{
+    ViewBag.Title = "Login";
+}
+
+<h2>Авторизация</h2>
+<p>Пожалуйста, введите свои учётные данные в поля ниже. При успешной авторазации вас должно перенаправить на главную страницу. Если этого не произошло, вы ввели некорректные данные.</p>
+<p>Чтобы зарегистрироваться как соискатель, Вы должны направить заявление в письменной форме председателю диссертационного совета.</p>
+
+@using (Html.BeginForm())
+{
+    @Html.AntiForgeryToken()
+    @Html.ValidationSummary(true)
+
+    <p>
+        @Html.LabelFor(m => m.Email)<br />
+        @Html.TextBoxFor(m => m.Email)<br />
+        @Html.ValidationMessageFor(m => m.Email)
+    </p>
+    
+    <p>
+        @Html.LabelFor(m => m.Password)<br />
+        @Html.PasswordFor(m => m.Password)<br />
+        @Html.ValidationMessageFor(m => m.Password)
+    </p>
+    
+    <input type="submit" value="Выполнить вход" />
+}
