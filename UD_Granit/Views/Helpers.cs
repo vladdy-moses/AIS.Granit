@@ -25,5 +25,10 @@ namespace UD_Granit.Controllers//.Views
         {
             return (User)controller.Session["User"];
         }
+
+        public static void SetUser(this Controller controller, User user)
+        {
+            controller.Session["User"] = user;
+        }
     }
 }

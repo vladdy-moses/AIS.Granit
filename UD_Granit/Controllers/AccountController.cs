@@ -10,6 +10,8 @@ namespace UD_Granit.Controllers
 {
     public class AccountController : Controller
     {
+        private DataContext db = new DataContext();
+
         //
         // GET: /Account/
 
@@ -30,10 +32,24 @@ namespace UD_Granit.Controllers
         //
         // POST: /Account/Login/
         [HttpPost]
-        public String Login(User user)
+        public ActionResult Login(User user)
         {
-            
-            return user.ToString();
+            var q = from u in db.Users where ((u.Email == user.Email) && (u.Password == user.Password)) select u;
+            if (q.Count() != 0)
+            {
+                this.SetUser(q.First());
+                return RedirectToAction("Index", "Home");
+            }
+            return View();
+        }
+
+        //
+        // GET: /Account/Logout/
+
+        public ActionResult Logout()
+        {
+            this.SetUser(null);
+            return Redirect(Request.UrlReferrer.AbsoluteUri);
         }
 
         //
@@ -44,7 +60,7 @@ namespace UD_Granit.Controllers
             UD_Granit.Models.User currentUser = this.GetUser();
             if (currentUser != null)
             {
-                if(currentUser is UD_Granit.Models.Administrator)
+                if (currentUser is UD_Granit.Models.Administrator)
                     return View("RegisterAdministrator");
                 if ((currentUser is Member) && ((currentUser as Member).Position == MemberPosition.Chairman))
                     return View("RegisterChairman");

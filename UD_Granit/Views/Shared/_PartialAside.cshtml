@@ -9,12 +9,13 @@
 
 <div class="section">
     <h3>Авторизация</h3>
-    @if (Session["AttachedUser"] == null)
+    @if (Session["User"] == null)
     {
         <p>Вы не авторизованы в системе. Чтобы выполнить вход, пожалуйста, введите свои учётные данные на <a href="@Url.Action("Login", "Account")">специальной странице</a>.</p>
     }
     else
     {
-        <a>fdsfs</a>
+        <p>Добро пожаловать, @((Session["User"] as UD_Granit.Models.User).FirstName)</p>
+        @Html.ActionLink("Выход", "Logout", "Account")
     }
 </div>
