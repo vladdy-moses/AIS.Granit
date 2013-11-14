@@ -65,7 +65,31 @@ namespace UD_Granit.Controllers
                 if ((currentUser is Member) && ((currentUser as Member).Position == MemberPosition.Chairman))
                     return View("RegisterChairman");
             }
+            else
+            {
+                return View("RegisterNewbie");
+            }
             return HttpNotFound();
+        }
+
+        //
+        // POST: /Account/Register/
+
+        [HttpPost]
+        public ActionResult RegisterNewbie(Applicant applicant)
+        {
+            //return applicant.FirstName + " " + applicant.SecondName;
+            var q = from u in db.Users where u.Email == applicant.Email select u;//db.Users.Select(u => u.Email == applicant.Email);
+            if (q.Count() > 0)
+                return Redirect(q.Count().ToString()); //HttpNotFound();
+            else
+            {
+                db.Applicants.Add(applicant);
+                db.SaveChanges();
+                this.SetUser(applicant);
+
+                return RedirectToAction("Index", "Home");
+            }
         }
     }
 }

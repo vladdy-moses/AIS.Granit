@@ -1,0 +1,39 @@
+﻿@model UD_Granit.Models.Applicant
+
+@{
+    ViewBag.Title = "RegisterNewbie";
+}
+
+<h2>RegisterNewbie</h2>
+@using (Html.BeginForm("RegisterNewbie", "Account"))
+{
+    @Html.ValidationSummary(true)
+
+    <p>
+        @Html.LabelFor(model => model.Email):<br />
+        @Html.EditorFor(model => model.Email)&nbsp;
+        @Html.ValidationMessageFor(model => model.Email)
+    </p>
+    <p>
+        @Html.LabelFor(model => model.Password):<br />
+        @Html.EditorFor(model => model.Password)&nbsp;
+        @Html.ValidationMessageFor(model => model.Password)
+    </p>
+    <p>
+        @Html.LabelFor(model => model.FirstName):<br />
+        @Html.EditorFor(model => model.FirstName)&nbsp;
+        @Html.ValidationMessageFor(model => model.FirstName)
+    </p>
+    <p>
+        @Html.LabelFor(model => model.SecondName):<br />
+        @Html.EditorFor(model => model.SecondName)&nbsp;
+        @Html.ValidationMessageFor(model => model.SecondName)
+    </p>
+    <p>
+        @Html.LabelFor(model => model.LastName):<br />
+        @Html.EditorFor(model => model.LastName)&nbsp;
+        @Html.ValidationMessageFor(model => model.LastName)
+    </p>
+
+    <p><input type="submit" value="Create" /></p>
+}

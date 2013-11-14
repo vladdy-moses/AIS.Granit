@@ -45,7 +45,7 @@ namespace UD_Granit.Models
         public string Organization { set; get; }
         public string Organization_Depatment { set; get; }
         public string Organization_Conclusion { set; get; }
-        public DateTime Birthday { set; get; }
+        public DateTime? Birthday { set; get; }
         public bool Ph_D { set; get; }
         //Идентификатор руководителя
         public string City { set; get; }
