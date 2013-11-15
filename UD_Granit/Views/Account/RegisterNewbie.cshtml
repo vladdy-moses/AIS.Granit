@@ -9,31 +9,92 @@
 {
     @Html.ValidationSummary(true)
 
+    <fieldset>
+        <legend>Данные для входа</legend>
+        <p>
+            @Html.LabelFor(model => model.Email):<br />
+            @Html.EditorFor(model => model.Email)&nbsp;
+            @Html.ValidationMessageFor(model => model.Email)
+        </p>
+        <p>
+            @Html.LabelFor(model => model.Password):<br />
+            @Html.PasswordFor(model => model.Password)&nbsp;
+            @Html.ValidationMessageFor(model => model.Password)
+        </p>
+    </fieldset>
+    <fieldset>
+        <legend>Личные сведения</legend>
+        <p>
+            @Html.LabelFor(model => model.FirstName):<br />
+            @Html.EditorFor(model => model.FirstName)&nbsp;
+            @Html.ValidationMessageFor(model => model.FirstName)
+        </p>
+        <p>
+            @Html.LabelFor(model => model.SecondName):<br />
+            @Html.EditorFor(model => model.SecondName)&nbsp;
+            @Html.ValidationMessageFor(model => model.SecondName)
+        </p>
+        <p>
+            @Html.LabelFor(model => model.LastName):<br />
+            @Html.EditorFor(model => model.LastName)&nbsp;
+            @Html.ValidationMessageFor(model => model.LastName)
+        </p>
+        <p>
+            @Html.LabelFor(model => model.Birthday):<br />
+            @Html.EditorFor(model => model.Birthday)&nbsp;
+            @Html.ValidationMessageFor(model => model.Birthday)
+        </p>
+    </fieldset>
+    <fieldset>
+        <legend>Сведения об организации</legend>
+        <p>
+            @Html.LabelFor(model => model.Organization):<br />
+            @Html.EditorFor(model => model.Organization)&nbsp;
+            @Html.ValidationMessageFor(model => model.Organization)
+        </p>
+        <p>
+            @Html.LabelFor(model => model.Organization_Depatment):<br />
+            @Html.EditorFor(model => model.Organization_Depatment)&nbsp;
+            @Html.ValidationMessageFor(model => model.Organization_Depatment)
+        </p>
+        <p>
+            @Html.LabelFor(model => model.Organization_Conclusion):<br />
+            @Html.TextAreaFor(model => model.Organization_Conclusion)&nbsp;
+            @Html.ValidationMessageFor(model => model.Organization_Conclusion)
+        </p>
+    </fieldset>
+    <fieldset>
+        <legend>Место проживания</legend>
+        <p>
+            @Html.LabelFor(model => model.City):<br />
+            @Html.EditorFor(model => model.City)&nbsp;
+            @Html.ValidationMessageFor(model => model.City)
+        </p>
+        <p>
+            @Html.LabelFor(model => model.Address):<br />
+            @Html.EditorFor(model => model.Address)&nbsp;
+            @Html.ValidationMessageFor(model => model.Address)
+        </p>
+    </fieldset>
+    <fieldset>
+        <legend>Сведения аб аспирантуре</legend>
+        <p>
+            @Html.LabelFor(model => model.WasInGraduateSchool):<br />
+            @Html.CheckBoxFor(model => model.WasInGraduateSchool)&nbsp;
+            @Html.ValidationMessageFor(model => model.WasInGraduateSchool)
+        </p>
+        <p>
+            @Html.LabelFor(model => model.University):<br />
+            @Html.EditorFor(model => model.University)&nbsp;
+            @Html.ValidationMessageFor(model => model.University)
+        </p>
+        <p>
+            @Html.LabelFor(model => model.University_Departmant):<br />
+            @Html.EditorFor(model => model.University_Departmant)&nbsp;
+            @Html.ValidationMessageFor(model => model.University_Departmant)
+        </p>
+    </fieldset>
     <p>
-        @Html.LabelFor(model => model.Email):<br />
-        @Html.EditorFor(model => model.Email)&nbsp;
-        @Html.ValidationMessageFor(model => model.Email)
+        <input type="submit" value="Зарегистрироваться" />
     </p>
-    <p>
-        @Html.LabelFor(model => model.Password):<br />
-        @Html.EditorFor(model => model.Password)&nbsp;
-        @Html.ValidationMessageFor(model => model.Password)
-    </p>
-    <p>
-        @Html.LabelFor(model => model.FirstName):<br />
-        @Html.EditorFor(model => model.FirstName)&nbsp;
-        @Html.ValidationMessageFor(model => model.FirstName)
-    </p>
-    <p>
-        @Html.LabelFor(model => model.SecondName):<br />
-        @Html.EditorFor(model => model.SecondName)&nbsp;
-        @Html.ValidationMessageFor(model => model.SecondName)
-    </p>
-    <p>
-        @Html.LabelFor(model => model.LastName):<br />
-        @Html.EditorFor(model => model.LastName)&nbsp;
-        @Html.ValidationMessageFor(model => model.LastName)
-    </p>
-
-    <p><input type="submit" value="Create" /></p>
 }

@@ -27,31 +27,44 @@ namespace UD_Granit.Models
         public int User_Id { set; get; }
 
         [Required]
-        [Display(Name = "Электронный адрес", Prompt = "Email")]
+        [Display(Name = "Электронный адрес")]
         public string Email { set; get; }
         [Required]
-        [Display(Name = "Пароль", Prompt = "Пароль")]
+        [Display(Name = "Пароль")]
         public string Password { set; get; }
 
         [Required]
+        [Display(Name = "Фамилия")]
         public string FirstName { set; get; }
         [Required]
+        [Display(Name = "Имя")]
         public string SecondName { set; get; }
+        [Display(Name = "Отчество")]
         public string LastName { set; get; }
     }
 
     public class Applicant : User
     {
+        [Display(Name = "Наименование организации")]
         public string Organization { set; get; }
+        [Display(Name = "Подразделение")]
         public string Organization_Depatment { set; get; }
+        [Display(Name = "Заключение организации")]
         public string Organization_Conclusion { set; get; }
+        [Display(Name = "День рождения")]
         public DateTime? Birthday { set; get; }
+        //[Display(Name = "Электронный адрес")]
         public bool Ph_D { set; get; }
         //Идентификатор руководителя
+        [Display(Name = "Город")]
         public string City { set; get; }
+        [Display(Name = "Адрес")]
         public string Address { set; get; }
+        [Display(Name = "Обучался в аспирантуре?")]
         public bool WasInGraduateSchool { set; get; }
+        [Display(Name = "Высшее учебное заведение, где проходил аспирантуру")]
         public string University { set; get; }
+        [Display(Name = "Подразделение, где проходил аспирантуру")]
         public string University_Departmant { set; get; }
         //[Required]
         public Dissertation Dissertation { set; get; }
