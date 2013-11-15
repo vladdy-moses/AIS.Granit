@@ -1,0 +1,12 @@
+﻿@if (Session["User"] != null)
+{
+    <div class="section">
+        <h3>Меню пользователя</h3>
+        
+        @if (Session["User"] is UD_Granit.Models.Administrator)
+        {
+            <p>kill 'em all!</p>
+        }
+
+    </div>
+}

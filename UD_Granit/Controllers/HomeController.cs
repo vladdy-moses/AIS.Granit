@@ -16,13 +16,7 @@ namespace UD_Granit.Controllers
 
         public ActionResult Index()
         {
-            var q = from u in db.Administrators select u.User_Id;
-            if (q.Count() == 0)
-            {
-                Administrator u = new Administrator() { Email = "v.moiseev94@gmail.com", FirstName = "Moiseev", SecondName = "Vladislav", Password = "123456", LastIP = this.GetUserIp() };
-                db.Users.Add(u);
-                db.SaveChanges();
-            }
+            
 
             /*try
             {

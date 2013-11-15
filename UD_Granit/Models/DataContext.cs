@@ -9,7 +9,15 @@ namespace UD_Granit.Models
 {
     public class DataContext : DbContext
     {
-        public DataContext() : base("DefaultConnection") { }
+        public DataContext() : base("DefaultConnection") {
+            var q = from u in this.Administrators select u.User_Id;
+            if (q.Count() == 0)
+            {
+                Administrator u = new Administrator() { Email = "v.moiseev94@gmail.com", FirstName = "Moiseev", SecondName = "Vladislav", Password = "123456", LastIP = "" };
+                this.Users.Add(u);
+                this.SaveChanges();
+            }
+        }
 
         public DbSet<User> Users { set; get; }
         public DbSet<Applicant> Applicants { set; get; }
@@ -23,5 +31,7 @@ namespace UD_Granit.Models
         public DbSet<Session> Sessions { set; get; }
         public DbSet<SessionDefence> SessionsDefence { set; get; }
         public DbSet<SessionСonsideration> SessionsСonsideration { set; get; }
+
+        public DbSet<Council> Council { set; get; }
     }
 }

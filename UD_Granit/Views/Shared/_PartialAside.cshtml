@@ -1,29 +1,6 @@
-﻿<div class="section">
-    <h3>Меню</h3>
-    <ul class="menu">
-        <li><a href="@Url.Action("Index", "Home")">Главная страница</a></li>
-        <li><a href="@Url.Action("Index", "Dissertation")">Просмотр диссертаций</a></li>
-        <li><a href="@Url.Action("Index", "Council")">Информация о совете</a></li>
-    </ul>
-</div>
+﻿
+@Html.Partial("_AsideMainMenu")
+@Html.Partial("_AsideUserMenu")
 
-<div class="section">
-    <h3>Авторизация</h3>
-    @if (Session["User"] == null)
-    {
-        <p>Вы не авторизованы в системе. Чтобы выполнить вход, пожалуйста, введите свои учётные данные на <a href="@Url.Action("Login", "Account")">специальной странице</a>.</p>
-    }
-    else
-    {
-        <p>Добро пожаловать, @((Session["User"] as UD_Granit.Models.User).FirstName)</p>
-        @Html.ActionLink("Выход", "Logout", "Account")
-    }
-</div>
-
-@if (Session["User"] == null)
-{
-    <div class="section">
-        <h3>Регистрация</h3>
-        <p>Хотите зарегистрироваться как соискатель? Вы можете это сделать на <a href="@Url.Action("Register", "Account")">специальной странице</a>.</p>
-    </div>
-}
+@Html.Partial("_AsideLogin")
+@Html.Partial("_AsideRegister")

@@ -134,6 +134,7 @@
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
+    <Compile Include="Models\Council.cs" />
     <Compile Include="Models\Sessions.cs" />
     <Compile Include="Models\Users.cs" />
     <Compile Include="Models\DataContext.cs" />
@@ -165,6 +166,7 @@
       <DependentUpon>Web.config</DependentUpon>
     </Content>
     <Content Include="Views\Web.config" />
+    <Content Include="Views\Shared\_AsideMainMenu.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
@@ -185,7 +187,10 @@
     <Content Include="Views\Shared\_PartialHeader.cshtml" />
     <Content Include="Views\Account\Login.cshtml" />
     <Content Include="Views\Account\RegisterNewbie.cshtml" />
-    <None Include="Views\Shared\_Layout.cshtml" />
+    <Content Include="Views\Shared\_AsideRegister.cshtml" />
+    <Content Include="Views\Shared\_AsideLogin.cshtml" />
+    <Content Include="Views\Shared\_AsideUserMenu.cshtml" />
+    <None Include="Views\Shared\Layout.cshtml" />
     <Content Include="Views\Shared\_PartialAside.cshtml" />
     <Content Include="Views\Shared\_PartialArticle.cshtml" />
     <Content Include="Views\Shared\_PartialFooter.cshtml" />
@@ -197,7 +202,7 @@
     <Content Include="Views\Dissertation\Details.cshtml" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="Views\Shared\_LayoutLite.cshtml" />
+    <None Include="Views\Shared\LayoutLite.cshtml" />
   </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>
