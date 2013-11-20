@@ -24,6 +24,7 @@ namespace UD_Granit.Models
         public DbSet<ApplicantCandidate> ApplicantsCandidates { set; get; }
         public DbSet<ApplicantDoctor> ApplicantsDoctors { set; get; }
         public DbSet<Administrator> Administrators { set; get; }
+        public DbSet<Member> Members { set; get; }
 
         public DbSet<Dissertation> Dissertations { set; get; }
         public DbSet<Reply> Replies { set; get; }
@@ -33,5 +34,17 @@ namespace UD_Granit.Models
         public DbSet<SessionСonsideration> SessionsСonsideration { set; get; }
 
         public DbSet<Council> Council { set; get; }
+
+        protected override void OnModelCreating(DbModelBuilder modelBuilder)
+        {
+            base.OnModelCreating(modelBuilder);
+
+            modelBuilder.Entity<User>().ToTable("User");
+            modelBuilder.Entity<Applicant>().ToTable("Applicant");
+            modelBuilder.Entity<ApplicantCandidate>().ToTable("ApplicantCandidate");
+            modelBuilder.Entity<ApplicantDoctor>().ToTable("ApplicantDoctor");
+            modelBuilder.Entity<Administrator>().ToTable("Administrator");
+            modelBuilder.Entity<Member>().ToTable("Member");
+        }
     }
 }
