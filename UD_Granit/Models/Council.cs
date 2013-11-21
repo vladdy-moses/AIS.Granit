@@ -12,7 +12,24 @@ namespace UD_Granit.Models
         public int Council_Id { set; get; }
 
         [Required]
-        [Display(Name = "Название")]
-        public string Name { set; get; }
+        [Display(Name = "Номер диссертационного совета")]
+        public string Number { set; get; }
+
+        //идентификатор пресмедателя
+
+        [Required]
+        [Display(Name = "Организация")]
+        public string Organization { set; get; }
+
+        [Required]
+        [Display(Name = "Подразделение")]
+        public string Department { set; get; }
+
+        [Required]
+        [Display(Name = "Адрес")]
+        public string Address { set; get; }
+
+        [Display(Name = "Дата основания")]
+        public string FoundationDate { set; get; }
     }
 }

@@ -127,6 +127,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Controllers\AccountController.cs" />
+    <Compile Include="Controllers\CouncilController.cs" />
     <Compile Include="Controllers\DissertationController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="App_Start\FilterConfig.cs" />
