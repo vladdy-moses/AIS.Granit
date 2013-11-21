@@ -1,0 +1,50 @@
+﻿@model UD_Granit.Models.Council
+
+@{
+    ViewBag.Title = "Редактирование информации о диссертационном совете";
+}
+
+<h2>@ViewBag.Title</h2>
+@using (Html.BeginForm("Edit", "Council"))
+{
+    @Html.ValidationSummary(true)
+
+    <fieldset>
+        <legend>Данные о прикреплённой организации</legend>
+        <p>
+            @Html.LabelFor(model => model.Organization):<br />
+            @Html.EditorFor(model => model.Organization)&nbsp;
+            @Html.ValidationMessageFor(model => model.Organization)
+        </p>
+        <p>
+            @Html.LabelFor(model => model.Department):<br />
+            @Html.EditorFor(model => model.Department)&nbsp;
+            @Html.ValidationMessageFor(model => model.Department)
+        </p>
+    </fieldset>
+    <fieldset>
+        <legend>Основная информация</legend>
+        <p>
+            @Html.LabelFor(model => model.Number):<br />
+            @Html.EditorFor(model => model.Number)&nbsp;
+            @Html.ValidationMessageFor(model => model.Number)
+        </p>
+        <p>
+            @Html.LabelFor(model => model.Address):<br />
+            @Html.EditorFor(model => model.Address)&nbsp;
+            @Html.ValidationMessageFor(model => model.Address)
+        </p>
+    </fieldset>
+    <fieldset>
+        <legend>Прочая информация</legend>
+        <p>
+            @Html.LabelFor(model => model.FoundationDate):<br />
+            @Html.EditorFor(model => model.FoundationDate)&nbsp;
+            @Html.ValidationMessageFor(model => model.FoundationDate)
+        </p>
+    </fieldset>
+    
+    <p>
+        <input type="submit" value="Принять изменения" />
+    </p>
+}

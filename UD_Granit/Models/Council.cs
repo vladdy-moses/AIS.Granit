@@ -30,6 +30,6 @@ namespace UD_Granit.Models
         public string Address { set; get; }
 
         [Display(Name = "Дата основания")]
-        public string FoundationDate { set; get; }
+        public DateTime? FoundationDate { set; get; }
     }
 }

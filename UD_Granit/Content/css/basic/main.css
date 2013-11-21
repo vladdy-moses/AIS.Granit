@@ -130,3 +130,12 @@ footer {
 .cb {
     clear: both;
 }
+
+.error {
+    color: red;
+    font-size: 1.2em;
+    font-weight: bold;
+    margin: 10px;
+    padding: 10px;
+    border: 1px dashed red;
+}

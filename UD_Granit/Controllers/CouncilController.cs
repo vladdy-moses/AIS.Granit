@@ -9,12 +9,14 @@ namespace UD_Granit.Controllers
 {
     public class CouncilController : Controller
     {
+        private DataContext db = new DataContext();
+
         //
         // GET: /Council/
 
         public ActionResult Index()
         {
-            return View();
+            return View((db.Council.Count() > 0) ? db.Council.First() : null);
         }
 
         //
@@ -22,7 +24,14 @@ namespace UD_Granit.Controllers
 
         public ActionResult Edit()
         {
-            return View();
+            User currentUser = this.GetUser();
+
+            if (currentUser == null)
+                return HttpNotFound();
+            if ((currentUser is Administrator) ||
+                ((currentUser is Member) && ((currentUser as Member).Position == MemberPosition.Chairman)))
+                return View((db.Council.Count() > 0) ? db.Council.First() : null);
+            return HttpNotFound();
         }
 
         //
@@ -33,7 +42,16 @@ namespace UD_Granit.Controllers
         {
             try
             {
-                // TODO: Add update logic here
+                if (db.Council.Count() == 0)
+                {
+                    db.Council.Add(council);
+                }
+                else
+                {
+                    council.Council_Id = 1;
+                    db.Entry(council).State = System.Data.Entity.EntityState.Modified;
+                }
+                db.SaveChanges();
 
                 return RedirectToAction("Index");
             }

@@ -191,6 +191,8 @@
     <Content Include="Views\Shared\_AsideRegister.cshtml" />
     <Content Include="Views\Shared\_AsideLogin.cshtml" />
     <Content Include="Views\Shared\_AsideUserMenu.cshtml" />
+    <Content Include="Views\Council\Index.cshtml" />
+    <Content Include="Views\Council\Edit.cshtml" />
     <None Include="Views\Shared\Layout.cshtml" />
     <Content Include="Views\Shared\_PartialAside.cshtml" />
     <Content Include="Views\Shared\_PartialArticle.cshtml" />
