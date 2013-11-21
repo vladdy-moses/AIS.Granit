@@ -195,7 +195,6 @@
     <Content Include="Views\Council\Edit.cshtml" />
     <None Include="Views\Shared\Layout.cshtml" />
     <Content Include="Views\Shared\_PartialAside.cshtml" />
-    <Content Include="Views\Shared\_PartialArticle.cshtml" />
     <Content Include="Views\Shared\_PartialFooter.cshtml" />
   </ItemGroup>
   <ItemGroup>

@@ -6,6 +6,11 @@
     @Styles.Render("~/Content/css/lite/main.css")
 </head>
 <body>
-    @RenderBody()
+    <header>
+        @Html.Partial("_PartialHeader")
+    </header>
+    <article>
+        @RenderBody()
+    </article>
 </body>
 </html>
