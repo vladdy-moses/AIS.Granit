@@ -6,7 +6,8 @@
     }
     else
     {
-        <p>Добро пожаловать, @((Session["User"] as UD_Granit.Models.User).FirstName)</p>
+        <p>Имя: @UD_Granit.Helpers.UserHelper.GetFullNameWithInitials(Session["User"] as UD_Granit.Models.User)</p>
+        <p>Роль: @UD_Granit.Helpers.UserHelper.GetRole(Session["User"] as UD_Granit.Models.User).</p>
         @Html.ActionLink("Выход", "Logout", "Account")
     }
 </div>

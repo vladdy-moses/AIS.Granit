@@ -25,7 +25,7 @@ namespace UD_Granit.Controllers
 
         public ActionResult Edit()
         {
-            User currentUser = this.GetUser();
+            User currentUser = Session.GetUser();
 
             if (currentUser == null)
                 return HttpNotFound();

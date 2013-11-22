@@ -45,7 +45,7 @@ namespace UD_Granit.Controllers
                 }
             }
             */
-            ViewBag.asd = this.GetUserIp();
+            ViewBag.asd = Request.GetUserIp();
 
             NotificationManager nManager = new NotificationManager();
             nManager.Notifies.Add(new NotificationManager.Notify() { Type = NotificationManager.Notify.NotifyType.Error, Message = "Ошибка ввода строки." });

@@ -53,11 +53,12 @@ namespace UD_Granit.Models
         {
             Administrator u = new Administrator() { Email = "v.moiseev94@gmail.com", FirstName = "Moiseev", SecondName = "Vladislav", Password = "123456", LastIP = "" };
             this.Users.Add(u);
-            this.SaveChanges();;
+            this.SaveChanges();
 
             Database.Connection.Open();
             DbCommand cmd = Database.Connection.CreateCommand();
-            cmd.CommandText = @"CREATE PROCEDURE [dbo].[Procedure]
+            cmd.CommandText = @"
+CREATE PROCEDURE [dbo].[Procedure]
 	@param1 int = 0,
 	@param2 int
 AS

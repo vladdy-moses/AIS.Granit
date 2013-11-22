@@ -38,7 +38,14 @@ namespace UD_Granit.Controllers
             var q = from u in db.Users where ((u.Email == user.Email) && (u.Password == user.Password)) select u;
             if (q.Count() != 0)
             {
-                this.SetUser(q.First());
+                User currentUser = q.First();
+                if (currentUser is Administrator)
+                {
+                    (currentUser as Administrator).LastIP = Request.GetUserIp();
+                    db.Entry(currentUser).State = System.Data.Entity.EntityState.Modified;
+                    db.SaveChanges();
+                }
+                Session.SetUser(currentUser);
                 return RedirectToAction("Index", "Home");
             }
             return View();
@@ -49,7 +56,7 @@ namespace UD_Granit.Controllers
 
         public ActionResult Logout()
         {
-            this.SetUser(null);
+            Session.SetUser(null);
             return Redirect(Request.UrlReferrer.AbsoluteUri);
         }
 
@@ -58,7 +65,7 @@ namespace UD_Granit.Controllers
 
         public ActionResult Register()
         {
-            UD_Granit.Models.User currentUser = this.GetUser();
+            UD_Granit.Models.User currentUser = Session.GetUser();
             if (currentUser != null)
             {
                 if (currentUser is UD_Granit.Models.Administrator)
@@ -87,7 +94,7 @@ namespace UD_Granit.Controllers
             {
                 db.Applicants.Add(applicant);
                 db.SaveChanges();
-                this.SetUser(applicant);
+                Session.SetUser(applicant);
 
                 return RedirectToAction("Index", "Home");
             }
