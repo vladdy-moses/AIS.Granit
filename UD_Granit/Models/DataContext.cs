@@ -1,7 +1,9 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
+using System.Data.Common;
 using System.Data.Entity;
+using System.Diagnostics;
 using System.Linq;
 using System.Web;
 
@@ -9,13 +11,13 @@ namespace UD_Granit.Models
 {
     public class DataContext : DbContext
     {
-        public DataContext() : base("DefaultConnection") {
+        public DataContext()
+            : base("DefaultConnection")
+        {
             var q = from u in this.Administrators select u.User_Id;
             if (q.Count() == 0)
             {
-                Administrator u = new Administrator() { Email = "v.moiseev94@gmail.com", FirstName = "Moiseev", SecondName = "Vladislav", Password = "123456", LastIP = "" };
-                this.Users.Add(u);
-                this.SaveChanges();
+                InitDatabase();
             }
         }
 
@@ -39,12 +41,31 @@ namespace UD_Granit.Models
         {
             base.OnModelCreating(modelBuilder);
 
-            modelBuilder.Entity<User>().ToTable("User");
-            modelBuilder.Entity<Applicant>().ToTable("Applicant");
-            modelBuilder.Entity<ApplicantCandidate>().ToTable("ApplicantCandidate");
-            modelBuilder.Entity<ApplicantDoctor>().ToTable("ApplicantDoctor");
-            modelBuilder.Entity<Administrator>().ToTable("Administrator");
-            modelBuilder.Entity<Member>().ToTable("Member");
+            modelBuilder.Entity<User>().ToTable("Users");
+            modelBuilder.Entity<Applicant>().ToTable("Applicants");
+            modelBuilder.Entity<ApplicantCandidate>().ToTable("ApplicantCandidates");
+            modelBuilder.Entity<ApplicantDoctor>().ToTable("ApplicantDoctors");
+            modelBuilder.Entity<Administrator>().ToTable("Administrators");
+            modelBuilder.Entity<Member>().ToTable("Members");
+        }
+
+        protected void InitDatabase()
+        {
+            Administrator u = new Administrator() { Email = "v.moiseev94@gmail.com", FirstName = "Moiseev", SecondName = "Vladislav", Password = "123456", LastIP = "" };
+            this.Users.Add(u);
+            this.SaveChanges();;
+
+            Database.Connection.Open();
+            DbCommand cmd = Database.Connection.CreateCommand();
+            cmd.CommandText = @"CREATE PROCEDURE [dbo].[Procedure]
+	@param1 int = 0,
+	@param2 int
+AS
+	SELECT @param1, @param2
+RETURN 0
+";
+            cmd.ExecuteNonQuery();
+            this.SaveChanges();
         }
     }
 }
