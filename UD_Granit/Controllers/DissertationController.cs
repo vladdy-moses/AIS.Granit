@@ -4,6 +4,7 @@ using System.Linq;
 using System.Web;
 using System.Web.Mvc;
 using UD_Granit.Models;
+using UD_Granit.Helpers;
 
 namespace UD_Granit.Controllers
 {
@@ -25,11 +26,13 @@ namespace UD_Granit.Controllers
         public ActionResult Details(int id)
         {
             Dissertation dissertation = db.Dissertations.Find(id);
-            if (dissertation == null)
+            if (dissertation != null)
             {
-                return HttpNotFound();
+                #warning Разрешить просмотр для пользователей
+                if(!dissertation.Administrative_Use)
+                    return View(dissertation);
             }
-            return View(dissertation);
+            return HttpNotFound();
         }
 
         //
@@ -37,7 +40,13 @@ namespace UD_Granit.Controllers
 
         public ActionResult Create()
         {
-            return View();
+            if (Session.GetUser() != null)
+            {
+                User currentUser = Session.GetUser();
+                if (currentUser is Applicant)
+                    return View();
+            }
+            return HttpNotFound();
         }
 
         //

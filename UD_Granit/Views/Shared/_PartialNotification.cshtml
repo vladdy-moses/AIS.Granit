@@ -5,7 +5,7 @@
     {
         foreach (UD_Granit.Helpers.NotificationManager.Notify notify in ViewBag.UserNotification.Notifies)
         {
-            <div class="@notify.Class">@notify.Message</div>
+            <div class="@notify.Class">@Html.Raw(notify.Message)</div>
         }
     }
 }
