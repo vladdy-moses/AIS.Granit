@@ -5,10 +5,20 @@ using System.Web;
 using System.Web.Mvc;
 using UD_Granit.Models;
 
-namespace UD_Granit.Controllers//.Views
+namespace UD_Granit.Helpers
 {
-    public static class Helpers
+    public static class UserHelper
     {
+        public static User GetUser(this Controller controller)
+        {
+            return (User)controller.Session["User"];
+        }
+
+        public static void SetUser(this Controller controller, User user)
+        {
+            controller.Session["User"] = user;
+        }
+
         public static string GetUserIp(this Controller controller)
         {
             string ipList = controller.Request.ServerVariables["HTTP_X_FORWARDED_FOR"];
@@ -19,16 +29,6 @@ namespace UD_Granit.Controllers//.Views
             }
 
             return controller.Request.ServerVariables["REMOTE_ADDR"];
-        }
-
-        public static User GetUser(this Controller controller)
-        {
-            return (User)controller.Session["User"];
-        }
-
-        public static void SetUser(this Controller controller, User user)
-        {
-            controller.Session["User"] = user;
         }
     }
 }
