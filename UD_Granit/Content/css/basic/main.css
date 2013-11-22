@@ -60,7 +60,6 @@ hgroup {
 aside {
     float: right;
     width: 200px;
-    border-left: 1px dashed #666;
     padding-left: 5px;
 }
 
@@ -78,6 +77,23 @@ ul.menu {
         ul.menu a:hover {
             color: #999;
         }
+
+.notify {
+    padding: 5px;
+    margin: 5px;
+    font-size: 1.1em;
+    border: 1px dashed #999;
+}
+
+.notify-error {
+    color:red;
+    border: 1px dashed red;
+}
+
+.notify-info {
+    color: blue;
+    border: 1px dashed blue;
+}
 
 article {
     margin-right: 215px;

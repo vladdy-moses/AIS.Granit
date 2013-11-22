@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Web;
 using System.Web.Mvc;
+using UD_Granit.Helpers;
 using UD_Granit.Models;
 
 namespace UD_Granit.Controllers
@@ -45,6 +46,12 @@ namespace UD_Granit.Controllers
             }
             */
             ViewBag.asd = this.GetUserIp();
+
+            NotificationManager nManager = new NotificationManager();
+            nManager.Notifies.Add(new NotificationManager.Notify() { Type = NotificationManager.Notify.NotifyType.Error, Message = "Ошибка ввода строки." });
+            nManager.Notifies.Add(new NotificationManager.Notify() { Type = NotificationManager.Notify.NotifyType.Info, Message = "Предупреждение! Вы наркоман." });
+            ViewBag.UserNotification = nManager;
+
             return View();
         }
     }
