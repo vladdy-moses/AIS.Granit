@@ -27,10 +27,6 @@ else
 {
     <div class="error">
         Извините, информация о диссертационном совете ещё не заполнена.
-        @if (Session["User"] is UD_Granit.Models.Administrator)
-        {
-            @Html.ActionLink("Заполнить информацию.", "Edit")
-        }
     </div>
 }
 @if (Session["User"] is UD_Granit.Models.Administrator)
