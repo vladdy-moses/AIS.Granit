@@ -56,8 +56,15 @@ namespace UD_Granit.Controllers
 
         public ActionResult Logout()
         {
-            Session.SetUser(null);
-            return Redirect(Request.UrlReferrer.AbsoluteUri);
+            if (Session.GetUser() != null)
+            {
+                Session.SetUser(null);
+                return RedirectToAction("Index", "Home");
+            }
+            else
+            {
+                return HttpNotFound();
+            }
         }
 
         //
