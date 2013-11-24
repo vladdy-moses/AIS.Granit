@@ -96,7 +96,7 @@ namespace UD_Granit.Controllers
                 db.SaveChanges();
                 Session.SetUser(applicant);
 
-                return RedirectToAction("Index", "Home");
+                return RedirectToAction("Create", "Dissertation");
             }
         }
     }

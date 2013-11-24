@@ -44,7 +44,16 @@ namespace UD_Granit.Controllers
             {
                 User currentUser = Session.GetUser();
                 if (currentUser is Applicant)
+                {
+                    var dissertations = from d in db.Dissertations where d.Applicant.User_Id == currentUser.User_Id select d;
+                    if (dissertations.Count() == 0)
+                    {
+                        NotificationManager nManager = new NotificationManager();
+                        nManager.Notifies.Add(new NotificationManager.Notify() { Type = NotificationManager.Notify.NotifyType.Info, Message = "Заполните информацию о Вашей диссертации. Вы можете сделать это позже, также как и отредактировать информацию о ней." });
+                        ViewBag.UserNotification = nManager;
+                    }
                     return View();
+                }
             }
             return HttpNotFound();
         }

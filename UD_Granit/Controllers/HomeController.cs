@@ -49,7 +49,6 @@ namespace UD_Granit.Controllers
 
             NotificationManager nManager = new NotificationManager();
 
-
             User currentUser = Session.GetUser();
             if (currentUser != null)
             {
@@ -60,9 +59,6 @@ namespace UD_Granit.Controllers
                         nManager.Notifies.Add(new NotificationManager.Notify() { Type = NotificationManager.Notify.NotifyType.Error, Message = "У Вас отсутствуют записи о Ваших диссертациях. Заведите запись о диссертации <a href=\"" + Url.Action("Create", "Dissertation") + "\">здесь</a>." });
                 }
             }
-            //nManager.Notifies.Add(new NotificationManager.Notify() { Type = NotificationManager.Notify.NotifyType.Error, Message = "Ошибка ввода строки." });
-            //nManager.Notifies.Add(new NotificationManager.Notify() { Type = NotificationManager.Notify.NotifyType.Info, Message = "Предупреждение! Вы наркоман." });
-
 
             ViewBag.UserNotification = nManager;
 
