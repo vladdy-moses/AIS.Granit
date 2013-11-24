@@ -110,5 +110,26 @@ namespace UD_Granit.Controllers
                 return RedirectToAction("Create", "Dissertation");
             }
         }
+
+        //
+        // GET: /Account/Details/5
+
+        public ActionResult Details(int? id)
+        {
+            User currentUser = Session.GetUser();
+            if (!id.HasValue)
+            {
+                if (currentUser == null)
+                    return HttpNotFound();
+                else
+                    id = currentUser.User_Id;
+            }
+
+            var q = from u in db.Users where u.User_Id == id.Value select u;
+            if(q.Count() == 0)
+                return HttpNotFound();
+
+            return View(q.First());
+        }
     }
 }
