@@ -151,6 +151,7 @@
   <ItemGroup>
     <Content Include="Content\css\basic\main.css" />
     <Content Include="Content\css\lite\main.css" />
+    <Content Include="Content\js\script.js" />
     <Content Include="Content\themes\base\images\animated-overlay.gif" />
     <Content Include="Content\themes\base\images\ui-bg_flat_0_aaaaaa_40x100.png" />
     <Content Include="Content\themes\base\images\ui-bg_flat_75_ffffff_40x100.png" />

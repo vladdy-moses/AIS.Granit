@@ -6,7 +6,8 @@
 
 <h2>Create</h2>
 
-@using (Html.BeginForm()) {
+@using (Html.BeginForm())
+{
     @Html.ValidationSummary(true)
 
     <fieldset>
@@ -77,3 +78,10 @@
 <div>
     @Html.ActionLink("Back to List", "Index")
 </div>
+
+<script>
+    $(function () {
+        $("#Date_Sending").datepicker({ changeYear: true });
+        $("#Date_Preliminary_Defense").datepicker({ changeYear: true });
+    });
+</script>
