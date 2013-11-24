@@ -18,7 +18,7 @@ namespace UD_Granit.Controllers
 
         public ActionResult Index()
         {
-            return View();
+            return HttpNotFound();
         }
 
         //
@@ -26,7 +26,6 @@ namespace UD_Granit.Controllers
 
         public ActionResult Login()
         {
-            //FormsAuthentication.
             return View();
         }
 
@@ -88,15 +87,20 @@ namespace UD_Granit.Controllers
         }
 
         //
-        // POST: /Account/Register/
+        // POST: /Account/RegisterNewbie/
 
         [HttpPost]
         public ActionResult RegisterNewbie(Applicant applicant)
         {
-            //return applicant.FirstName + " " + applicant.SecondName;
-            var q = from u in db.Users where u.Email == applicant.Email select u;//db.Users.Select(u => u.Email == applicant.Email);
+            var q = from u in db.Users where u.Email == applicant.Email select u;
             if (q.Count() > 0)
-                return Redirect(q.Count().ToString()); //HttpNotFound();
+            {
+                NotificationManager nManager = new NotificationManager();
+                nManager.Notifies.Add(new NotificationManager.Notify() { Type = NotificationManager.Notify.NotifyType.Error, Message = "Пользователь с таким электронным почтовым ящиком уже зарегистрирован. Пожалуйста, выберите другой email." });
+                ViewBag.UserNotification = nManager;
+
+                return View();
+            }
             else
             {
                 db.Applicants.Add(applicant);
