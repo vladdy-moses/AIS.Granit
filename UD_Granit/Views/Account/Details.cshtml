@@ -1,4 +1,4 @@
-﻿@model UD_Granit.Models.User
+﻿@model UD_Granit.ViewModels.Account.Details
 
 @{
     ViewBag.Title = "Details";
@@ -6,12 +6,11 @@
 
 <h2>Информация о пользователе</h2>
 
-<h3>@UD_Granit.Helpers.UserHelper.GetFullName(Model)</h3>
-<h4>@UD_Granit.Helpers.UserHelper.GetRole(Model)</h4>
+<h3>@Model.FullName</h3>
+<h4>@Model.Role</h4>
 
 @using UD_Granit.Helpers
-@if ((Session.GetUser() is UD_Granit.Models.Administrator) ||
-    (Session.GetUserPosition() == UD_Granit.Models.MemberPosition.Chairman))
+@if (Model.CanControl)
 {
     <p>
         @Html.ActionLink("Редактировать", "Edit", new { id = Model.User_Id }) |

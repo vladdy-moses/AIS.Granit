@@ -1,4 +1,4 @@
-﻿@model UD_Granit.Models.Council
+﻿@model UD_Granit.ViewModels.Council.Index
 
 @{
     ViewBag.Title = "Информация о диссертационном совете";
@@ -7,20 +7,20 @@
 <h2>@ViewBag.Title</h2>
 <p>На этой странице показана информация о диссертационном совете. Здесь Вы можете узнать его номер, организацию, к которой он относится, адрес, а также другую информацию.</p>
 
-@if (Model != null)
+@if (Model.HaveInformation)
 {
-    <h3>@Html.LabelFor(u => u.Number)</h3>
-    <p>@Model.Number</p>
-    <h3>@Html.LabelFor(u => u.Organization)</h3>
-    <p>@Model.Organization</p>
-    <h3>@Html.LabelFor(u => u.Department)</h3>
-    <p>@Model.Department</p>
-    <h3>@Html.LabelFor(u => u.Address)</h3>
-    <p>@Model.Address</p>
-    if (Model.FoundationDate != null)
+    <h3>@Html.LabelFor(model => model.Council.Number)</h3>
+    <p>@Model.Council.Number</p>
+    <h3>@Html.LabelFor(model => model.Council.Organization)</h3>
+    <p>@Model.Council.Organization</p>
+    <h3>@Html.LabelFor(model => model.Council.Department)</h3>
+    <p>@Model.Council.Department</p>
+    <h3>@Html.LabelFor(model => model.Council.Address)</h3>
+    <p>@Model.Council.Address</p>
+    if (Model.Council.FoundationDate != null)
     {
-        <h3>@Html.LabelFor(u => u.FoundationDate)</h3>
-        <p>@Model.FoundationDate</p>
+        <h3>@Html.LabelFor(model => model.Council.FoundationDate)</h3>
+        <p>@Model.Council.FoundationDate</p>
     }
 }
 else
@@ -29,7 +29,7 @@ else
         Извините, информация о диссертационном совете ещё не заполнена.
     </div>
 }
-@if (Session["User"] is UD_Granit.Models.Administrator)
+@if (Model.CanControl)
 {
     <p>@Html.ActionLink("Редактировать информацию о диссертационном совете.", "Edit")</p>
 }

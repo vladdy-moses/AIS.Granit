@@ -17,7 +17,13 @@ namespace UD_Granit.Controllers
 
         public ActionResult Index()
         {
-            return View((db.Council.Count() > 0) ? db.Council.First() : null);
+            UD_Granit.ViewModels.Council.Index viewModel = new ViewModels.Council.Index();
+            viewModel.HaveInformation = (db.Council.Count() > 0);
+            if (viewModel.HaveInformation)
+                viewModel.Council = db.Council.First();
+            if (Session.GetUser() is Administrator)
+                viewModel.CanControl = true;
+            return View(viewModel);
         }
 
         //
@@ -30,8 +36,13 @@ namespace UD_Granit.Controllers
             if (currentUser == null)
                 return HttpNotFound();
             if ((currentUser is Administrator) ||
-                ((currentUser is Member) && ((currentUser as Member).Position == MemberPosition.Chairman)))
-                return View((db.Council.Count() > 0) ? db.Council.First() : null);
+                (Session.GetUserPosition() == MemberPosition.Chairman))
+            {
+                UD_Granit.ViewModels.Council.Edit viewModel = new ViewModels.Council.Edit();
+                if (db.Council.Count() > 0)
+                    viewModel.Council = db.Council.First();
+                return View(viewModel);
+            }
             return HttpNotFound();
         }
 
@@ -39,18 +50,18 @@ namespace UD_Granit.Controllers
         // POST: /Council/Edit
 
         [HttpPost]
-        public ActionResult Edit(Council council)
+        public ActionResult Edit(UD_Granit.ViewModels.Council.Edit viewModel)
         {
             try
             {
                 if (db.Council.Count() == 0)
                 {
-                    db.Council.Add(council);
+                    db.Council.Add(viewModel.Council);
                 }
                 else
                 {
-                    council.Council_Id = 1;
-                    db.Entry(council).State = System.Data.Entity.EntityState.Modified;
+                    viewModel.Council.Council_Id = 1;
+                    db.Entry(viewModel.Council).State = System.Data.Entity.EntityState.Modified;
                 }
                 db.SaveChanges();
 

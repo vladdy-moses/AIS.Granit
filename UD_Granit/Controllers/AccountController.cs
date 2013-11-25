@@ -31,10 +31,11 @@ namespace UD_Granit.Controllers
 
         //
         // POST: /Account/Login/
+
         [HttpPost]
-        public ActionResult Login(User user)
+        public ActionResult Login(UD_Granit.ViewModels.Account.Login viewModel)
         {
-            var q = from u in db.Users where ((u.Email == user.Email) && (u.Password == user.Password)) select u;
+            var q = from u in db.Users where ((u.Email == viewModel.Email) && (u.Password == viewModel.Password)) select u;
             if (q.Count() != 0)
             {
                 User currentUser = q.First();
@@ -90,9 +91,9 @@ namespace UD_Granit.Controllers
         // POST: /Account/RegisterNewbie/
 
         [HttpPost]
-        public ActionResult RegisterNewbie(Applicant applicant)
+        public ActionResult RegisterNewbie(UD_Granit.ViewModels.Account.RegisterNewbie viewModel)
         {
-            var q = from u in db.Users where u.Email == applicant.Email select u;
+            var q = from u in db.Users where u.Email == viewModel.User.Email select u;
             if (q.Count() > 0)
             {
                 NotificationManager nManager = new NotificationManager();
@@ -103,9 +104,9 @@ namespace UD_Granit.Controllers
             }
             else
             {
-                db.Applicants.Add(applicant);
+                db.Applicants.Add(viewModel.User);
                 db.SaveChanges();
-                Session.SetUser(applicant);
+                Session.SetUser(viewModel.User);
 
                 return RedirectToAction("Create", "Dissertation");
             }
@@ -128,8 +129,14 @@ namespace UD_Granit.Controllers
             var q = from u in db.Users where u.User_Id == id.Value select u;
             if(q.Count() == 0)
                 return HttpNotFound();
+            User showedUser = q.First();
 
-            return View(q.First());
+            UD_Granit.ViewModels.Account.Details viewModel = new UD_Granit.ViewModels.Account.Details();
+            viewModel.FullName = UserHelper.GetFullName(showedUser);
+            viewModel.Role = UserHelper.GetRole(showedUser);
+            viewModel.User_Id = showedUser.User_Id;
+            viewModel.CanControl = ((currentUser is Administrator) || (Session.GetUserPosition() == MemberPosition.Chairman));
+            return View(viewModel);
         }
     }
 }

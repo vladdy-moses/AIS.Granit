@@ -1,4 +1,4 @@
-﻿@model UD_Granit.Models.Council
+﻿@model UD_Granit.ViewModels.Council.Edit
 
 @{
     ViewBag.Title = "Редактирование информации о диссертационном совете";
@@ -12,35 +12,35 @@
     <fieldset>
         <legend>Данные о прикреплённой организации</legend>
         <p>
-            @Html.LabelFor(model => model.Organization):<br />
-            @Html.EditorFor(model => model.Organization)&nbsp;
-            @Html.ValidationMessageFor(model => model.Organization)
+            @Html.LabelFor(model => model.Council.Organization):<br />
+            @Html.EditorFor(model => model.Council.Organization)&nbsp;
+            @Html.ValidationMessageFor(model => model.Council.Organization)
         </p>
         <p>
-            @Html.LabelFor(model => model.Department):<br />
-            @Html.EditorFor(model => model.Department)&nbsp;
-            @Html.ValidationMessageFor(model => model.Department)
+            @Html.LabelFor(model => model.Council.Department):<br />
+            @Html.EditorFor(model => model.Council.Department)&nbsp;
+            @Html.ValidationMessageFor(model => model.Council.Department)
         </p>
     </fieldset>
     <fieldset>
         <legend>Основная информация</legend>
         <p>
-            @Html.LabelFor(model => model.Number):<br />
-            @Html.EditorFor(model => model.Number)&nbsp;
-            @Html.ValidationMessageFor(model => model.Number)
+            @Html.LabelFor(model => model.Council.Number):<br />
+            @Html.EditorFor(model => model.Council.Number)&nbsp;
+            @Html.ValidationMessageFor(model => model.Council.Number)
         </p>
         <p>
-            @Html.LabelFor(model => model.Address):<br />
-            @Html.EditorFor(model => model.Address)&nbsp;
-            @Html.ValidationMessageFor(model => model.Address)
+            @Html.LabelFor(model => model.Council.Address):<br />
+            @Html.EditorFor(model => model.Council.Address)&nbsp;
+            @Html.ValidationMessageFor(model => model.Council.Address)
         </p>
     </fieldset>
     <fieldset>
         <legend>Прочая информация</legend>
         <p>
-            @Html.LabelFor(model => model.FoundationDate):<br />
-            @Html.EditorFor(model => model.FoundationDate)&nbsp;
-            @Html.ValidationMessageFor(model => model.FoundationDate)
+            @Html.LabelFor(model => model.Council.FoundationDate):<br />
+            @Html.EditorFor(model => model.Council.FoundationDate)&nbsp;
+            @Html.ValidationMessageFor(model => model.Council.FoundationDate)
         </p>
     </fieldset>
     
@@ -48,3 +48,9 @@
         <input type="submit" value="Принять изменения" />
     </p>
 }
+
+<script>
+    $(function () {
+        $("#Council_FoundationDate").datepicker({ changeYear: true });
+    });
+</script>
