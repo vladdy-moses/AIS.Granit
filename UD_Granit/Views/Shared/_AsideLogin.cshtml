@@ -8,8 +8,9 @@
     }
     else
     {
-        <p>Имя: @Session.GetUser().GetFullNameWithInitials()</p>
-        <p>Роль: @Session.GetUser().GetRole().</p>
-        @Html.ActionLink("Выход", "Logout", "Account")
+        <ul class="menu">
+            <li>@Html.ActionLink("Информация о пользователе", "Details", "Account")</li>
+            <li>@Html.ActionLink("Выход", "Logout", "Account")</li>
+        </ul>
     }
 </div>

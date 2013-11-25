@@ -1,9 +1,9 @@
 ﻿<div class="section">
     <h3>Меню системы</h3>
     <ul class="menu">
-        <li><a href="@Url.Action("Index", "Home")">Главная страница</a></li>
-        <li><a href="@Url.Action("Index", "Dissertation")">Просмотр диссертаций</a></li>
-        <li><a href="@Url.Action("Index", "Council")">Информация о совете</a></li>
-        <li><a href="@Url.Action("Index", "Account")">Пользователи системы</a></li>
+        <li>@Html.ActionLink("Главная страница", "Index", "Home")</li>
+        <li>@Html.ActionLink("Просмотр диссертаций", "Index", "Dissertation")</li>
+        <li>@Html.ActionLink("Информация о совете", "Index", "Council")</li>
+        <li>@Html.ActionLink("Пользователи системы", "Index", "Account")</li>
     </ul>
 </div>
