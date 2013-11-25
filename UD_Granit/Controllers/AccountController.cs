@@ -18,7 +18,7 @@ namespace UD_Granit.Controllers
 
         public ActionResult Index()
         {
-            return HttpNotFound();
+            return RedirectToAction("ShowAll");
         }
 
         //

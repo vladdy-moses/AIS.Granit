@@ -2,8 +2,9 @@
     <h3>Меню системы</h3>
     <ul class="menu">
         <li>@Html.ActionLink("Главная страница", "Index", "Home")</li>
+        <li>@Html.ActionLink("Заседания", "Index", "Session")</li>
         <li>@Html.ActionLink("Просмотр диссертаций", "Index", "Dissertation")</li>
         <li>@Html.ActionLink("Информация о совете", "Index", "Council")</li>
-        <li>@Html.ActionLink("Пользователи системы", "Index", "Account")</li>
+        <li>@Html.ActionLink("Состав совета", "ShowMembers", "Account")</li>
     </ul>
 </div>

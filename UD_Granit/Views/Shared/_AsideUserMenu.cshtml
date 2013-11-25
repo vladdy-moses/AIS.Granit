@@ -1,12 +1,36 @@
-﻿@if (Session["User"] != null)
+﻿@using UD_Granit.Helpers
+@if (Session.GetUser() != null)
 {
     <div class="section">
         <h3>Меню пользователя</h3>
-        
-        @if (Session["User"] is UD_Granit.Models.Administrator)
-        {
-            <p>kill 'em all!</p>
-        }
 
+        <ul class="menu">
+            @if (Session.GetUser() is UD_Granit.Models.Applicant)
+            {
+                <li>@Html.ActionLink("Мои диссертации", "Show", "Dissertation")</li>
+                <li>@Html.ActionLink("Мои заседания", "Show", "Session")</li>
+            }
+
+            @if (Session.GetUserPosition() == UD_Granit.Models.MemberPosition.Member)
+            {
+                <li>@Html.ActionLink("Мои заседания", "Show", "Session")</li>
+                <li>@Html.ActionLink("Соискатели", "ShowApplicants", "Account")</li>
+            }
+            @if (Session.GetUserPosition() == UD_Granit.Models.MemberPosition.Secretary)
+            {
+                <li>@Html.ActionLink("Новое заседание", "Create", "Session")</li>
+                <li>@Html.ActionLink("Соискатели", "ShowApplicants", "Account")</li>
+            }
+            @if ((Session.GetUserPosition() == UD_Granit.Models.MemberPosition.Chairman) ||
+            (Session.GetUserPosition() == UD_Granit.Models.MemberPosition.ViceChairman))
+            {
+                <li>@Html.ActionLink("Специальности", "Index", "Specialities")</li>
+            }
+            @if (Session.GetUser() is UD_Granit.Models.Administrator)
+            {
+                <li>@Html.ActionLink("Пользователи", "ShowAll", "Account")</li>
+                <li>@Html.ActionLink("Специальности", "Index", "Specialities")</li>
+            }
+        </ul>
     </div>
 }
