@@ -30,5 +30,14 @@ namespace UD_Granit.Helpers
 
             return request.ServerVariables["REMOTE_ADDR"];
         }
+
+        public static MemberPosition? GetUserPosition(this HttpSessionStateBase session)
+        {
+            if (session.GetUser() == null)
+                return null;
+            if (!(session.GetUser() is Member))
+                return null;
+            return (session.GetUser() as Member).Position;
+        }
     }
 }

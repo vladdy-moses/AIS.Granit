@@ -4,49 +4,17 @@
     ViewBag.Title = "Details";
 }
 
-<h2>Details</h2>
+<h2>Информация о пользователе</h2>
 
-<p>@Model.GetType().ToString()</p>
+<h3>@UD_Granit.Helpers.UserHelper.GetFullName(Model)</h3>
+<h4>@UD_Granit.Helpers.UserHelper.GetRole(Model)</h4>
 
-<fieldset>
-    <legend>User</legend>
-
-    <div class="display-label">
-         @Html.DisplayNameFor(model => model.Email)
-    </div>
-    <div class="display-field">
-        @Html.DisplayFor(model => model.Email)
-    </div>
-
-    <div class="display-label">
-         @Html.DisplayNameFor(model => model.Password)
-    </div>
-    <div class="display-field">
-        @Html.DisplayFor(model => model.Password)
-    </div>
-
-    <div class="display-label">
-         @Html.DisplayNameFor(model => model.FirstName)
-    </div>
-    <div class="display-field">
-        @Html.DisplayFor(model => model.FirstName)
-    </div>
-
-    <div class="display-label">
-         @Html.DisplayNameFor(model => model.SecondName)
-    </div>
-    <div class="display-field">
-        @Html.DisplayFor(model => model.SecondName)
-    </div>
-
-    <div class="display-label">
-         @Html.DisplayNameFor(model => model.LastName)
-    </div>
-    <div class="display-field">
-        @Html.DisplayFor(model => model.LastName)
-    </div>
-</fieldset>
-<p>
-    @Html.ActionLink("Edit", "Edit", new { id=Model.User_Id }) |
-    @Html.ActionLink("Back to List", "Index")
-</p>
+@using UD_Granit.Helpers
+@if ((Session.GetUser() is UD_Granit.Models.Administrator) ||
+    (Session.GetUserPosition() == UD_Granit.Models.MemberPosition.Chairman))
+{
+    <p>
+        @Html.ActionLink("Редактировать", "Edit", new { id = Model.User_Id }) |
+        @Html.ActionLink("Удалить", "Delete", new { id = Model.User_Id })
+    </p>
+}
