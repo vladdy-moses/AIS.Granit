@@ -147,6 +147,15 @@
     <Compile Include="App_Start\RouteConfig.cs" />
     <Compile Include="App_Start\WebApiConfig.cs" />
     <Compile Include="Helpers\UserHelper.cs" />
+    <Compile Include="ViewModels\Account\Details.cs" />
+    <Compile Include="ViewModels\Account\Login.cs" />
+    <Compile Include="ViewModels\Account\RegisterNewbie.cs" />
+    <Compile Include="ViewModels\Council\Edit.cs" />
+    <Compile Include="ViewModels\Council\Index.cs" />
+    <Compile Include="ViewModels\Dissertation\Create.cs" />
+    <Compile Include="ViewModels\Dissertation\Details.cs" />
+    <Compile Include="ViewModels\Dissertation\Index.cs" />
+    <Compile Include="ViewModels\Home\Index.cs" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="Content\css\basic\main.css" />
