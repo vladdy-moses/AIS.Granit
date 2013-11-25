@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 using System.Linq;
@@ -9,7 +10,9 @@ namespace UD_Granit.Models
 {
     public enum DissertationType : short
     {
+        [Description("Кандидатская")]
         Candidate = 0,
+        [Description("Докторская")]
         Doctor = 1
     }
 

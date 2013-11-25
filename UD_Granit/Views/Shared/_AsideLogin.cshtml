@@ -1,4 +1,6 @@
-﻿<div class="section">
+﻿@using UD_Granit.Helpers
+
+<div class="section">
     <h3>Авторизация</h3>
     @if (Session["User"] == null)
     {
@@ -6,8 +8,8 @@
     }
     else
     {
-        <p>Имя: @UD_Granit.Helpers.UserHelper.GetFullNameWithInitials(Session["User"] as UD_Granit.Models.User)</p>
-        <p>Роль: @UD_Granit.Helpers.UserHelper.GetRole(Session["User"] as UD_Granit.Models.User).</p>
+        <p>Имя: @Session.GetUser().GetFullNameWithInitials()</p>
+        <p>Роль: @Session.GetUser().GetRole().</p>
         @Html.ActionLink("Выход", "Logout", "Account")
     }
 </div>

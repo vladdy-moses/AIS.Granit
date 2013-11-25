@@ -1,23 +1,21 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Web;
 
 namespace UD_Granit.Models
 {
-    public enum UserRole : int
-    {
-        Applicant = 1,
-        Member = 2,
-        Administrator = 3
-    };
-
     public enum MemberPosition : int
     {
+        [Description("Рядовой член")]
         Member = 1,
+        [Description("Учёный секретарь")]
         Secretary = 2,
+        [Description("Заместитель председателя")]
         ViceChairman = 3,
+        [Description("Председатель")]
         Chairman = 4
     }
 

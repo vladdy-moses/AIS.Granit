@@ -17,7 +17,7 @@
             @Html.LabelFor(model => model.Type)
         </div>
         <div class="editor-field">
-            @Html.EditorFor(model => model.Type)
+            @Html.EnumDropDownListFor(model => model.Type)
             @Html.ValidationMessageFor(model => model.Type)
         </div>
 

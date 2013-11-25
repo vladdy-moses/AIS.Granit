@@ -2,13 +2,14 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Web;
+using System.Web.Mvc.Html;
 using UD_Granit.Models;
 
 namespace UD_Granit.Helpers
 {
     public static class UserHelper
     {
-        public static string GetFullName(User user)
+        public static string GetFullName(this User user)
         {
             if (user != null)
             {
@@ -22,7 +23,7 @@ namespace UD_Granit.Helpers
             return string.Empty;
         }
 
-        public static string GetFullNameWithInitials(User user)
+        public static string GetFullNameWithInitials(this User user)
         {
             if (user != null)
             {
@@ -36,18 +37,25 @@ namespace UD_Granit.Helpers
             return string.Empty;
         }
 
-        public static string GetRole(User user)
+        public static string GetRole(this User user)
         {
             if (user != null)
             {
                 if (user is Administrator)
-                    return "администратор";
+                    return "Администратор";
                 if (user is Member)
-                    return "член совета";
+                    return "Член совета";
                 if (user is Applicant)
-                    return "соискатель";
+                    return "Соискатель";
             }
             return string.Empty;
+        }
+
+        public static string GetPosition(this User user)
+        {
+            if (user is Member)
+                return (user as Member).Position.ToDescription();
+            return String.Empty;
         }
     }
 }
