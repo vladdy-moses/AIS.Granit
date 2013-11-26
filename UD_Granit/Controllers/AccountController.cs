@@ -18,7 +18,7 @@ namespace UD_Granit.Controllers
 
         public ActionResult Index()
         {
-            return RedirectToAction("ShowAll");
+            return RedirectToAction("All");
         }
 
         //
@@ -141,6 +141,14 @@ namespace UD_Granit.Controllers
             viewModel.User_Id = showedUser.User_Id;
             viewModel.CanControl = ((currentUser is Administrator) || (Session.GetUserPosition() == MemberPosition.Chairman));
             return View(viewModel);
+        }
+
+        //
+        // GET: /Account/All
+
+        public ActionResult All()
+        {
+            return HttpNotFound();
         }
     }
 }

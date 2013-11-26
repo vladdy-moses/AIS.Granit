@@ -6,7 +6,6 @@
 
 <h2>Авторизация</h2>
 <p>Пожалуйста, введите свои учётные данные в поля ниже, затем нажмите на кнопку "Выполнить вход". При успешной авторазации вас должно перенаправить на главную страницу. Если этого не произошло, вы ввели некорректные данные.</p>
-<p>Чтобы зарегистрироваться как соискатель, Вы должны направить заявление в письменной форме председателю диссертационного совета.</p>
 
 @using (Html.BeginForm())
 {
@@ -18,7 +17,7 @@
         @Html.LabelFor(model => model.Email)
     </div>
     <div class="editor-field">
-        @Html.EnumDropDownListFor(model => model.Email)
+        @Html.EditorFor(model => model.Email)
         @Html.ValidationMessageFor(model => model.Email)
     </div>
     
@@ -26,7 +25,7 @@
         @Html.LabelFor(model => model.Password)
     </div>
     <div class="editor-field">
-        @Html.EnumDropDownListFor(model => model.Password)
+        @Html.PasswordFor(model => model.Password)
         @Html.ValidationMessageFor(model => model.Password)
     </div>
     

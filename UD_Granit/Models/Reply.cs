@@ -10,7 +10,7 @@ namespace UD_Granit.Models
     public class Reply
     {
         [Key]
-        public int Reply_Id { private set; get; }
+        public int Reply_Id { set; get; }
 
         public string Author { set; get; }
         

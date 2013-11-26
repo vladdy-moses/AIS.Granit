@@ -1,87 +1,96 @@
-﻿@model UD_Granit.Models.Dissertation
+﻿@model UD_Granit.ViewModels.Dissertation.Create
 
 @{
-    ViewBag.Title = "Create";
+    ViewBag.Title = "Создать запись о диссертации";
 }
 
-<h2>Create</h2>
+<h2>@ViewBag.Title</h2>
+<p>На этой странице Вы должны заполнить информацию о Вашей диссертации. Записи о диссертациях, в которые будет занесена неверная информация, будут удалены из системы.</p>
 
-@using (Html.BeginForm())
+@using (Html.BeginForm("Create", "Dissertation", FormMethod.Post, new { enctype = "multipart/form-data" }))
 {
     @Html.ValidationSummary(true)
 
-    <fieldset>
-        <legend>Dissertation</legend>
+    <div class="editor-label">
+        @Html.LabelFor(model => model.Dissertation.Type)
+    </div>
+    <div class="editor-field">
+        @Html.EnumDropDownListFor(model => model.Dissertation.Type)
+        @Html.ValidationMessageFor(model => model.Dissertation.Type)
+    </div>
 
-        <div class="editor-label">
-            @Html.LabelFor(model => model.Type)
-        </div>
-        <div class="editor-field">
-            @Html.EnumDropDownListFor(model => model.Type)
-            @Html.ValidationMessageFor(model => model.Type)
-        </div>
+    <div class="editor-label">
+        @Html.LabelFor(model => model.Dissertation.Title)
+    </div>
+    <div class="editor-field">
+        @Html.EditorFor(model => model.Dissertation.Title)
+        @Html.ValidationMessageFor(model => model.Dissertation.Title)
+    </div>
 
-        <div class="editor-label">
-            @Html.LabelFor(model => model.Title)
-        </div>
-        <div class="editor-field">
-            @Html.EditorFor(model => model.Title)
-            @Html.ValidationMessageFor(model => model.Title)
-        </div>
+    <div class="editor-label">
+        @Html.LabelFor(model => model.Dissertation.References)
+    </div>
+    <div class="editor-field">
+        @Html.TextAreaFor(model => model.Dissertation.References)
+        @Html.ValidationMessageFor(model => model.Dissertation.References)
+    </div>
 
-        <div class="editor-label">
-            @Html.LabelFor(model => model.References)
-        </div>
-        <div class="editor-field">
-            @Html.EditorFor(model => model.References)
-            @Html.ValidationMessageFor(model => model.References)
-        </div>
+    <div class="editor-label">
+        @Html.LabelFor(model => model.Dissertation.Administrative_Use)
+    </div>
+    <div class="editor-field">
+        @Html.EditorFor(model => model.Dissertation.Administrative_Use)
+        @Html.ValidationMessageFor(model => model.Dissertation.Administrative_Use)
+    </div>
 
-        <div class="editor-label">
-            @Html.LabelFor(model => model.Administrative_Use)
-        </div>
-        <div class="editor-field">
-            @Html.EditorFor(model => model.Administrative_Use)
-            @Html.ValidationMessageFor(model => model.Administrative_Use)
-        </div>
+    <div class="editor-label">
+        @Html.LabelFor(model => model.Dissertation.Publications)
+    </div>
+    <div class="editor-field">
+        @Html.EditorFor(model => model.Dissertation.Publications)
+        @Html.ValidationMessageFor(model => model.Dissertation.Publications)
+    </div>
 
-        <div class="editor-label">
-            @Html.LabelFor(model => model.Publications)
-        </div>
-        <div class="editor-field">
-            @Html.EditorFor(model => model.Publications)
-            @Html.ValidationMessageFor(model => model.Publications)
-        </div>
+    <div class="editor-label">
+        @Html.LabelFor(model => model.Dissertation.Date_Sending)
+    </div>
+    <div class="editor-field">
+        @Html.EditorFor(model => model.Dissertation.Date_Sending)
+        @Html.ValidationMessageFor(model => model.Dissertation.Date_Sending)
+    </div>
 
-        <div class="editor-label">
-            @Html.LabelFor(model => model.Date_Sending)
-        </div>
-        <div class="editor-field">
-            @Html.EditorFor(model => model.Date_Sending)
-            @Html.ValidationMessageFor(model => model.Date_Sending)
-        </div>
+    <div class="editor-label">
+        @Html.LabelFor(model => model.Dissertation.Date_Preliminary_Defense)
+    </div>
+    <div class="editor-field">
+        @Html.EditorFor(model => model.Dissertation.Date_Preliminary_Defense)
+        @Html.ValidationMessageFor(model => model.Dissertation.Date_Preliminary_Defense)
+    </div>
+    
+    <div class="editor-label">
+        @Html.LabelFor(model => model.File_Abstract)
+    </div>
+    <div class="editor-field">
+        @Html.TextBoxFor(model => model.File_Abstract, new { type = "file" })
+        @Html.ValidationMessageFor(model => model.File_Abstract)
+    </div>
+    
+    <div class="editor-label">
+        @Html.LabelFor(model => model.File_Text)
+    </div>
+    <div class="editor-field">
+        @Html.TextBoxFor(model => model.File_Text, new { type = "file" })
+        @Html.ValidationMessageFor(model => model.File_Text)
+    </div>
 
-        <div class="editor-label">
-            @Html.LabelFor(model => model.Date_Preliminary_Defense)
-        </div>
-        <div class="editor-field">
-            @Html.EditorFor(model => model.Date_Preliminary_Defense)
-            @Html.ValidationMessageFor(model => model.Date_Preliminary_Defense)
-        </div>
-
-        <p>
-            <input type="submit" value="Create" />
-        </p>
-    </fieldset>
+    <p>
+        <input type="submit" value="Добавить запись о диссертации" />
+    </p>
 }
-
-<div>
-    @Html.ActionLink("Back to List", "Index")
-</div>
 
 <script>
     $(function () {
-        $("#Date_Sending").datepicker({ changeYear: true });
-        $("#Date_Preliminary_Defense").datepicker({ changeYear: true });
+        $("#Dissertation_Date_Sending").datepicker({ changeYear: true });
+        $("#Dissertation_Date_Preliminary_Defense").datepicker({ changeYear: true });
     });
 </script>

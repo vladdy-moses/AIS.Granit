@@ -80,7 +80,7 @@ namespace UD_Granit.Models
         [Display(Name = "Подразделение, где проходил аспирантуру")]
         public string University_Departmant { set; get; }
 
-        public Dissertation Dissertation { set; get; }
+        public virtual ICollection<Dissertation> Dissertations { set; get; }
     }
 
     public class Administrator : User

@@ -5,6 +5,7 @@ using System.Web;
 using System.Web.Mvc;
 using UD_Granit.Models;
 using UD_Granit.Helpers;
+using System.IO;
 
 namespace UD_Granit.Controllers
 {
@@ -13,7 +14,7 @@ namespace UD_Granit.Controllers
         private DataContext db = new DataContext();
 
         //
-        // GET: /Default1/
+        // GET: /Dissertation/
 
         public ActionResult Index()
         {
@@ -21,22 +22,22 @@ namespace UD_Granit.Controllers
         }
 
         //
-        // GET: /Default1/Details/5
+        // GET: /Dissertation/Details/5
 
         public ActionResult Details(int id)
         {
             Dissertation dissertation = db.Dissertations.Find(id);
             if (dissertation != null)
             {
-                #warning Разрешить просмотр для пользователей
-                if(!dissertation.Administrative_Use)
-                    return View(dissertation);
+#warning Разрешить просмотр для пользователей
+                // if (!dissertation.Administrative_Use)
+                return View(dissertation);
             }
             return HttpNotFound();
         }
 
         //
-        // GET: /Default1/Create
+        // GET: /Dissertation/Create
 
         public ActionResult Create()
         {
@@ -59,25 +60,39 @@ namespace UD_Granit.Controllers
         }
 
         //
-        // POST: /Default1/Create
+        // POST: /Dissertation/Create
 
         [HttpPost]
-        public ActionResult Create(FormCollection collection)
+        public ActionResult Create(UD_Granit.ViewModels.Dissertation.Create viewModel)
         {
+            if ((Session.GetUser() is Applicant) == false)
+                return HttpNotFound();
+
             try
             {
-                // TODO: Add insert logic here
+                Dissertation currentDissertation = viewModel.Dissertation;
+                currentDissertation.Applicant_Id = Session.GetUser().User_Id;
+                currentDissertation.File_Abstract = Path.GetExtension(viewModel.File_Abstract.FileName);
+                currentDissertation.File_Text = Path.GetExtension(viewModel.File_Text.FileName);
+                db.Dissertations.Add(currentDissertation);
+                db.SaveChanges();
 
-                return RedirectToAction("Index");
+                viewModel.File_Abstract.SaveAs(Server.MapPath(Path.Combine("~/App_Data/", currentDissertation.Dissertation_Id + "_Abstract" + currentDissertation.File_Abstract)));
+                viewModel.File_Text.SaveAs(Server.MapPath(Path.Combine("~/App_Data/", currentDissertation.Dissertation_Id + "_Text" + currentDissertation.File_Text)));
+
+                return RedirectToAction("Details", new { id = currentDissertation.Dissertation_Id });
             }
-            catch
+            catch (Exception ex)
             {
+                NotificationManager nManager = new NotificationManager();
+                nManager.Notifies.Add(new NotificationManager.Notify() { Message = ex.Message, Type = NotificationManager.Notify.NotifyType.Error });
+                ViewBag.UserNotification = nManager;
                 return View();
             }
         }
 
         //
-        // GET: /Default1/Edit/5
+        // GET: /Dissertation/Edit/5
 
         public ActionResult Edit(int id)
         {
@@ -85,7 +100,7 @@ namespace UD_Granit.Controllers
         }
 
         //
-        // POST: /Default1/Edit/5
+        // POST: /Dissertation/Edit/5
 
         [HttpPost]
         public ActionResult Edit(int id, FormCollection collection)
@@ -103,7 +118,7 @@ namespace UD_Granit.Controllers
         }
 
         //
-        // GET: /Default1/Delete/5
+        // GET: /Dissertation/Delete/5
 
         public ActionResult Delete(int id)
         {
@@ -111,7 +126,7 @@ namespace UD_Granit.Controllers
         }
 
         //
-        // POST: /Default1/Delete/5
+        // POST: /Dissertation/Delete/5
 
         [HttpPost]
         public ActionResult Delete(int id, FormCollection collection)

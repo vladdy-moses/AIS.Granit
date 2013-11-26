@@ -19,9 +19,7 @@ namespace UD_Granit.Models
     public class Dissertation
     {
         [Key]
-        [ForeignKey("Applicant")]
-        public int Dissertation_Id { private set; get; }
-        public Applicant Applicant { set; get; }
+        public int Dissertation_Id { set; get; }
 
         [Required]
         [Display(Name = "Тип диссертационной работы")]
@@ -31,13 +29,11 @@ namespace UD_Granit.Models
         [Display(Name = "Заголовок")]
         public string Title { set; get; }
 
-        [Required]
         [Display(Name = "Автореферат")]
-        public byte[] File_Abstract { set; get; }
+        public string File_Abstract { set; get; }
 
-        [Required]
         [Display(Name = "Текст диссертации")]
-        public byte[] File_Text { set; get; }
+        public string File_Text { set; get; }
 
         [Display(Name = "Список литературы")]
         public string References { set; get; }
@@ -61,6 +57,10 @@ namespace UD_Granit.Models
 
         public virtual ICollection<Reply> Replies { set; get; }
 
+        [Required]
+        [ForeignKey("Applicant")]
+        public int Applicant_Id { get; set; }
 
+        public virtual Applicant Applicant { set; get; }
     }
 }
