@@ -9,7 +9,7 @@ namespace UD_Granit.ViewModels.Home
     public struct MemberView
     {
         public string FullName;
-        public MemberPosition Position;
+        public string Position;
     }
 
     public class Index

@@ -11,11 +11,25 @@
 <div style="overflow: hidden">
     <div style="float: left" class="MainBlock">
         <h3>Недавно прошедшие заседания</h3>
-#warning Добавить вывод
+        @if ((Model != null) && (Model.SessionsWas != null) && (Model.SessionsWas.Count() > 0))
+        {
+#warning Добавить вывод, когда будут данные из контроллера
+        }
+        else
+        {
+            <p>Извините, в АСУРДС не было зарегестрировано ни одного прошедшего заседания.</p>
+        }
     </div>
     <div style="float: right" class="MainBlock">
         <h3>Предстоящие заседания</h3>
-#warning Добавить вывод
+        @if ((Model != null) && (Model.SessionsWill != null) && (Model.SessionsWill.Count() > 0))
+        {
+#warning Добавить вывод, когда будут данные из контроллера
+        }
+        else
+        {
+            <p>Извините, в диссерационном совете не запланировано заседаний.</p>
+        }
     </div>
 </div>
 
@@ -25,7 +39,6 @@
     <ul>
         @foreach (UD_Granit.ViewModels.Home.MemberView member in Model.Members)
         {
-#warning Хелпер для должности
             <li>@member.FullName (@member.Position)</li>
         }
     </ul>

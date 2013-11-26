@@ -62,9 +62,9 @@ namespace UD_Granit.Controllers
 
             UD_Granit.ViewModels.Home.Index viewModel = new ViewModels.Home.Index();
             List<UD_Granit.ViewModels.Home.MemberView> memberList = new List<UD_Granit.ViewModels.Home.MemberView>();
-            memberList.Add(new ViewModels.Home.MemberView() { FullName = "Василий", Position = MemberPosition.Chairman });
-            memberList.Add(new ViewModels.Home.MemberView() { FullName = "Ваня", Position = MemberPosition.Member });
-            memberList.Add(new ViewModels.Home.MemberView() { FullName = "Таня", Position = MemberPosition.Member });
+            memberList.Add(new ViewModels.Home.MemberView() { FullName = "Василий", Position = "a" });
+            memberList.Add(new ViewModels.Home.MemberView() { FullName = "Ваня", Position = "б" });
+            memberList.Add(new ViewModels.Home.MemberView() { FullName = "Таня", Position = "d" });
 #warning Добавить нормальный вывод в view
             viewModel.Members = memberList;
 
