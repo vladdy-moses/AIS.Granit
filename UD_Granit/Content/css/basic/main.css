@@ -86,7 +86,7 @@ ul.menu {
 }
 
 .notify-error {
-    color:red;
+    color: red;
     border: 1px dashed red;
 }
 
@@ -158,4 +158,9 @@ footer {
 
 #ui-datepicker-div {
     font-size: 0.9em;
+}
+
+.MainBlock {
+    width: 360px;
+    padding: 5px;
 }

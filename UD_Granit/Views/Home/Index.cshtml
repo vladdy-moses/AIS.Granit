@@ -1,14 +1,36 @@
-﻿@model UD_Granit.Models.Dissertation
+﻿@model UD_Granit.ViewModels.Home.Index
 
 @{
-    ViewBag.Title = "Index";
+    ViewBag.Title = "Главная страница";
 }
 
-<h2>Index</h2>
-Welcome, @ViewBag.asd!
+<h2>@ViewBag.Title</h2>
 
-<p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Duis dictum vestibulum felis, vitae semper lectus fringilla eget. In euismod pulvinar tempor. Duis lobortis est cursus, iaculis ipsum in, porttitor quam. Cras fermentum vulputate orci eget mattis. Morbi tempor viverra sem, sit amet dapibus lacus imperdiet nec. Proin vestibulum nisl sed quam condimentum lobortis nec nec turpis. Ut vitae ornare nibh. Proin a magna sit amet mi pharetra ultricies. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Integer orci purus, accumsan a ultricies molestie, interdum vel massa. Maecenas non elit odio. Quisque adipiscing turpis dui, vitae adipiscing enim convallis consectetur.</p>
-<p>Aliquam erat volutpat. Etiam accumsan, risus ac aliquam consectetur, nulla dui imperdiet leo, vitae malesuada massa turpis vitae risus. Pellentesque pulvinar lobortis ipsum, nec porttitor ligula malesuada vitae. Nulla viverra auctor ullamcorper. Etiam dignissim odio id nisi egestas gravida. Integer auctor erat ac magna posuere, at eleifend mauris sagittis. Nulla hendrerit nulla id semper venenatis. Pellentesque ultrices eros a sapien rutrum, non gravida quam gravida. In eleifend sagittis pretium. Interdum et malesuada fames ac ante ipsum primis in faucibus. In ac consectetur est, quis vestibulum nisi. Integer facilisis nibh quis aliquet ultrices. Cras nec purus ultrices, sollicitudin velit posuere, mollis urna. Mauris vel interdum justo, eget placerat quam. Nulla dictum purus sed ligula consequat, vitae malesuada lectus consectetur. Vestibulum accumsan urna et lacus fermentum imperdiet.</p>
-<p>Phasellus lobortis scelerisque augue quis condimentum. Interdum et malesuada fames ac ante ipsum primis in faucibus. Aenean vel metus consequat, laoreet tellus et, ultricies justo. Ut et arcu viverra, fermentum ante feugiat, viverra odio. Donec sed rutrum arcu, a sodales dolor. Nam tempus augue congue diam aliquam laoreet. Donec urna lectus, eleifend in purus a, mollis suscipit nibh. Donec egestas orci vitae neque convallis rutrum et in lorem. Interdum et malesuada fames ac ante ipsum primis in faucibus. In felis magna, molestie vitae vestibulum et, molestie eget quam. Donec mollis odio quis ante convallis ullamcorper. Praesent sed urna sit amet enim ullamcorper eleifend. Praesent semper, lectus non cursus hendrerit, mi urna egestas nibh, eget lacinia nibh nulla sed erat.</p>
-<p>Etiam sit amet tincidunt lacus. Curabitur fringilla tempor tortor. Nam eget lectus eget diam vehicula viverra id sed sem. Fusce ut convallis lacus. Maecenas turpis felis, eleifend quis tempus et, accumsan ut sem. Integer varius leo quis aliquam lobortis. Nullam eros quam, pulvinar at sem nec, auctor scelerisque lacus. Sed vehicula ante eget pellentesque cursus. Sed id egestas nisi. Nulla a rutrum magna. Duis nec urna sagittis sem tristique porttitor. Sed ac arcu magna. Donec lorem quam, mollis sit amet lacinia placerat, molestie vitae massa. In in elit et tortor euismod mollis nec eget lectus. Vivamus pharetra iaculis sollicitudin.</p>
-<p>Vestibulum justo felis, laoreet vitae lacus et, tempor faucibus ipsum. Maecenas ac diam sed tellus cursus tempus. Donec malesuada at est id interdum. Pellentesque pharetra adipiscing eros nec consectetur. Maecenas adipiscing suscipit tempus. In faucibus eros quis erat scelerisque iaculis. Ut justo nunc, vulputate eu quam id, pharetra pellentesque lacus. Aenean consequat, odio eget feugiat consectetur, massa tellus malesuada justo, a tempor nunc urna vitae tellus. Cras rutrum nulla non risus facilisis ornare. Pellentesque elementum urna ipsum. Maecenas lacus tortor, tempus a neque eu, tristique sagittis ipsum. Quisque dignissim malesuada ullamcorper. Aliquam erat volutpat. Mauris elit magna, feugiat ac interdum a, imperdiet a nibh. Fusce vulputate venenatis odio adipiscing sodales. Donec tempor nisi a porttitor bibendum.</p>
+<p>Добро пожаловать на главную страницу.</p>
+
+<div style="overflow: hidden">
+    <div style="float: left" class="MainBlock">
+        <h3>Недавно прошедшие заседания</h3>
+#warning Добавить вывод
+    </div>
+    <div style="float: right" class="MainBlock">
+        <h3>Предстоящие заседания</h3>
+#warning Добавить вывод
+    </div>
+</div>
+
+<h3>Состав диссертационного совета</h3>
+@if ((Model != null) && (Model.Members != null) && (Model.Members.Count() > 0))
+{
+    <ul>
+        @foreach (UD_Granit.ViewModels.Home.MemberView member in Model.Members)
+        {
+#warning Хелпер для должности
+            <li>@member.FullName (@member.Position)</li>
+        }
+    </ul>
+}
+else
+{
+    <div class="error">Извините, данные о составе диссертационного совета ещё не заполнены.</div>   
+}

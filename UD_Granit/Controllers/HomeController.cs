@@ -45,10 +45,9 @@ namespace UD_Granit.Controllers
                 }
             }
             */
-            ViewBag.asd = Request.GetUserIp();
+            /*ViewBag.asd = Request.GetUserIp();*/
 
             NotificationManager nManager = new NotificationManager();
-
             User currentUser = Session.GetUser();
             if (currentUser != null)
             {
@@ -59,10 +58,17 @@ namespace UD_Granit.Controllers
                         nManager.Notifies.Add(new NotificationManager.Notify() { Type = NotificationManager.Notify.NotifyType.Error, Message = "У Вас отсутствуют записи о Ваших диссертациях. Заведите запись о диссертации <a href=\"" + Url.Action("Create", "Dissertation") + "\">здесь</a>." });
                 }
             }
-
             ViewBag.UserNotification = nManager;
 
-            return View();
+            UD_Granit.ViewModels.Home.Index viewModel = new ViewModels.Home.Index();
+            List<UD_Granit.ViewModels.Home.MemberView> memberList = new List<UD_Granit.ViewModels.Home.MemberView>();
+            memberList.Add(new ViewModels.Home.MemberView() { FullName = "Василий", Position = MemberPosition.Chairman });
+            memberList.Add(new ViewModels.Home.MemberView() { FullName = "Ваня", Position = MemberPosition.Member });
+            memberList.Add(new ViewModels.Home.MemberView() { FullName = "Таня", Position = MemberPosition.Member });
+#warning Добавить нормальный вывод в view
+            viewModel.Members = memberList;
+
+            return View(viewModel);
         }
     }
 }
