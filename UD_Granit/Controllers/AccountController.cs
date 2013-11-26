@@ -48,6 +48,10 @@ namespace UD_Granit.Controllers
                 Session.SetUser(currentUser);
                 return RedirectToAction("Index", "Home");
             }
+
+            NotificationManager nManager = new NotificationManager();
+            nManager.Notifies.Add(new NotificationManager.Notify() { Type = NotificationManager.Notify.NotifyType.Error, Message = "Пользователь с такой комбинацией электронного почтового ящика и пароля не найден в системе. Пожалуйста, проверьте достоверность введённых данных." });
+            ViewBag.UserNotification = nManager;
             return View();
         }
 

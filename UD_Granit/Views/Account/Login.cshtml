@@ -13,17 +13,22 @@
     @Html.AntiForgeryToken()
     @Html.ValidationSummary(true)
 
-    <p>
-        @Html.LabelFor(m => m.Email)<br />
-        @Html.TextBoxFor(m => m.Email)<br />
-        @Html.ValidationMessageFor(m => m.Email)
-    </p>
+   
+    <div class="editor-label">
+        @Html.LabelFor(model => model.Email)
+    </div>
+    <div class="editor-field">
+        @Html.EnumDropDownListFor(model => model.Email)
+        @Html.ValidationMessageFor(model => model.Email)
+    </div>
     
-    <p>
-        @Html.LabelFor(m => m.Password)<br />
-        @Html.PasswordFor(m => m.Password)<br />
-        @Html.ValidationMessageFor(m => m.Password)
-    </p>
+    <div class="editor-label">
+        @Html.LabelFor(model => model.Password)
+    </div>
+    <div class="editor-field">
+        @Html.EnumDropDownListFor(model => model.Password)
+        @Html.ValidationMessageFor(model => model.Password)
+    </div>
     
     <input type="submit" value="Выполнить вход" />
 }
