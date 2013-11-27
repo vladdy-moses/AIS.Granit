@@ -9,13 +9,13 @@ namespace UD_Granit.Models
     public class Council
     {
         [Key]
-        public int Council_Id { set; get; }
+        public int Id { set; get; }
 
         [Required]
         [Display(Name = "Номер диссертационного совета")]
         public string Number { set; get; }
 
-        //идентификатор пресмедателя
+        //идентификатор преседателя
 
         [Required]
         [Display(Name = "Организация")]

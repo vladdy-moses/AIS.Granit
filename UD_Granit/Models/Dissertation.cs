@@ -19,7 +19,7 @@ namespace UD_Granit.Models
     public class Dissertation
     {
         [Key]
-        public int Dissertation_Id { set; get; }
+        public int Id { set; get; }
 
         [Required]
         [Display(Name = "Тип диссертационной работы")]
@@ -62,6 +62,8 @@ namespace UD_Granit.Models
         public DateTime? Date_Preliminary_Defense { set; get; }
 
         public virtual ICollection<Reply> Replies { set; get; }
+
+        public Speciality Speciality { set; get; }
 
         [Required]
         [ForeignKey("Applicant")]

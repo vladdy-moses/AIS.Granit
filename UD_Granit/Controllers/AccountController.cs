@@ -122,10 +122,10 @@ namespace UD_Granit.Controllers
                 if (currentUser == null)
                     return HttpNotFound();
                 else
-                    id = currentUser.User_Id;
+                    id = currentUser.Id;
             }
 
-            var q = from u in db.Users where u.User_Id == id.Value select u;
+            var q = from u in db.Users where u.Id == id.Value select u;
             if(q.Count() == 0)
                 return HttpNotFound();
             User showedUser = q.First();
@@ -133,7 +133,7 @@ namespace UD_Granit.Controllers
             UD_Granit.ViewModels.Account.Details viewModel = new UD_Granit.ViewModels.Account.Details();
             viewModel.FullName = showedUser.GetFullNameWithInitials();
             viewModel.Role = showedUser.GetRole();
-            viewModel.User_Id = showedUser.User_Id;
+            viewModel.User_Id = showedUser.Id;
             viewModel.CanControl = ((currentUser is Administrator) || (Session.GetUserPosition() == MemberPosition.Chairman));
             return View(viewModel);
         }

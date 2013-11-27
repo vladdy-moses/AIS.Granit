@@ -52,7 +52,7 @@ namespace UD_Granit.Controllers
             {
                 if (currentUser is Applicant)
                 {
-                    var dissertations = from d in db.Dissertations where d.Applicant.User_Id == currentUser.User_Id select d;
+                    var dissertations = from d in db.Dissertations where d.Applicant.Id == currentUser.Id select d;
                     if(dissertations.Count() == 0)
                         ViewData.NotificationAdd(new NotificationManager.Notify() { Type = NotificationManager.Notify.NotifyType.Error, Message = "У Вас отсутствуют записи о Ваших диссертациях. Заведите запись о диссертации <a href=\"" + Url.Action("Create", "Dissertation") + "\">здесь</a>." });
                 }

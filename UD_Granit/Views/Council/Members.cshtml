@@ -1,0 +1,38 @@
+﻿@model UD_Granit.ViewModels.Council.Members
+
+@{
+    ViewBag.Title = "Члены диссертационного совета";
+}
+
+<h2>@ViewBag.Title</h2>
+
+@if ((Model != null) && (Model.CouncilMembers != null) && (Model.CouncilMembers.Count() > 0))
+{
+    <table>
+        <thead>
+            <tr>
+                <td>Фамилия Имя Отчество</td>
+                <td>Должность</td>
+                <td>Специальность</td>
+                <td>Учёная степень</td>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (UD_Granit.ViewModels.Council.MemberView member in Model.CouncilMembers)
+            {
+                <tr>
+                    <td>@member.Name</td>
+                    <td>@member.Position</td>
+                    <td>@member.Speciality</td>
+                    <td>@member.Degree</td>
+                </tr>
+            }
+        </tbody>
+    </table>
+}
+else
+{
+    <div class="error">
+        Извините, информация о членах диссертационного совета ещё не заполнена.
+    </div>
+}

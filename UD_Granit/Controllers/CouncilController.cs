@@ -60,7 +60,7 @@ namespace UD_Granit.Controllers
                 }
                 else
                 {
-                    viewModel.Council.Council_Id = 1;
+                    viewModel.Council.Id = 1;
                     db.Entry(viewModel.Council).State = System.Data.Entity.EntityState.Modified;
                 }
                 db.SaveChanges();
@@ -71,6 +71,20 @@ namespace UD_Granit.Controllers
             {
                 return View();
             }
+        }
+
+        //
+        // GET: /Council/Members
+
+        public ActionResult Members()
+        {
+#warning Переписать на нормальные данные из БД
+            UD_Granit.ViewModels.Council.Members viewModel = new ViewModels.Council.Members();
+            List<UD_Granit.ViewModels.Council.MemberView> list = new List<UD_Granit.ViewModels.Council.MemberView>();
+            list.Add(new ViewModels.Council.MemberView() { Name = "Пупкин Василий Петрович", Degree = "К.Т.Н.", Position = "Бог Совета", Speciality = "10.15.2102102 Ха" });
+            list.Add(new ViewModels.Council.MemberView() { Name = "Васильев Пупок Петрович", Degree = "К.Т.Н.", Position = "Серафим Совета", Speciality = "10.15.2102104 Хе" });
+            viewModel.CouncilMembers = list;
+            return View(viewModel);
         }
     }
 }

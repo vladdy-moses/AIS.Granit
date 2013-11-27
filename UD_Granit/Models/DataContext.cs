@@ -14,7 +14,7 @@ namespace UD_Granit.Models
         public DataContext()
             : base("DefaultConnection")
         {
-            var q = from u in this.Administrators select u.User_Id;
+            var q = from u in this.Administrators select u.Id;
             if (q.Count() == 0)
             {
                 InitDatabase();
@@ -36,6 +36,8 @@ namespace UD_Granit.Models
         public DbSet<SessionСonsideration> SessionsСonsideration { set; get; }
 
         public DbSet<Council> Council { set; get; }
+
+        public DbSet<Speciality> Specialities { set; get; }
 
         protected override void OnModelCreating(DbModelBuilder modelBuilder)
         {

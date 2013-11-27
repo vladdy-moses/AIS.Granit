@@ -37,14 +37,14 @@ namespace UD_Granit.Controllers
                 }
                 else
                 {
-                    if ((currentUser is Applicant) && (currentUser.User_Id != dissertation.Applicant_Id))
+                    if ((currentUser is Applicant) && (currentUser.Id != dissertation.Applicant_Id))
                         if (!dissertation.Defensed || dissertation.Administrative_Use)
                             return HttpNotFound();
                 }
 
                 UD_Granit.ViewModels.Dissertation.Details viewModel = new ViewModels.Dissertation.Details();
                 viewModel.Dissertation = dissertation;
-                viewModel.CanEdit = !((currentUser is Applicant) && (currentUser.User_Id != dissertation.Applicant_Id));
+                viewModel.CanEdit = !((currentUser is Applicant) && (currentUser.Id != dissertation.Applicant_Id));
                 viewModel.CanCreateSession = ((Session.GetUserPosition() == MemberPosition.Chairman) || (currentUser is Administrator));
                 return View(viewModel);
             }
@@ -61,7 +61,7 @@ namespace UD_Granit.Controllers
                 User currentUser = Session.GetUser();
                 if (currentUser is Applicant)
                 {
-                    var dissertations = from d in db.Dissertations where d.Applicant.User_Id == currentUser.User_Id select d;
+                    var dissertations = from d in db.Dissertations where d.Applicant.Id == currentUser.Id select d;
                     if (dissertations.Count() == 0)
                         ViewData.NotificationAdd(new NotificationManager.Notify() { Type = NotificationManager.Notify.NotifyType.Info, Message = "Заполните информацию о Вашей диссертации. Вы можете сделать это позже, также как и отредактировать информацию о ней." });
 #warning Добавить проверку на то, что нельзя больше одной незащищённой диссертации
@@ -83,7 +83,7 @@ namespace UD_Granit.Controllers
             try
             {
                 Dissertation currentDissertation = viewModel.Dissertation;
-                currentDissertation.Applicant_Id = Session.GetUser().User_Id;
+                currentDissertation.Applicant_Id = Session.GetUser().Id;
                 currentDissertation.File_Abstract = Path.GetExtension(viewModel.File_Abstract.FileName);
                 currentDissertation.File_Text = Path.GetExtension(viewModel.File_Text.FileName);
                 currentDissertation.File_Summary = Path.GetExtension(viewModel.File_Summary.FileName);
@@ -91,11 +91,11 @@ namespace UD_Granit.Controllers
                 db.Dissertations.Add(currentDissertation);
                 db.SaveChanges();
 
-                viewModel.File_Abstract.SaveAs(Server.MapPath(Path.Combine("~/App_Data/", currentDissertation.Dissertation_Id + "_Abstract" + currentDissertation.File_Abstract)));
-                viewModel.File_Text.SaveAs(Server.MapPath(Path.Combine("~/App_Data/", currentDissertation.Dissertation_Id + "_Text" + currentDissertation.File_Text)));
-                viewModel.File_Summary.SaveAs(Server.MapPath(Path.Combine("~/App_Data/", currentDissertation.Dissertation_Id + "_Summary" + currentDissertation.File_Summary)));
+                viewModel.File_Abstract.SaveAs(Server.MapPath(Path.Combine("~/App_Data/", currentDissertation.Id + "_Abstract" + currentDissertation.File_Abstract)));
+                viewModel.File_Text.SaveAs(Server.MapPath(Path.Combine("~/App_Data/", currentDissertation.Id + "_Text" + currentDissertation.File_Text)));
+                viewModel.File_Summary.SaveAs(Server.MapPath(Path.Combine("~/App_Data/", currentDissertation.Id + "_Summary" + currentDissertation.File_Summary)));
 
-                return RedirectToAction("Details", new { id = currentDissertation.Dissertation_Id });
+                return RedirectToAction("Details", new { id = currentDissertation.Id });
             }
             catch (Exception ex)
             {

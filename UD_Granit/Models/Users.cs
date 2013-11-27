@@ -22,7 +22,7 @@ namespace UD_Granit.Models
     public class User
     {
         [Key]
-        public int User_Id { set; get; }
+        public int Id { set; get; }
 
         [Required]
         [Display(Name = "Электронный адрес")]

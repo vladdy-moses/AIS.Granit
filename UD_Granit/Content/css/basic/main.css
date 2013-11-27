@@ -18,6 +18,23 @@ a {
         color: #999;
     }
 
+table {
+    width: 100%;
+    border: 1px solid gray;
+    border-collapse: collapse;
+}
+
+thead {
+    font-size: 1.1em;
+    text-align: center;
+    font-weight: bold;
+}
+
+td {
+    border: 1px solid gray;
+    padding: 2px;
+}
+
 #MainWrapper {
     width: 968px;
     margin: 0 auto;

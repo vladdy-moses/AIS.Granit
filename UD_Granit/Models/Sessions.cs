@@ -9,7 +9,7 @@ namespace UD_Granit.Models
     public class Session
     {
         [Key]
-        public int Session_Id { set; get; }
+        public int Id { set; get; }
 
         public DateTime Date { set; get; }
         public bool Was { set; get; }
