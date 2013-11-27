@@ -47,7 +47,6 @@ namespace UD_Granit.Controllers
             */
             /*ViewBag.asd = Request.GetUserIp();*/
 
-            NotificationManager nManager = new NotificationManager();
             User currentUser = Session.GetUser();
             if (currentUser != null)
             {
@@ -55,10 +54,9 @@ namespace UD_Granit.Controllers
                 {
                     var dissertations = from d in db.Dissertations where d.Applicant.User_Id == currentUser.User_Id select d;
                     if(dissertations.Count() == 0)
-                        nManager.Notifies.Add(new NotificationManager.Notify() { Type = NotificationManager.Notify.NotifyType.Error, Message = "У Вас отсутствуют записи о Ваших диссертациях. Заведите запись о диссертации <a href=\"" + Url.Action("Create", "Dissertation") + "\">здесь</a>." });
+                        ViewData.NotificationAdd(new NotificationManager.Notify() { Type = NotificationManager.Notify.NotifyType.Error, Message = "У Вас отсутствуют записи о Ваших диссертациях. Заведите запись о диссертации <a href=\"" + Url.Action("Create", "Dissertation") + "\">здесь</a>." });
                 }
             }
-            ViewBag.UserNotification = nManager;
 
             UD_Granit.ViewModels.Home.Index viewModel = new ViewModels.Home.Index();
             List<UD_Granit.ViewModels.Home.MemberView> memberList = new List<UD_Granit.ViewModels.Home.MemberView>();

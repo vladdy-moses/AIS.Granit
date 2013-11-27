@@ -1,9 +1,11 @@
-﻿@if (ViewBag.UserNotification != null)
+﻿@using UD_Granit.Helpers
+
+@if (Html.Notifications() != null)
 {
-    UD_Granit.Helpers.NotificationManager notificationManager = ViewBag.UserNotification;
+    NotificationManager notificationManager = Html.Notifications();
     if (notificationManager.Count > 0)
     {
-        foreach (UD_Granit.Helpers.NotificationManager.Notify notify in ViewBag.UserNotification.Notifies)
+        foreach (NotificationManager.Notify notify in notificationManager.Notifies)
         {
             <div class="@notify.Class">@Html.Raw(notify.Message)</div>
         }

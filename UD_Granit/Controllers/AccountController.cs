@@ -49,9 +49,7 @@ namespace UD_Granit.Controllers
                 return RedirectToAction("Index", "Home");
             }
 
-            NotificationManager nManager = new NotificationManager();
-            nManager.Notifies.Add(new NotificationManager.Notify() { Type = NotificationManager.Notify.NotifyType.Error, Message = "Пользователь с такой комбинацией электронного почтового ящика и пароля не найден в системе. Пожалуйста, проверьте достоверность введённых данных." });
-            ViewBag.UserNotification = nManager;
+            ViewData.NotificationAdd(new NotificationManager.Notify() { Type = NotificationManager.Notify.NotifyType.Error, Message = "Пользователь с такой комбинацией электронного почтового ящика и пароля не найден в системе. Пожалуйста, проверьте достоверность введённых данных." });
             return View();
         }
 
@@ -100,10 +98,7 @@ namespace UD_Granit.Controllers
             var q = from u in db.Users where u.Email == viewModel.User.Email select u;
             if (q.Count() > 0)
             {
-                NotificationManager nManager = new NotificationManager();
-                nManager.Notifies.Add(new NotificationManager.Notify() { Type = NotificationManager.Notify.NotifyType.Error, Message = "Пользователь с таким электронным почтовым ящиком уже зарегистрирован. Пожалуйста, выберите другой email." });
-                ViewBag.UserNotification = nManager;
-
+                ViewData.NotificationAdd(new NotificationManager.Notify() { Type = NotificationManager.Notify.NotifyType.Error, Message = "Пользователь с таким электронным почтовым ящиком уже зарегистрирован. Пожалуйста, выберите другой email." });
                 return View();
             }
             else
