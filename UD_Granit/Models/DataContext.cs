@@ -23,8 +23,8 @@ namespace UD_Granit.Models
 
         public DbSet<User> Users { set; get; }
         public DbSet<Applicant> Applicants { set; get; }
-        public DbSet<ApplicantCandidate> ApplicantsCandidates { set; get; }
-        public DbSet<ApplicantDoctor> ApplicantsDoctors { set; get; }
+        //public DbSet<ApplicantCandidate> ApplicantsCandidates { set; get; }
+        //public DbSet<ApplicantDoctor> ApplicantsDoctors { set; get; }
         public DbSet<Administrator> Administrators { set; get; }
         public DbSet<Member> Members { set; get; }
 
@@ -45,16 +45,17 @@ namespace UD_Granit.Models
 
             modelBuilder.Entity<User>().ToTable("Users");
             modelBuilder.Entity<Applicant>().ToTable("Applicants");
-            modelBuilder.Entity<ApplicantCandidate>().ToTable("ApplicantCandidates");
-            modelBuilder.Entity<ApplicantDoctor>().ToTable("ApplicantDoctors");
+            //modelBuilder.Entity<ApplicantCandidate>().ToTable("ApplicantCandidates");
+            //modelBuilder.Entity<ApplicantDoctor>().ToTable("ApplicantDoctors");
             modelBuilder.Entity<Administrator>().ToTable("Administrators");
             modelBuilder.Entity<Member>().ToTable("Members");
         }
 
         protected void InitDatabase()
         {
-            Administrator u = new Administrator() { Email = "v.moiseev94@gmail.com", FirstName = "Moiseev", SecondName = "Vladislav", Password = "123456", LastIP = "" };
-            this.Users.Add(u);
+            this.Users.Add(new Administrator() { Email = "admin", Password = "admin", FirstName = "Администраторов", SecondName = "Администратор", LastName = "Администраторович", LastIP = "" });
+            this.Users.Add(new Applicant() { Email = "applicant", Password = "applicant", FirstName = "Соискателев", SecondName = "Соискатель", Organization = "Тестовая", Organization_Depatment = "Тестовый", City = "Тестовый", Address = "Тестовая улица" });
+            this.Users.Add(new Member() { Email = "member", Password = "member", FirstName = "Членов", SecondName = "Член", LastName = "Членович", Position = MemberPosition.Member, Degree = "К.Маг.Н." });
             this.SaveChanges();
 
             Database.Connection.Open();

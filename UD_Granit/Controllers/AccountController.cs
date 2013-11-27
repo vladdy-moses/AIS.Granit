@@ -131,7 +131,7 @@ namespace UD_Granit.Controllers
             User showedUser = q.First();
 
             UD_Granit.ViewModels.Account.Details viewModel = new UD_Granit.ViewModels.Account.Details();
-            viewModel.FullName = showedUser.GetFullNameWithInitials();
+            viewModel.FullName = showedUser.GetFullName();
             viewModel.Role = showedUser.GetRole();
             viewModel.User_Id = showedUser.Id;
             viewModel.CanControl = ((currentUser is Administrator) || (Session.GetUserPosition() == MemberPosition.Chairman));

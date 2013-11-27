@@ -33,17 +33,31 @@
     </div>
 </div>
 
-<h3>Состав диссертационного совета</h3>
-@if ((Model != null) && (Model.Members != null) && (Model.Members.Count() > 0))
-{
-    <ul>
-        @foreach (UD_Granit.ViewModels.Home.MemberView member in Model.Members)
-        {
-            <li>@member.FullName (@member.Position)</li>
-        }
-    </ul>
-}
-else
-{
-    <div class="error">Извините, данные о составе диссертационного совета ещё не заполнены.</div>   
-}
+<h3>Тестовый доступ к системе</h3>
+<p>Вы можете использовать следующие учетные данные для демонстрации функциональности системы:</p>
+<table>
+    <thead>
+        <tr>
+            <td>Имя пользователя</td>
+            <td>Пароль</td>
+            <td>Роль в системе</td>
+        </tr>
+    </thead>
+    <tbody>
+        <tr>
+            <td>admin</td>
+            <td>admin</td>
+            <td>Администратор системы</td>
+        </tr>
+        <tr>
+            <td>applicant</td>
+            <td>applicant</td>
+            <td>Соискатель (без диссертаций)</td>
+        </tr>
+        <tr>
+            <td>member</td>
+            <td>member</td>
+            <td>Рядовой член совета</td>
+        </tr>
+    </tbody>
+</table>

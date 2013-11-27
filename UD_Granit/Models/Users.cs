@@ -90,12 +90,17 @@ namespace UD_Granit.Models
 
     public class Member : User
     {
+        [Display(Name = "Должность")]
         public MemberPosition Position { set; get; }
-        //public bool Ph_D { set; get; }
-        //номер специальности
+
+        [Display(Name = "Учёная степень")]
+        public string Degree { set; get; }
+
+        [Display(Name = "Специальность")]
+        public Speciality Speciality { set; get; }
     }
 
-    public class ApplicantCandidate : Applicant
+    /*public class ApplicantCandidate : Applicant
     {
         public string DocumentOfEducation { set; get; }
         public string CandidateExams { set; get; }
@@ -104,5 +109,5 @@ namespace UD_Granit.Models
     public class ApplicantDoctor : Applicant
     {
         public string CandidateDiplom { set; get; }
-    }
+    }*/
 }
