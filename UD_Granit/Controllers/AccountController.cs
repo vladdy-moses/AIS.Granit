@@ -134,6 +134,13 @@ namespace UD_Granit.Controllers
             viewModel.FullName = showedUser.GetFullName();
             viewModel.Role = showedUser.GetRole();
             viewModel.User_Id = showedUser.Id;
+
+            if (showedUser is Applicant)
+                viewModel.ApplicantView = new ViewModels.Account.ApplicantViewItem() { City = (showedUser as Applicant).City, Organization = (showedUser as Applicant).Organization, Organization_Depatment = (showedUser as Applicant).Organization_Depatment};
+
+            if (showedUser is Member)
+                viewModel.MemberView = new ViewModels.Account.MemberViewItem() { Position = (showedUser as Member).GetPosition(), Speciality = (showedUser as Member).Speciality };
+
             viewModel.CanControl = ((currentUser is Administrator) || (Session.GetUserPosition() == MemberPosition.Chairman));
             return View(viewModel);
         }

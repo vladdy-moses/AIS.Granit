@@ -97,7 +97,7 @@ namespace UD_Granit.Models
         public string Degree { set; get; }
 
         [Display(Name = "Специальность")]
-        public Speciality Speciality { set; get; }
+        public virtual Speciality Speciality { set; get; }
     }
 
     /*public class ApplicantCandidate : Applicant

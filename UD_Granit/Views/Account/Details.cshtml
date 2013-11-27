@@ -6,10 +6,30 @@
 
 <h2>Информация о пользователе</h2>
 
-<h3>@Model.FullName</h3>
-<h4>@Model.Role</h4>
+<h3>@Html.DisplayNameFor(model => model.FullName)</h3>
+<p>@Model.FullName</p>
+<h3>@Html.DisplayNameFor(model => model.Role)</h3>
+<p>@Model.Role</p>
 
-@using UD_Granit.Helpers
+@if (Model.ApplicantView != null)
+{
+    <h3>@Html.DisplayNameFor(model => model.ApplicantView.City)</h3>
+    <p>@Model.ApplicantView.City</p>
+    <h3>@Html.DisplayNameFor(model => model.ApplicantView.Organization)</h3>
+    <p>@Model.ApplicantView.Organization</p>
+    <h3>@Html.DisplayNameFor(model => model.ApplicantView.Organization_Depatment)</h3>
+    <p>@Model.ApplicantView.Organization_Depatment</p>
+}
+
+@if (Model.MemberView != null)
+{
+    <h3>@Html.DisplayNameFor(model => model.MemberView.Position)</h3>
+    <p>@Model.MemberView.Position</p>
+    <h3>@Html.DisplayNameFor(model => model.MemberView.Speciality)</h3>
+    <p>@Model.MemberView.Speciality.Number "@Model.MemberView.Speciality.Name" (@Model.MemberView.Speciality.ScienceBranch)</p>
+}
+
+
 @if (Model.CanControl)
 {
     <p>
