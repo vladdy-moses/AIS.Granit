@@ -11,7 +11,7 @@ namespace UD_Granit.Models
     {
         [Key]
         [DatabaseGenerated(DatabaseGeneratedOption.None)]
-        public int Number { set; get; }
+        public string Number { set; get; }
 
         [Required]
         [Display(Name = "Отрасль науки")]

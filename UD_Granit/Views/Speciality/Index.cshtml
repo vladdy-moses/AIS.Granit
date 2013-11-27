@@ -1,0 +1,46 @@
+﻿@model UD_Granit.ViewModels.Speciality.Index
+
+@{
+    ViewBag.Title = "Просмотр специальностей";
+}
+
+<h2>@ViewBag.Title</h2>
+<p>На этой странице находится список специальностей, по которым данный диссертационный совет может допускать работы к защите.</p>
+
+@if ((Model != null) && (Model.Specialities != null) && (Model.Specialities.Count() > 0))
+{
+    <table>
+        <thead>
+            <tr>
+                <td>Номер</td>
+                <td>Название</td>
+                <td>Отрасль науки</td>
+                @if (Model.CanControl)
+                {
+                    <td>Управление</td>
+                }
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (UD_Granit.Models.Speciality speciality in Model.Specialities)
+            {
+                <tr>
+                    <td>@speciality.Number</td>
+                    <td>@speciality.Name</td>
+                    <td>@speciality.ScienceBranch</td>
+                    @if (Model.CanControl)
+                    {
+                        <td>@Html.ActionLink("Редактировать", "Edit", new { id = speciality.Number })</td>
+                    }
+                </tr>
+            }
+        </tbody>
+    </table>
+}
+else
+{
+    <div class="error">
+        Извините, информация о специальностях ещё не заполнена.
+    </div>
+}
+
