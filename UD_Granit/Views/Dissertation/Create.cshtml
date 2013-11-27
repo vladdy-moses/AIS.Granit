@@ -82,6 +82,14 @@
         @Html.TextBoxFor(model => model.File_Text, new { type = "file" })
         @Html.ValidationMessageFor(model => model.File_Text)
     </div>
+    
+    <div class="editor-label">
+        @Html.LabelFor(model => model.File_Summary)
+    </div>
+    <div class="editor-field">
+        @Html.TextBoxFor(model => model.File_Summary, new { type = "file" })
+        @Html.ValidationMessageFor(model => model.File_Summary)
+    </div>
 
     <p>
         <input type="submit" value="Добавить запись о диссертации" />

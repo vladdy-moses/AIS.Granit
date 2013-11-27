@@ -17,5 +17,9 @@ namespace UD_Granit.ViewModels.Dissertation
         [Required]
         [Display(Name = "Файл с текстом диссертации")]
         public HttpPostedFileBase File_Text { set; get; }
+
+        [Required]
+        [Display(Name = "Файл с заключением ведущей организации")]
+        public HttpPostedFileBase File_Summary { set; get; }
     }
 }

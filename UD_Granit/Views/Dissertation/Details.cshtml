@@ -1,4 +1,4 @@
-﻿@model UD_Granit.Models.Dissertation
+﻿@model UD_Granit.ViewModels.Dissertation.Details
 
 @{
     ViewBag.Title = "Details";
@@ -6,5 +6,45 @@
 
 <h2>Details</h2>
 <div>
-    Title — <b>@Model.Title</b>
+    <h3>@Html.LabelFor(model => model.Dissertation.Title)</h3>
+    <p>@Model.Dissertation.Title</p>
+
+    <h3>@Html.LabelFor(model => model.Dissertation.Publications)</h3>
+    <p>@Model.Dissertation.Publications</p>
+
+    @if (Model.Dissertation.Date_Sending != null)
+    {
+        <h3>@Html.LabelFor(model => model.Dissertation.Date_Sending)</h3>
+        <p>@Model.Dissertation.Date_Sending</p>
+    }
+
+    <h3>@Html.LabelFor(model => model.Dissertation.Type)</h3>
+    <p>@Model.Dissertation.Type.ToDescription()</p>
+
+    @if (Model.Dissertation.References != null)
+    {
+        <h3>@Html.LabelFor(model => model.Dissertation.References)</h3>
+        <p>@Model.Dissertation.References</p>
+    }
+
+    <h3>@Html.LabelFor(model => model.Dissertation.Defensed)</h3>
+    <p>@Model.Dissertation.Defensed</p>
+
+    <h3>@Html.LabelFor(model => model.Dissertation.Administrative_Use)</h3>
+    <p>@Model.Dissertation.Administrative_Use</p>
+
+    @if (Model.Dissertation.Date_Preliminary_Defense != null)
+    {
+        <h3>@Html.LabelFor(model => model.Dissertation.Date_Preliminary_Defense)</h3>
+        <p>@Model.Dissertation.Date_Preliminary_Defense</p>
+    }
+
+    @if (Model.CanEdit)
+    {
+        <p>CanEdit</p>
+    }
+    @if (Model.CanCreateSession)
+    {
+        <p>CanCreateSession</p>
+    }
 </div>

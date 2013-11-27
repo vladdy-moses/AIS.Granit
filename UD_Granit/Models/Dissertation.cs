@@ -25,15 +25,24 @@ namespace UD_Granit.Models
         [Display(Name = "Тип диссертационной работы")]
         public DissertationType Type { set; get; }
 
+        [Display(Name = "Диссертация защищена")]
+        public bool Defensed { set; get; }
+
         [Required]
         [Display(Name = "Заголовок")]
         public string Title { set; get; }
 
+        [Required]
         [Display(Name = "Автореферат")]
         public string File_Abstract { set; get; }
 
+        [Required]
         [Display(Name = "Текст диссертации")]
         public string File_Text { set; get; }
+
+        [Required]
+        [Display(Name = "Заключение ведущей организации")]
+        public string File_Summary { set; get; }
 
         [Display(Name = "Список литературы")]
         public string References { set; get; }
@@ -41,9 +50,6 @@ namespace UD_Granit.Models
         [Required]
         [Display(Name = "Для внутреннего использования")]
         public bool Administrative_Use { set; get; }
-
-        [Display(Name = "Заключение ведущей организации")]
-        public byte[] Organization_Summary { set; get; }
 
         [Required]
         [Display(Name = "Число ВАКовских публикаций")]
