@@ -55,6 +55,8 @@ namespace UD_Granit.Models
         {
             Speciality s = new Speciality() { Number = "10.001.2001", Name = "Информатика и вычислительная техника", ScienceBranch = "Технические науки" };
             this.Specialities.Add(s);
+            this.Specialities.Add(new Speciality() { Number = "15.001.2001", Name = "Экстенциология", ScienceBranch = "Философские науки" });
+
             this.Users.Add(new Administrator() { Email = "admin", Password = "admin", FirstName = "Администраторов", SecondName = "Администратор", LastName = "Администраторович", LastIP = "" });
             this.Users.Add(new Applicant() { Email = "applicant", Password = "applicant", FirstName = "Соискателев", SecondName = "Соискатель", Organization = "Тестовая", Organization_Depatment = "Тестовый", City = "Тестовый", Address = "Тестовая улица" });
             this.Users.Add(new Member() { Email = "member", Password = "member", FirstName = "Членов", SecondName = "Член", LastName = "Членович", Position = MemberPosition.Member, Degree = "К.Маг.Н.", Speciality = s });

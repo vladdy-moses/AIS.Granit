@@ -27,10 +27,10 @@ namespace UD_Granit.Controllers
         //
         // GET: /Speciality/Details/5
 
-        public ActionResult Details(int id)
+        /*public ActionResult Details(int id)
         {
             return View();
-        }
+        }*/
 
         //
         // GET: /Speciality/Create
@@ -61,7 +61,7 @@ namespace UD_Granit.Controllers
         //
         // GET: /Speciality/Edit/5
 
-        public ActionResult Edit(int id)
+        public ActionResult Edit(string id)
         {
             return View();
         }
@@ -87,9 +87,10 @@ namespace UD_Granit.Controllers
         //
         // GET: /Speciality/Delete/5
 
-        public ActionResult Delete(int id)
+        public ActionResult Delete(string id)
         {
-            return View();
+#warning Удалять только те, к которым не прикреплено что-либо (процедура)
+            return HttpNotFound();
         }
 
         //
