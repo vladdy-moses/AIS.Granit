@@ -12,6 +12,14 @@
     @Html.ValidationSummary(true)
 
     <div class="editor-label">
+        @Html.LabelFor(model => model.Speciality)
+    </div>
+    <div class="editor-field">
+        @Html.DropDownListFor(model => model.Speciality, null)
+        @Html.ValidationMessageFor(model => model.Speciality)
+    </div>
+    
+    <div class="editor-label">
         @Html.LabelFor(model => model.Dissertation.Type)
     </div>
     <div class="editor-field">

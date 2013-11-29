@@ -18,6 +18,9 @@
         <p>@Model.Dissertation.Date_Sending</p>
     }
 
+    <h3>@Html.LabelFor(model => model.Dissertation.Speciality)</h3>
+    <p>@Model.Dissertation.Speciality.Number @Model.Dissertation.Speciality.Name</p>
+
     <h3>@Html.LabelFor(model => model.Dissertation.Type)</h3>
     <p>@Model.Dissertation.Type.ToDescription()</p>
 

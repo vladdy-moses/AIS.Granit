@@ -65,11 +65,15 @@ namespace UD_Granit.Models
             Database.Connection.Open();
             DbCommand cmd = Database.Connection.CreateCommand();
             cmd.CommandText = @"
-CREATE PROCEDURE [dbo].[Procedure]
-	@param1 int = 0,
-	@param2 int
+CREATE PROCEDURE [dbo].[GetDissertations]
+	@type int = 0
 AS
-	SELECT @param1, @param2
+    IF @type == 0
+    BEGIN
+        SELECT @type + 1
+    END
+    ELSE
+	    SELECT 1
 RETURN 0
 ";
             cmd.ExecuteNonQuery();

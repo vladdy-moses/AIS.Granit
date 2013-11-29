@@ -27,25 +27,15 @@ namespace UD_Granit.Controllers
         public ActionResult Details(int id)
         {
             Dissertation dissertation = db.Dissertations.Find(id);
-            if (dissertation != null)
+            if (CanShow(dissertation))
             {
-                User currentUser = Session.GetUser();
-                if (currentUser == null)
-                {
-                    if (!dissertation.Defensed || dissertation.Administrative_Use)
-                        return HttpNotFound();
-                }
-                else
-                {
-                    if ((currentUser is Applicant) && (currentUser.Id != dissertation.Applicant_Id))
-                        if (!dissertation.Defensed || dissertation.Administrative_Use)
-                            return HttpNotFound();
-                }
-
                 UD_Granit.ViewModels.Dissertation.Details viewModel = new ViewModels.Dissertation.Details();
                 viewModel.Dissertation = dissertation;
+
+                User currentUser = Session.GetUser();
                 viewModel.CanEdit = !((currentUser is Applicant) && (currentUser.Id != dissertation.Applicant_Id));
                 viewModel.CanCreateSession = ((Session.GetUserPosition() == MemberPosition.Chairman) || (currentUser is Administrator));
+
                 return View(viewModel);
             }
             return HttpNotFound();
@@ -65,6 +55,14 @@ namespace UD_Granit.Controllers
                     if (dissertations.Count() == 0)
                         ViewData.NotificationAdd(new NotificationManager.Notify() { Type = NotificationManager.Notify.NotifyType.Info, Message = "Заполните информацию о Вашей диссертации. Вы можете сделать это позже, также как и отредактировать информацию о ней." });
 #warning Добавить проверку на то, что нельзя больше одной незащищённой диссертации
+
+
+                    //ViewData["Dissertation.Speciality"] = new SelectList(db.Specialities.Select(m => m.Number));
+                    ViewData["Speciality"] = db.Specialities.Select(s => new SelectListItem { Text = s.Number + " " + s.Name, Value = s.Number });
+                    /*if(ViewData["Speciality"] is IEnumerable<SelectListItem>)
+                        ViewData.NotificationAdd(new NotificationManager.Notify() { Type = NotificationManager.Notify.NotifyType.Info, Message = "Всё хорошо." });
+                    else
+                        ViewData.NotificationAdd(new NotificationManager.Notify() { Type = NotificationManager.Notify.NotifyType.Error, Message = "Всё плохо." });*/
                     return View();
                 }
             }
@@ -77,6 +75,8 @@ namespace UD_Granit.Controllers
         [HttpPost]
         public ActionResult Create(UD_Granit.ViewModels.Dissertation.Create viewModel)
         {
+            //ViewData["Dissertation.Speciality"] = new SelectList(db.Specialities.Select(x => new SelectListItem { Value = x.Number, Text = x.Number }), "Value", "Text");
+
             if ((Session.GetUser() is Applicant) == false)
                 return HttpNotFound();
 
@@ -88,6 +88,7 @@ namespace UD_Granit.Controllers
                 currentDissertation.File_Text = Path.GetExtension(viewModel.File_Text.FileName);
                 currentDissertation.File_Summary = Path.GetExtension(viewModel.File_Summary.FileName);
                 currentDissertation.Defensed = false;
+                currentDissertation.Speciality = db.Specialities.Find(viewModel.Speciality);
                 db.Dissertations.Add(currentDissertation);
                 db.SaveChanges();
 
@@ -154,6 +155,27 @@ namespace UD_Granit.Controllers
             {
                 return View();
             }
+        }
+
+        private bool CanShow(Dissertation dissertation)
+        {
+            if (dissertation != null)
+            {
+                User currentUser = Session.GetUser();
+                if (currentUser == null)
+                {
+                    if (!dissertation.Defensed || dissertation.Administrative_Use)
+                        return false;
+                }
+                else
+                {
+                    if ((currentUser is Applicant) && (currentUser.Id != dissertation.Applicant_Id))
+                        if (!dissertation.Defensed || dissertation.Administrative_Use)
+                            return false;
+                }
+                return true;
+            }
+            return false;
         }
     }
 }

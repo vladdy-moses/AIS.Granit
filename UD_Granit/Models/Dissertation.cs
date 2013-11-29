@@ -63,8 +63,8 @@ namespace UD_Granit.Models
 
         public virtual ICollection<Reply> Replies { set; get; }
 
-        [Display(Name = "Специальность")]
-        public Speciality Speciality { set; get; }
+        [Required]
+        public virtual Speciality Speciality { set; get; }
 
         [Required]
         [ForeignKey("Applicant")]

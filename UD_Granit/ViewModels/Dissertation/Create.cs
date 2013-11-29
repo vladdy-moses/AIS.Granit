@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Web;
+using System.Web.Mvc;
 
 namespace UD_Granit.ViewModels.Dissertation
 {
@@ -21,5 +22,9 @@ namespace UD_Granit.ViewModels.Dissertation
         [Required]
         [Display(Name = "Файл с заключением ведущей организации")]
         public HttpPostedFileBase File_Summary { set; get; }
+
+        [Required]
+        [Display(Name = "Специальность")]
+        public string Speciality { set; get; }
     }
 }
