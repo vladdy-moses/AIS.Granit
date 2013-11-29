@@ -168,6 +168,48 @@ namespace UD_Granit.Controllers
             return View(viewModel);
         }
 
+        //
+        // GET: /Dissertation/Download/5?type=Summary
+
+        public ActionResult Download(int id, string type)
+        {
+            Dissertation currentDisserrtation = db.Dissertations.Find(id);
+            if (!CanShow(currentDisserrtation))
+                return HttpNotFound();
+
+            string fileName = string.Empty;
+
+            switch (type)
+            {
+                case "Abstract":
+                    fileName = currentDisserrtation.Id + "_Abstract" + currentDisserrtation.File_Abstract;
+                    break;
+                case "Text":
+                    fileName = currentDisserrtation.Id + "_Text" + currentDisserrtation.File_Abstract;
+                    break;
+                case "Summary":
+                    fileName = currentDisserrtation.Id + "_Summary" + currentDisserrtation.File_Abstract;
+                    break;
+            }
+            if(fileName.Length == 0)
+                return HttpNotFound();
+
+            return File("~/App_Data/" + fileName, "binary/octet-stream", fileName);
+            /*Response.Clear();
+            Response.ClearHeaders();
+            Response.ClearContent();
+
+            Response.AddHeader("Content-Disposition", "attachment; filename=" + file.Name);
+            Response.AddHeader("Content-Length", file.Length.ToString());
+
+            Response.ContentType = "text/plain";
+            Response.Flush();
+            Response.TransmitFile(file.FullName);
+            Response.End();
+
+            return HttpNotFound();*/
+        }
+
         private bool CanShow(Dissertation dissertation)
         {
             if (dissertation != null)
