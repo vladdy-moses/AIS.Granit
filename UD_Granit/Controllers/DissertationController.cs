@@ -56,13 +56,7 @@ namespace UD_Granit.Controllers
                         ViewData.NotificationAdd(new NotificationManager.Notify() { Type = NotificationManager.Notify.NotifyType.Info, Message = "Заполните информацию о Вашей диссертации. Вы можете сделать это позже, также как и отредактировать информацию о ней." });
 #warning Добавить проверку на то, что нельзя больше одной незащищённой диссертации
 
-
-                    //ViewData["Dissertation.Speciality"] = new SelectList(db.Specialities.Select(m => m.Number));
                     ViewData["Speciality"] = db.Specialities.Select(s => new SelectListItem { Text = s.Number + " " + s.Name, Value = s.Number });
-                    /*if(ViewData["Speciality"] is IEnumerable<SelectListItem>)
-                        ViewData.NotificationAdd(new NotificationManager.Notify() { Type = NotificationManager.Notify.NotifyType.Info, Message = "Всё хорошо." });
-                    else
-                        ViewData.NotificationAdd(new NotificationManager.Notify() { Type = NotificationManager.Notify.NotifyType.Error, Message = "Всё плохо." });*/
                     return View();
                 }
             }
@@ -75,8 +69,6 @@ namespace UD_Granit.Controllers
         [HttpPost]
         public ActionResult Create(UD_Granit.ViewModels.Dissertation.Create viewModel)
         {
-            //ViewData["Dissertation.Speciality"] = new SelectList(db.Specialities.Select(x => new SelectListItem { Value = x.Number, Text = x.Number }), "Value", "Text");
-
             if ((Session.GetUser() is Applicant) == false)
                 return HttpNotFound();
 

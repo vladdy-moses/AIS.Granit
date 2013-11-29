@@ -64,6 +64,7 @@ namespace UD_Granit.Models
         public virtual ICollection<Reply> Replies { set; get; }
 
         [Required]
+        [Display(Name = "Специальность")]
         public virtual Speciality Speciality { set; get; }
 
         [Required]
