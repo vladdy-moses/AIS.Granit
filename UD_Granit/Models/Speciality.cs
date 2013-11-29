@@ -11,6 +11,8 @@ namespace UD_Granit.Models
     {
         [Key]
         [DatabaseGenerated(DatabaseGeneratedOption.None)]
+        [Required]
+        [Display(Name = "Номер специальности")]
         public string Number { set; get; }
 
         [Required]

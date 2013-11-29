@@ -19,8 +19,8 @@ namespace UD_Granit.Controllers
         {
             UD_Granit.ViewModels.Speciality.Index viewModel = new ViewModels.Speciality.Index();
             viewModel.Specialities = db.Specialities;
-            if ((Session.GetUser() is Administrator) || (Session.GetUserPosition() == MemberPosition.Chairman))
-                viewModel.CanControl = true;
+            viewModel.CanControl = CanControl();
+
             return View(viewModel);
         }
 
@@ -37,6 +37,9 @@ namespace UD_Granit.Controllers
 
         public ActionResult Create()
         {
+            if (!CanControl())
+                return HttpNotFound();
+
             return View();
         }
 
@@ -44,16 +47,32 @@ namespace UD_Granit.Controllers
         // POST: /Speciality/Create
 
         [HttpPost]
-        public ActionResult Create(FormCollection collection)
+        public ActionResult Create(UD_Granit.ViewModels.Speciality.Create viewModel)
         {
+            if (!CanControl())
+                return HttpNotFound();
+
             try
             {
-                // TODO: Add insert logic here
+                if (ModelState.IsValid)
+                {
+                    if (db.Specialities.Find(viewModel.Speciality.Number) == null)
+                    {
+                        db.Specialities.Add(viewModel.Speciality);
+                        db.SaveChanges();
+                    }
+                    else
+                    {
+                        ViewData.NotificationAdd(new NotificationManager.Notify() { Message = "Специальность с таким номером уже существует.", Type = NotificationManager.Notify.NotifyType.Error });
+                        return View(viewModel);
+                    }
+                }
 
                 return RedirectToAction("Index");
             }
-            catch
+            catch (Exception ex)
             {
+                ViewData.NotificationAdd(new NotificationManager.Notify() { Message = ex.Message, Type = NotificationManager.Notify.NotifyType.Error });
                 return View();
             }
         }
@@ -63,23 +82,38 @@ namespace UD_Granit.Controllers
 
         public ActionResult Edit(string id)
         {
-            return View();
+            if (CanControl())
+            {
+                UD_Granit.ViewModels.Speciality.Edit viewModel = new ViewModels.Speciality.Edit();
+                viewModel.Speciality = db.Specialities.Find(id);
+                if (viewModel.Speciality != null)
+                    return View(viewModel);
+            }
+            return HttpNotFound();
         }
 
         //
         // POST: /Speciality/Edit/5
 
         [HttpPost]
-        public ActionResult Edit(int id, FormCollection collection)
+        public ActionResult Edit(UD_Granit.ViewModels.Speciality.Edit viewModel)
         {
+            if (!CanControl())
+                return HttpNotFound();
+
             try
             {
-                // TODO: Add update logic here
+                if (ModelState.IsValid)
+                {
+                    db.Entry<Speciality>(viewModel.Speciality).State = System.Data.Entity.EntityState.Modified;
+                    db.SaveChanges();
+                }
 
                 return RedirectToAction("Index");
             }
-            catch
+            catch (Exception ex)
             {
+                ViewData.NotificationAdd(new NotificationManager.Notify() { Message = ex.Message, Type = NotificationManager.Notify.NotifyType.Error });
                 return View();
             }
         }
@@ -109,6 +143,11 @@ namespace UD_Granit.Controllers
             {
                 return View();
             }
+        }
+
+        private bool CanControl()
+        {
+            return ((Session.GetUser() is Administrator) || (Session.GetUserPosition() == MemberPosition.Chairman)) ? true : false;
         }
     }
 }

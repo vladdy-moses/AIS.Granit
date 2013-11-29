@@ -160,6 +160,7 @@
     <Compile Include="ViewModels\Dissertation\Details.cs" />
     <Compile Include="ViewModels\Dissertation\Index.cs" />
     <Compile Include="ViewModels\Home\Index.cs" />
+    <Compile Include="ViewModels\Speciality\Create.cs" />
     <Compile Include="ViewModels\Speciality\Edit.cs" />
     <Compile Include="ViewModels\Speciality\Index.cs" />
   </ItemGroup>
@@ -253,6 +254,8 @@
     <Content Include="Views\Shared\_AsideMainMenu.cshtml" />
     <Content Include="Views\Shared\_PartialNotification.cshtml" />
     <Content Include="Views\Speciality\Index.cshtml" />
+    <Content Include="Views\Speciality\Edit.cshtml" />
+    <Content Include="Views\Speciality\Create.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

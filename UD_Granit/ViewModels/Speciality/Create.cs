@@ -6,7 +6,7 @@ using System.Web;
 
 namespace UD_Granit.ViewModels.Speciality
 {
-    public class Edit
+    public class Create
     {
         [Required]
         public UD_Granit.Models.Speciality Speciality { set; get; }

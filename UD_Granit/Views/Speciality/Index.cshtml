@@ -44,3 +44,7 @@ else
     </div>
 }
 
+@if ((Model != null) && (Model.CanControl))
+{
+    <p>@Html.ActionLink("Добавить специальность", "Create")</p>
+}

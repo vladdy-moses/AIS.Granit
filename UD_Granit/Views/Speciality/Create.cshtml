@@ -1,0 +1,47 @@
+﻿@model UD_Granit.ViewModels.Speciality.Create
+
+@{
+    ViewBag.Title = "Добавление специальности";
+}
+
+<h2>@ViewBag.Title</h2>
+
+@using (Html.BeginForm()) {
+    @Html.ValidationSummary(true)
+
+    <fieldset>
+        <legend>Основная информация</legend>
+
+        <div class="editor-label">
+            @Html.LabelFor(model => model.Speciality.Number)
+        </div>
+        <div class="editor-field">
+            @Html.EditorFor(model => model.Speciality.Number)
+            @Html.ValidationMessageFor(model => model.Speciality.Number)
+        </div>
+
+        <div class="editor-label">
+            @Html.LabelFor(model => model.Speciality.ScienceBranch)
+        </div>
+        <div class="editor-field">
+            @Html.EditorFor(model => model.Speciality.ScienceBranch)
+            @Html.ValidationMessageFor(model => model.Speciality.ScienceBranch)
+        </div>
+
+        <div class="editor-label">
+            @Html.LabelFor(model => model.Speciality.Name)
+        </div>
+        <div class="editor-field">
+            @Html.EditorFor(model => model.Speciality.Name)
+            @Html.ValidationMessageFor(model => model.Speciality.Name)
+        </div>
+
+        <p>
+            <input type="submit" value="Добавить запись о специальности" />
+        </p>
+    </fieldset>
+}
+
+<div>
+    @Html.ActionLink("Вернуться к списку специальностей", "Index")
+</div>
