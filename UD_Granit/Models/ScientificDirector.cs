@@ -19,13 +19,12 @@ namespace UD_Granit.Models
         [Display(Name = "Имя")]
         public string SecondName { set; get; }
 
-        [Required]
         [Display(Name = "Отчество")]
         public string LastName { set; get; }
 
         [Required]
-        [Display(Name = "Доктор наук")]
-        public bool Ph_D { set; get; }
+        [Display(Name = "Учёная степень")]
+        public string Degree { set; get; }
 
         [Required]
         [Display(Name = "Организация")]
@@ -34,5 +33,9 @@ namespace UD_Granit.Models
         [Required]
         [Display(Name = "Подразделение")]
         public string Organization_Department { set; get; }
+
+        [Required]
+        [Display(Name = "Должность")]
+        public string Organization_Post { set; get; }
     }
 }

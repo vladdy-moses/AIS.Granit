@@ -50,6 +50,10 @@ namespace UD_Granit.Models
             //modelBuilder.Entity<ApplicantDoctor>().ToTable("ApplicantDoctors");
             modelBuilder.Entity<Administrator>().ToTable("Administrators");
             modelBuilder.Entity<Member>().ToTable("Members");
+
+            modelBuilder.Entity<Session>().ToTable("Sessions");
+            modelBuilder.Entity<SessionDefence>().ToTable("SessionsDefence");
+            modelBuilder.Entity<SessionСonsideration>().ToTable("SessionsСonsideration");
         }
 
         protected void InitDatabase()

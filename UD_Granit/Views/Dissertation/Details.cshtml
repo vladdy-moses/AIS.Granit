@@ -5,43 +5,113 @@
 }
 
 <h2>Details</h2>
+<h3>Сведения о диссертации</h3>
+<table>
+    <tbody>
+        <tr>
+            <td>@Html.LabelFor(model => model.Dissertation.Title)</td>
+            <td>@Model.Dissertation.Title</td>
+        </tr>
+        <tr>
+            <td>@Html.LabelFor(model => model.Dissertation.Publications)</td>
+            <td>@Model.Dissertation.Publications</td>
+        </tr>
+        <tr>
+            <td>@Html.LabelFor(model => model.Dissertation.Speciality)</td>
+            <td>@Model.Dissertation.Speciality.Number @Model.Dissertation.Speciality.Name</td>
+        </tr>
+        <tr>
+            <td>@Html.LabelFor(model => model.Dissertation.Type)</td>
+            <td>@Model.Dissertation.Type.ToDescription()</td>
+        </tr>
+        <tr>
+            <td>@Html.LabelFor(model => model.Dissertation.Defensed)</td>
+            <td>@Model.Dissertation.Defensed</td>
+        </tr>
+        <tr>
+            <td>@Html.LabelFor(model => model.Dissertation.Administrative_Use)</td>
+            <td>@Model.Dissertation.Administrative_Use</td>
+        </tr>
+        @if (Model.Dissertation.References != null)
+        {
+            <tr>
+                <td>@Html.LabelFor(model => model.Dissertation.References)</td>
+                <td>@Model.Dissertation.References</td>
+            </tr>
+        }
+        @if (Model.Dissertation.Date_Sending != null)
+        {
+            <tr>
+                <td>@Html.LabelFor(model => model.Dissertation.Date_Sending)</td>
+                <td>@Model.Dissertation.Date_Sending</td>
+            </tr>
+        }
+        @if (Model.Dissertation.Date_Preliminary_Defense != null)
+        {
+            <tr>
+                <td>@Html.LabelFor(model => model.Dissertation.Date_Preliminary_Defense)</td>
+                <td>@Model.Dissertation.Date_Preliminary_Defense</td>
+            </tr>
+        }
+        <tr>
+            <td>@Html.LabelFor(model => model.Dissertation.File_Abstract)</td>
+            <td>@Html.ActionLink("Скачать", "Download", new { id = Model.Dissertation.Id, type = "Abstract" })</td>
+        </tr>
+        <tr>
+            <td>@Html.LabelFor(model => model.Dissertation.File_Text)</td>
+            <td>@Html.ActionLink("Скачать", "Download", new { id = Model.Dissertation.Id, type = "Text" })</td>
+        </tr>
+        <tr>
+            <td>@Html.LabelFor(model => model.Dissertation.File_Summary)</td>
+            <td>@Html.ActionLink("Скачать", "Download", new { id = Model.Dissertation.Id, type = "Summary" })</td>
+        </tr>
+
+        <tr>
+            <td></td>
+            <td></td>
+        </tr>
+    </tbody>
+</table>
+
+<h3>Сведения о научном руководителе</h3>
+<table>
+    <tr>
+        <td>@Html.LabelFor(model => model.Dissertation.ScientificDirector.FirstName)</td>
+        <td>@Model.Dissertation.ScientificDirector.FirstName</td>
+    </tr>
+    <tr>
+        <td>@Html.LabelFor(model => model.Dissertation.ScientificDirector.SecondName)</td>
+        <td>@Model.Dissertation.ScientificDirector.SecondName</td>
+    </tr>
+    @if (Model.Dissertation.ScientificDirector.LastName != null)
+    {
+        <tr>
+            <td>@Html.LabelFor(model => model.Dissertation.ScientificDirector.LastName)</td>
+            <td>@Model.Dissertation.ScientificDirector.LastName</td>
+        </tr>
+    }
+    <tr>
+        <td>@Html.LabelFor(model => model.Dissertation.ScientificDirector.Degree)</td>
+        <td>@Model.Dissertation.ScientificDirector.Degree</td>
+    </tr>
+    <tr>
+        <td>@Html.LabelFor(model => model.Dissertation.ScientificDirector.Organization)</td>
+        <td>@Model.Dissertation.ScientificDirector.Organization</td>
+    </tr>
+    <tr>
+        <td>@Html.LabelFor(model => model.Dissertation.ScientificDirector.Organization_Department)</td>
+        <td>@Model.Dissertation.ScientificDirector.Organization_Department</td>
+    </tr>
+    <tr>
+        <td>@Html.LabelFor(model => model.Dissertation.ScientificDirector.Organization_Post)</td>
+        <td>@Model.Dissertation.ScientificDirector.Organization_Post</td>
+    </tr>
+</table>
+
+<h3>Сведения об отзывах</h3>
+#warning Добавить отображение отзывов
+
 <div>
-    <h3>@Html.LabelFor(model => model.Dissertation.Title)</h3>
-    <p>@Model.Dissertation.Title</p>
-
-    <h3>@Html.LabelFor(model => model.Dissertation.Publications)</h3>
-    <p>@Model.Dissertation.Publications</p>
-
-    @if (Model.Dissertation.Date_Sending != null)
-    {
-        <h3>@Html.LabelFor(model => model.Dissertation.Date_Sending)</h3>
-        <p>@Model.Dissertation.Date_Sending</p>
-    }
-
-    <h3>@Html.LabelFor(model => model.Dissertation.Speciality)</h3>
-    <p>@Model.Dissertation.Speciality.Number @Model.Dissertation.Speciality.Name</p>
-
-    <h3>@Html.LabelFor(model => model.Dissertation.Type)</h3>
-    <p>@Model.Dissertation.Type.ToDescription()</p>
-
-    @if (Model.Dissertation.References != null)
-    {
-        <h3>@Html.LabelFor(model => model.Dissertation.References)</h3>
-        <p>@Model.Dissertation.References</p>
-    }
-
-    <h3>@Html.LabelFor(model => model.Dissertation.Defensed)</h3>
-    <p>@Model.Dissertation.Defensed</p>
-
-    <h3>@Html.LabelFor(model => model.Dissertation.Administrative_Use)</h3>
-    <p>@Model.Dissertation.Administrative_Use</p>
-
-    @if (Model.Dissertation.Date_Preliminary_Defense != null)
-    {
-        <h3>@Html.LabelFor(model => model.Dissertation.Date_Preliminary_Defense)</h3>
-        <p>@Model.Dissertation.Date_Preliminary_Defense</p>
-    }
-
     @if (Model.CanEdit)
     {
         <p>CanEdit</p>

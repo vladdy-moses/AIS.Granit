@@ -103,11 +103,11 @@
         </div>
 
         <div class="editor-label">
-            @Html.LabelFor(model => model.ScientificDirector.Ph_D)
+            @Html.LabelFor(model => model.ScientificDirector.Degree)
         </div>
         <div class="editor-field">
-            @Html.CheckBoxFor(model => model.ScientificDirector.Ph_D)
-            @Html.ValidationMessageFor(model => model.ScientificDirector.Ph_D)
+            @Html.TextBoxFor(model => model.ScientificDirector.Degree)
+            @Html.ValidationMessageFor(model => model.ScientificDirector.Degree)
         </div>
 
         <div class="editor-label">
@@ -124,6 +124,14 @@
         <div class="editor-field">
             @Html.TextBoxFor(model => model.ScientificDirector.Organization_Department)
             @Html.ValidationMessageFor(model => model.ScientificDirector.Organization_Department)
+        </div>
+
+        <div class="editor-label">
+            @Html.LabelFor(model => model.ScientificDirector.Organization_Post)
+        </div>
+        <div class="editor-field">
+            @Html.TextBoxFor(model => model.ScientificDirector.Organization_Post)
+            @Html.ValidationMessageFor(model => model.ScientificDirector.Organization_Post)
         </div>
     </fieldset>
     
