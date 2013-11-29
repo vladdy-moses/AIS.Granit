@@ -26,5 +26,8 @@ namespace UD_Granit.ViewModels.Dissertation
         [Required]
         [Display(Name = "Специальность")]
         public string Speciality { set; get; }
+
+        [Display(Name = "Научный руководитель")]
+        public UD_Granit.Models.ScientificDirector ScientificDirector { set; get; }
     }
 }

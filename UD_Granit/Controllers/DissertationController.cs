@@ -81,6 +81,11 @@ namespace UD_Granit.Controllers
                 currentDissertation.File_Summary = Path.GetExtension(viewModel.File_Summary.FileName);
                 currentDissertation.Defensed = false;
                 currentDissertation.Speciality = db.Specialities.Find(viewModel.Speciality);
+
+#warning Проверка на существование научного руководителя в БД
+                db.ScientificDirectors.Add(viewModel.ScientificDirector);
+                currentDissertation.ScientificDirector = viewModel.ScientificDirector;
+
                 db.Dissertations.Add(currentDissertation);
                 db.SaveChanges();
 
@@ -128,6 +133,7 @@ namespace UD_Granit.Controllers
 
         public ActionResult Delete(int id)
         {
+#warning При удалении удалять также заседания (каскадно), научного руководителя, если у него больше нет диссертаций и ФАЙЛЫ НА СЕРВЕРЕ
             return View();
         }
 
@@ -147,6 +153,19 @@ namespace UD_Granit.Controllers
             {
                 return View();
             }
+        }
+
+        //
+        // GET: /Dissertation/My
+
+        public ActionResult My()
+        {
+            if ((Session.GetUser() is Applicant) == false)
+                return HttpNotFound();
+
+            UD_Granit.ViewModels.Dissertation.My viewModel = new ViewModels.Dissertation.My();
+            viewModel.Dissertations = (from d in db.Dissertations select d);
+            return View(viewModel);
         }
 
         private bool CanShow(Dissertation dissertation)

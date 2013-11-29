@@ -11,93 +11,158 @@
 {
     @Html.ValidationSummary(true)
 
-    <div class="editor-label">
-        @Html.LabelFor(model => model.Speciality)
-    </div>
-    <div class="editor-field">
-        @Html.DropDownListFor(model => model.Speciality, null)
-        @Html.ValidationMessageFor(model => model.Speciality)
-    </div>
+    <fieldset>
+        <legend>Основная информация о диссертации</legend>
+
+        <div class="editor-label">
+            @Html.LabelFor(model => model.Dissertation.Title)
+        </div>
+        <div class="editor-field">
+            @Html.EditorFor(model => model.Dissertation.Title)
+            @Html.ValidationMessageFor(model => model.Dissertation.Title)
+        </div>
+
+        <div class="editor-label">
+            @Html.LabelFor(model => model.Speciality)
+        </div>
+        <div class="editor-field">
+            @Html.DropDownListFor(model => model.Speciality, null)
+            @Html.ValidationMessageFor(model => model.Speciality)
+        </div>
+
+        <div class="editor-label">
+            @Html.LabelFor(model => model.Dissertation.Type)
+        </div>
+        <div class="editor-field">
+            @Html.EnumDropDownListFor(model => model.Dissertation.Type)
+            @Html.ValidationMessageFor(model => model.Dissertation.Type)
+        </div>
+
+        <div class="editor-label">
+            @Html.LabelFor(model => model.Dissertation.Publications)
+        </div>
+        <div class="editor-field">
+            @Html.EditorFor(model => model.Dissertation.Publications)
+            @Html.ValidationMessageFor(model => model.Dissertation.Publications)
+        </div>
+    </fieldset>
     
-    <div class="editor-label">
-        @Html.LabelFor(model => model.Dissertation.Type)
-    </div>
-    <div class="editor-field">
-        @Html.EnumDropDownListFor(model => model.Dissertation.Type)
-        @Html.ValidationMessageFor(model => model.Dissertation.Type)
-    </div>
+    <fieldset>
+        <legend>Прикрепляемые файлы</legend>
 
-    <div class="editor-label">
-        @Html.LabelFor(model => model.Dissertation.Title)
-    </div>
-    <div class="editor-field">
-        @Html.EditorFor(model => model.Dissertation.Title)
-        @Html.ValidationMessageFor(model => model.Dissertation.Title)
-    </div>
+        <div class="editor-label">
+            @Html.LabelFor(model => model.File_Abstract)
+        </div>
+        <div class="editor-field">
+            @Html.TextBoxFor(model => model.File_Abstract, new { type = "file" })
+            @Html.ValidationMessageFor(model => model.File_Abstract)
+        </div>
 
-    <div class="editor-label">
-        @Html.LabelFor(model => model.Dissertation.References)
-    </div>
-    <div class="editor-field">
-        @Html.TextAreaFor(model => model.Dissertation.References)
-        @Html.ValidationMessageFor(model => model.Dissertation.References)
-    </div>
+        <div class="editor-label">
+            @Html.LabelFor(model => model.File_Text)
+        </div>
+        <div class="editor-field">
+            @Html.TextBoxFor(model => model.File_Text, new { type = "file" })
+            @Html.ValidationMessageFor(model => model.File_Text)
+        </div>
 
-    <div class="editor-label">
-        @Html.LabelFor(model => model.Dissertation.Administrative_Use)
-    </div>
-    <div class="editor-field">
-        @Html.EditorFor(model => model.Dissertation.Administrative_Use)
-        @Html.ValidationMessageFor(model => model.Dissertation.Administrative_Use)
-    </div>
-
-    <div class="editor-label">
-        @Html.LabelFor(model => model.Dissertation.Publications)
-    </div>
-    <div class="editor-field">
-        @Html.EditorFor(model => model.Dissertation.Publications)
-        @Html.ValidationMessageFor(model => model.Dissertation.Publications)
-    </div>
-
-    <div class="editor-label">
-        @Html.LabelFor(model => model.Dissertation.Date_Sending)
-    </div>
-    <div class="editor-field">
-        @Html.EditorFor(model => model.Dissertation.Date_Sending)
-        @Html.ValidationMessageFor(model => model.Dissertation.Date_Sending)
-    </div>
-
-    <div class="editor-label">
-        @Html.LabelFor(model => model.Dissertation.Date_Preliminary_Defense)
-    </div>
-    <div class="editor-field">
-        @Html.EditorFor(model => model.Dissertation.Date_Preliminary_Defense)
-        @Html.ValidationMessageFor(model => model.Dissertation.Date_Preliminary_Defense)
-    </div>
+        <div class="editor-label">
+            @Html.LabelFor(model => model.File_Summary)
+        </div>
+        <div class="editor-field">
+            @Html.TextBoxFor(model => model.File_Summary, new { type = "file" })
+            @Html.ValidationMessageFor(model => model.File_Summary)
+        </div>
+    </fieldset>
     
-    <div class="editor-label">
-        @Html.LabelFor(model => model.File_Abstract)
-    </div>
-    <div class="editor-field">
-        @Html.TextBoxFor(model => model.File_Abstract, new { type = "file" })
-        @Html.ValidationMessageFor(model => model.File_Abstract)
-    </div>
+    <fieldset>
+        <legend>Информация о научном руководителе</legend>
+
+        <div class="editor-label">
+            @Html.LabelFor(model => model.ScientificDirector.FirstName)
+        </div>
+        <div class="editor-field">
+            @Html.TextBoxFor(model => model.ScientificDirector.FirstName)
+            @Html.ValidationMessageFor(model => model.ScientificDirector.FirstName)
+        </div>
+
+        <div class="editor-label">
+            @Html.LabelFor(model => model.ScientificDirector.SecondName)
+        </div>
+        <div class="editor-field">
+            @Html.TextBoxFor(model => model.ScientificDirector.SecondName)
+            @Html.ValidationMessageFor(model => model.ScientificDirector.SecondName)
+        </div>
+
+        <div class="editor-label">
+            @Html.LabelFor(model => model.ScientificDirector.LastName)
+        </div>
+        <div class="editor-field">
+            @Html.TextBoxFor(model => model.ScientificDirector.LastName)
+            @Html.ValidationMessageFor(model => model.ScientificDirector.LastName)
+        </div>
+
+        <div class="editor-label">
+            @Html.LabelFor(model => model.ScientificDirector.Ph_D)
+        </div>
+        <div class="editor-field">
+            @Html.CheckBoxFor(model => model.ScientificDirector.Ph_D)
+            @Html.ValidationMessageFor(model => model.ScientificDirector.Ph_D)
+        </div>
+
+        <div class="editor-label">
+            @Html.LabelFor(model => model.ScientificDirector.Organization)
+        </div>
+        <div class="editor-field">
+            @Html.TextBoxFor(model => model.ScientificDirector.Organization)
+            @Html.ValidationMessageFor(model => model.ScientificDirector.Organization)
+        </div>
+
+        <div class="editor-label">
+            @Html.LabelFor(model => model.ScientificDirector.Organization_Department)
+        </div>
+        <div class="editor-field">
+            @Html.TextBoxFor(model => model.ScientificDirector.Organization_Department)
+            @Html.ValidationMessageFor(model => model.ScientificDirector.Organization_Department)
+        </div>
+    </fieldset>
     
-    <div class="editor-label">
-        @Html.LabelFor(model => model.File_Text)
-    </div>
-    <div class="editor-field">
-        @Html.TextBoxFor(model => model.File_Text, new { type = "file" })
-        @Html.ValidationMessageFor(model => model.File_Text)
-    </div>
-    
-    <div class="editor-label">
-        @Html.LabelFor(model => model.File_Summary)
-    </div>
-    <div class="editor-field">
-        @Html.TextBoxFor(model => model.File_Summary, new { type = "file" })
-        @Html.ValidationMessageFor(model => model.File_Summary)
-    </div>
+    <fieldset>
+        <legend>Дополнительная информация о диссертации</legend>
+
+        <div class="editor-label">
+            @Html.LabelFor(model => model.Dissertation.References)
+        </div>
+        <div class="editor-field">
+            @Html.TextAreaFor(model => model.Dissertation.References)
+            @Html.ValidationMessageFor(model => model.Dissertation.References)
+        </div>
+
+        <div class="editor-label">
+            @Html.LabelFor(model => model.Dissertation.Administrative_Use)
+        </div>
+        <div class="editor-field">
+            @Html.EditorFor(model => model.Dissertation.Administrative_Use)
+            @Html.ValidationMessageFor(model => model.Dissertation.Administrative_Use)
+        </div>
+
+
+        <div class="editor-label">
+            @Html.LabelFor(model => model.Dissertation.Date_Sending)
+        </div>
+        <div class="editor-field">
+            @Html.EditorFor(model => model.Dissertation.Date_Sending)
+            @Html.ValidationMessageFor(model => model.Dissertation.Date_Sending)
+        </div>
+
+        <div class="editor-label">
+            @Html.LabelFor(model => model.Dissertation.Date_Preliminary_Defense)
+        </div>
+        <div class="editor-field">
+            @Html.EditorFor(model => model.Dissertation.Date_Preliminary_Defense)
+            @Html.ValidationMessageFor(model => model.Dissertation.Date_Preliminary_Defense)
+        </div>
+    </fieldset>
 
     <p>
         <input type="submit" value="Добавить запись о диссертации" />

@@ -1,0 +1,46 @@
+﻿@model UD_Granit.ViewModels.Dissertation.My
+
+@{
+    ViewBag.Title = "Мои диссертации";
+}
+
+<h2>@ViewBag.Title</h2>
+<p>На этой странице показаны все Ваши диссертации. Вы можете посмотреть подроюную информацию по каждой, кликнув по её заголовку.</p>
+
+@if ((Model != null) && (Model.Dissertations != null) && (Model.Dissertations.Count() > 0))
+{
+
+    <table>
+        <thead>
+            <tr>
+                <td>Заголовок</td>
+                <td>Защищена</td>
+                <td>Специальность</td>
+                <td>Для внутреннего использования</td>
+                <td>Файлы</td>
+                <td>Управление</td>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (UD_Granit.Models.Dissertation dissertation in Model.Dissertations)
+            {
+                <tr>
+                    <td>@Html.ActionLink(dissertation.Title, "Details", new { id = dissertation.Id })</td>
+                    <td>@dissertation.Defensed</td>
+                    <td>@dissertation.Speciality.Number @dissertation.Speciality.Name</td>
+                    <td>@dissertation.Administrative_Use</td>
+                    <td>#warning Добавить<br>
+                        warning Добавить<br>
+                        #warning Добавить</td>
+                    <td>#warning Добавить</td>
+                </tr>   
+            }
+        </tbody>
+    </table>
+}
+else
+{
+    <div class="error">
+        Вами не создана ни одна запись о диссертации.
+    </div>
+}

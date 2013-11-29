@@ -140,6 +140,7 @@
     <Compile Include="Helpers\NotifyManager.cs" />
     <Compile Include="Helpers\EnumHelper.cs" />
     <Compile Include="Models\Council.cs" />
+    <Compile Include="Models\ScientificDirector.cs" />
     <Compile Include="Models\Sessions.cs" />
     <Compile Include="Models\Speciality.cs" />
     <Compile Include="Models\Users.cs" />
@@ -159,6 +160,7 @@
     <Compile Include="ViewModels\Dissertation\Create.cs" />
     <Compile Include="ViewModels\Dissertation\Details.cs" />
     <Compile Include="ViewModels\Dissertation\Index.cs" />
+    <Compile Include="ViewModels\Dissertation\My.cs" />
     <Compile Include="ViewModels\Home\Index.cs" />
     <Compile Include="ViewModels\Speciality\Create.cs" />
     <Compile Include="ViewModels\Speciality\Edit.cs" />
@@ -284,6 +286,7 @@
     <Content Include="Views\Dissertation\Create.cshtml" />
     <Content Include="Views\Account\Details.cshtml" />
     <Content Include="Views\Council\Members.cshtml" />
+    <Content Include="Views\Dissertation\My.cshtml" />
     <None Include="Views\Shared\Layout.cshtml" />
     <Content Include="Views\Shared\_PartialAside.cshtml" />
     <Content Include="Views\Shared\_PartialFooter.cshtml" />
