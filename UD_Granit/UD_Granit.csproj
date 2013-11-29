@@ -160,6 +160,7 @@
     <Compile Include="ViewModels\Dissertation\Details.cs" />
     <Compile Include="ViewModels\Dissertation\Index.cs" />
     <Compile Include="ViewModels\Home\Index.cs" />
+    <Compile Include="ViewModels\Speciality\Edit.cs" />
     <Compile Include="ViewModels\Speciality\Index.cs" />
   </ItemGroup>
   <ItemGroup>
@@ -228,6 +229,7 @@
     <Content Include="Content\themes\base\minified\jquery.ui.tabs.min.css" />
     <Content Include="Content\themes\base\minified\jquery.ui.theme.min.css" />
     <Content Include="Content\themes\base\minified\jquery.ui.tooltip.min.css" />
+    <Content Include="Error\404.html" />
     <Content Include="Global.asax" />
     <None Include="Scripts\jquery-2.0.3.intellisense.js" />
     <Content Include="Scripts\jquery-2.0.3.js" />
