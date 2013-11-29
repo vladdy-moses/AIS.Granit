@@ -181,3 +181,33 @@ footer {
     width: 360px;
     padding: 5px;
 }
+
+.editor-label {
+    font-size: 1.1em;
+    padding-top: 10px;
+}
+
+.field-validation-error {
+    color: red;
+    font-weight: bold;
+}
+
+.control {
+    padding: 10px;
+}
+
+    .control a,
+    .control button {
+        cursor: pointer;
+        text-decoration: none;
+        padding: 7px;
+        border: 1px solid gray;
+        margin: 3px;
+        background-color: #333;
+        color: white;
+    }
+
+        .control a:hover,
+        .control button:hover {
+            background-color: #666;
+        }

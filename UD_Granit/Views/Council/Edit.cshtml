@@ -11,42 +11,54 @@
 
     <fieldset>
         <legend>Данные о прикреплённой организации</legend>
-        <p>
-            @Html.LabelFor(model => model.Council.Organization):<br />
+        <div class="editor-label">
+            @Html.LabelFor(model => model.Council.Organization)
+        </div>
+        <div class="editor-field">
             @Html.EditorFor(model => model.Council.Organization)&nbsp;
             @Html.ValidationMessageFor(model => model.Council.Organization)
-        </p>
-        <p>
-            @Html.LabelFor(model => model.Council.Department):<br />
+        </div>
+
+        <div class="editor-label">
+            @Html.LabelFor(model => model.Council.Department)
+        </div>
+        <div class="editor-field">
             @Html.EditorFor(model => model.Council.Department)&nbsp;
             @Html.ValidationMessageFor(model => model.Council.Department)
-        </p>
+        </div>
     </fieldset>
     <fieldset>
         <legend>Основная информация</legend>
-        <p>
-            @Html.LabelFor(model => model.Council.Number):<br />
+        <div class="editor-label">
+            @Html.LabelFor(model => model.Council.Number)
+        </div>
+        <div class="editor-field">
             @Html.EditorFor(model => model.Council.Number)&nbsp;
             @Html.ValidationMessageFor(model => model.Council.Number)
-        </p>
-        <p>
-            @Html.LabelFor(model => model.Council.Address):<br />
+        </div>
+        z
+        <div class="editor-label">
+            @Html.LabelFor(model => model.Council.Address)
+        </div>
+        <div class="editor-field">
             @Html.EditorFor(model => model.Council.Address)&nbsp;
             @Html.ValidationMessageFor(model => model.Council.Address)
-        </p>
+        </div>
     </fieldset>
     <fieldset>
         <legend>Прочая информация</legend>
-        <p>
-            @Html.LabelFor(model => model.Council.FoundationDate):<br />
+        <div class="editor-label">
+            @Html.LabelFor(model => model.Council.FoundationDate)
+        </div>
+        <div class="editor-field">
             @Html.EditorFor(model => model.Council.FoundationDate)&nbsp;
             @Html.ValidationMessageFor(model => model.Council.FoundationDate)
-        </p>
+        </div>
     </fieldset>
     
-    <p>
-        <input type="submit" value="Принять изменения" />
-    </p>
+    <div class="control">
+        <button>Принять изменения</button>
+    </div>
 }
 
 <script>

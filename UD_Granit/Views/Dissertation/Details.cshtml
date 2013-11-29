@@ -36,7 +36,9 @@
         {
             <tr>
                 <td>@Html.LabelFor(model => model.Dissertation.References)</td>
-                <td><pre>@Model.Dissertation.References</pre></td>
+                <td>
+                    <pre>@Model.Dissertation.References</pre>
+                </td>
             </tr>
         }
         @if (Model.Dissertation.Date_Sending != null)
@@ -66,10 +68,10 @@
             <td>@Html.ActionLink("Скачать", "Download", new { id = Model.Dissertation.Id, type = "Summary" })</td>
         </tr>
 
-        <tr>
+        <!--<tr>
             <td></td>
             <td></td>
-        </tr>
+        </tr>-->
     </tbody>
 </table>
 
@@ -111,13 +113,14 @@
 <h3>Сведения об отзывах</h3>
 #warning Добавить отображение отзывов
 
-<div>
+<div class="control">
     @if (Model.CanEdit)
     {
-        <p>CanEdit</p>
+        @Html.ActionLink("Редактировать", "Edit", new { id = Model.Dissertation.Id }) 
+        @Html.ActionLink("Удалить", "Delete", new { id = Model.Dissertation.Id })
     }
     @if (Model.CanCreateSession)
     {
-        <p>CanCreateSession</p>
+        @Html.ActionLink("Создать заседание на основании диссертации", "Create", "Session", new { id = Model.Dissertation.Id })
     }
 </div>

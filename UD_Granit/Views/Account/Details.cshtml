@@ -32,8 +32,8 @@
 
 @if (Model.CanControl)
 {
-    <p>
-        @Html.ActionLink("Редактировать", "Edit", new { id = Model.User_Id }) |
+    <div class="control">
+        @Html.ActionLink("Редактировать", "Edit", new { id = Model.User_Id })
         @Html.ActionLink("Удалить", "Delete", new { id = Model.User_Id })
-    </p>
+    </div>
 }

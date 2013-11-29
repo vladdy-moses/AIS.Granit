@@ -6,7 +6,8 @@
 
 <h2>@ViewBag.Title</h2>
 
-@using (Html.BeginForm()) {
+@using (Html.BeginForm())
+{
     @Html.ValidationSummary(true)
 
     <fieldset>
@@ -35,13 +36,13 @@
             @Html.EditorFor(model => model.Speciality.Name)
             @Html.ValidationMessageFor(model => model.Speciality.Name)
         </div>
-
-        <p>
-            <input type="submit" value="Добавить запись о специальности" />
-        </p>
     </fieldset>
+    
+    <div>
+        @Html.ActionLink("Вернуться к списку специальностей", "Index")
+    </div>
+    
+    <div class="control">
+        <button>Добавить запись о специальности</button>
+    </div>
 }
-
-<div>
-    @Html.ActionLink("Вернуться к списку специальностей", "Index")
-</div>

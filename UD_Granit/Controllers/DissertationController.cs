@@ -33,8 +33,8 @@ namespace UD_Granit.Controllers
                 viewModel.Dissertation = dissertation;
 
                 User currentUser = Session.GetUser();
-                viewModel.CanEdit = !((currentUser is Applicant) && (currentUser.Id != dissertation.Applicant_Id));
-                viewModel.CanCreateSession = ((Session.GetUserPosition() == MemberPosition.Chairman) || (currentUser is Administrator));
+                viewModel.CanEdit = CanEdit(dissertation);
+                viewModel.CanCreateSession = CanCreateSession();
 
                 return View(viewModel);
             }
@@ -89,6 +89,7 @@ namespace UD_Granit.Controllers
                 db.Dissertations.Add(currentDissertation);
                 db.SaveChanges();
 
+#warning Проверять на существование файлов
                 viewModel.File_Abstract.SaveAs(Server.MapPath(Path.Combine("~/App_Data/", currentDissertation.Id + "_Abstract" + currentDissertation.File_Abstract)));
                 viewModel.File_Text.SaveAs(Server.MapPath(Path.Combine("~/App_Data/", currentDissertation.Id + "_Text" + currentDissertation.File_Text)));
                 viewModel.File_Summary.SaveAs(Server.MapPath(Path.Combine("~/App_Data/", currentDissertation.Id + "_Summary" + currentDissertation.File_Summary)));
@@ -216,6 +217,18 @@ namespace UD_Granit.Controllers
                 return true;
             }
             return false;
+        }
+
+        private bool CanEdit(Dissertation dissertation)
+        {
+            User currentUser = Session.GetUser();
+
+            return !((currentUser is Applicant) && (currentUser.Id != dissertation.Applicant_Id));
+        }
+
+        private bool CanCreateSession()
+        {
+            return ((Session.GetUserPosition() == MemberPosition.Chairman) || (Session.GetUser() is Administrator));
         }
     }
 }

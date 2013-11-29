@@ -8,32 +8,33 @@
 <p>На этой странице Вы можете отредактировать информацию о специальности.</p>
 <p><b>Внимание!</b> Нельзя отредактировать номер специальности.</p>
 
-@using (Html.BeginForm()) {
+@using (Html.BeginForm())
+{
     @Html.ValidationSummary(true)
 
-        @Html.HiddenFor(model => model.Speciality.Number)
+    @Html.HiddenFor(model => model.Speciality.Number)
 
-        <div class="editor-label">
-            @Html.LabelFor(model => model.Speciality.ScienceBranch)
-        </div>
-        <div class="editor-field">
-            @Html.EditorFor(model => model.Speciality.ScienceBranch)
-            @Html.ValidationMessageFor(model => model.Speciality.ScienceBranch)
-        </div>
+    <div class="editor-label">
+        @Html.LabelFor(model => model.Speciality.ScienceBranch)
+    </div>
+    <div class="editor-field">
+        @Html.EditorFor(model => model.Speciality.ScienceBranch)
+        @Html.ValidationMessageFor(model => model.Speciality.ScienceBranch)
+    </div>
 
-        <div class="editor-label">
-            @Html.LabelFor(model => model.Speciality.Name)
-        </div>
-        <div class="editor-field">
-            @Html.EditorFor(model => model.Speciality.Name)
-            @Html.ValidationMessageFor(model => model.Speciality.Name)
-        </div>
+    <div class="editor-label">
+        @Html.LabelFor(model => model.Speciality.Name)
+    </div>
+    <div class="editor-field">
+        @Html.EditorFor(model => model.Speciality.Name)
+        @Html.ValidationMessageFor(model => model.Speciality.Name)
+    </div>
+    
+    <div>
+        @Html.ActionLink("Вернуться к списку специальностей", "Index")
+    </div>
 
-        <p>
-            <input type="submit" value="Обновить информацию о специальности" />
-        </p>
+    <div class="control">
+        <button>Обновить информацию о специальности</button>
+    </div>
 }
-
-<div>
-    @Html.ActionLink("Вернуться к списку специальностей", "Index")
-</div>
