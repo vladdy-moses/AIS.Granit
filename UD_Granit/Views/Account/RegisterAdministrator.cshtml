@@ -1,0 +1,71 @@
+﻿@model UD_Granit.ViewModels.Account.RegisterAdministrator
+
+@{
+    ViewBag.Title = "Регистрация администратора";
+}
+
+<h2>@ViewBag.Title</h2>
+@using (Html.BeginForm("RegisterAdministrator", "Account"))
+{
+    @Html.ValidationSummary(true)
+
+    <fieldset>
+        <legend>Данные для авторизации</legend>
+        <div class="editor-label">
+            @Html.LabelFor(model => model.User.Email)
+        </div>
+        <div class="editor-field">
+            @Html.EditorFor(model => model.User.Email)&nbsp;
+            @Html.ValidationMessageFor(model => model.User.Email)
+        </div>
+
+        <div class="editor-label">
+            @Html.LabelFor(model => model.User.Password)
+        </div>
+        <div class="editor-field">
+            @Html.PasswordFor(model => model.User.Password)&nbsp;
+            @Html.ValidationMessageFor(model => model.User.Password)
+        </div>
+    </fieldset>
+    <fieldset>
+        <legend>Личные сведения</legend>
+        <div class="editor-label">
+            @Html.LabelFor(model => model.User.FirstName)
+        </div>
+        <div class="editor-field">
+            @Html.EditorFor(model => model.User.FirstName)&nbsp;
+            @Html.ValidationMessageFor(model => model.User.FirstName)
+        </div>
+
+        <div class="editor-label">
+            @Html.LabelFor(model => model.User.SecondName)
+        </div>
+        <div class="editor-field">
+            @Html.EditorFor(model => model.User.SecondName)&nbsp;
+            @Html.ValidationMessageFor(model => model.User.SecondName)
+        </div>
+
+        <div class="editor-label">
+            @Html.LabelFor(model => model.User.LastName)
+        </div>
+        <div class="editor-field">
+            @Html.EditorFor(model => model.User.LastName)&nbsp;
+            @Html.ValidationMessageFor(model => model.User.LastName)
+        </div>
+    </fieldset>
+    <fieldset>
+        <legend>Контактные данные</legend>
+        <div class="editor-label">
+            @Html.LabelFor(model => model.User.Phone)
+        </div>
+        <div class="editor-field">
+            @Html.EditorFor(model => model.User.Phone)&nbsp;
+            @Html.ValidationMessageFor(model => model.User.Phone)
+        </div>
+    </fieldset>
+    
+    <div class="control">
+        <button>Добавить запись об администраторе</button>
+    </div>
+}
+

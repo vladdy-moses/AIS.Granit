@@ -157,6 +157,7 @@
     <Compile Include="ViewModels\Account\Login.cs" />
     <Compile Include="ViewModels\Account\RegisterApplicant.cs" />
     <Compile Include="ViewModels\Account\RegisterMember.cs" />
+    <Compile Include="ViewModels\Account\RegisterAdministrator.cs" />
     <Compile Include="ViewModels\Council\Edit.cs" />
     <Compile Include="ViewModels\Council\Index.cs" />
     <Compile Include="ViewModels\Council\Members.cs" />
@@ -291,6 +292,7 @@
     <Content Include="Views\Council\Members.cshtml" />
     <Content Include="Views\Dissertation\My.cshtml" />
     <Content Include="Views\Account\RegisterMember.cshtml" />
+    <Content Include="Views\Account\RegisterAdministrator.cshtml" />
     <None Include="Views\Shared\Layout.cshtml" />
     <Content Include="Views\Shared\_PartialAside.cshtml" />
     <Content Include="Views\Shared\_PartialFooter.cshtml" />

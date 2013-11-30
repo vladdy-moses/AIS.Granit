@@ -1,4 +1,5 @@
 ﻿@model UD_Granit.ViewModels.Account.Details
+@using UD_Granit.Helpers
 
 @{
     ViewBag.Title = "Details";
@@ -6,34 +7,147 @@
 
 <h2>Информация о пользователе</h2>
 
-<h3>@Html.DisplayNameFor(model => model.FullName)</h3>
-<p>@Model.FullName</p>
-<h3>@Html.DisplayNameFor(model => model.Role)</h3>
-<p>@Model.Role</p>
+<h3>Основная информация</h3>
+<table>
+    <tbody>
+        <tr>
+            <td>Фамилия</td>
+            <td>@Model.User.FirstName</td>
+        </tr>
+        <tr>
+            <td>Имя</td>
+            <td>@Model.User.SecondName</td>
+        </tr>
+        @if (Model.User.LastName != null)
+        {
+            <tr>
+                <td>Отчество</td>
+                <td>@Model.User.LastName</td>
+            </tr>
+        }
+    </tbody>
+</table>
 
-@if (Model.ApplicantView != null)
+<h3>Место в системе</h3>
+<table>
+    <tbody>
+        <tr>
+            <td>Роль в системе</td>
+            <td>@Model.User.GetRole()</td>
+        </tr>
+        @if (Model.User is UD_Granit.Models.Member)
+        {
+            <tr>
+                <td>Должность</td>
+                <td>@Model.User.GetPosition()</td>
+            </tr>
+        }
+    </tbody>
+</table>
+
+@if ((Model.User is UD_Granit.Models.Member) || (Model.User is UD_Granit.Models.Applicant))
 {
-    <h3>@Html.DisplayNameFor(model => model.ApplicantView.City)</h3>
-    <p>@Model.ApplicantView.City</p>
-    <h3>@Html.DisplayNameFor(model => model.ApplicantView.Organization)</h3>
-    <p>@Model.ApplicantView.Organization</p>
-    <h3>@Html.DisplayNameFor(model => model.ApplicantView.Organization_Depatment)</h3>
-    <p>@Model.ApplicantView.Organization_Depatment</p>
+    <h3>Детальная информация</h3>
+    <table>
+        <tbody>
+            @if (Model.User is UD_Granit.Models.Member)
+            {
+                <tr>
+                    <td>Учёная степень</td>
+                    <td>@((Model.User as UD_Granit.Models.Member).Degree)</td>
+                </tr>
+                <tr>
+                    <td>Специальность</td>
+                    <td>@((Model.User as UD_Granit.Models.Member).Speciality.GetFullName())</td>
+                </tr>
+            }
+            @if (Model.User is UD_Granit.Models.Applicant)
+            {
+                <tr>
+                    <td>Организация</td>
+                    <td>@((Model.User as UD_Granit.Models.Applicant).Organization)</td>
+                </tr>
+                <tr>
+                    <td>Подразделение</td>
+                    <td>@((Model.User as UD_Granit.Models.Applicant).Organization_Depatment)</td>
+                </tr>
+                <tr>
+                    <td>Город</td>
+                    <td>@((Model.User as UD_Granit.Models.Applicant).City)</td>
+                </tr>
+            }
+        </tbody>
+    </table>
 }
 
-@if (Model.MemberView != null)
+@if (Model.CanShowAdditionalInfo)
 {
-    <h3>@Html.DisplayNameFor(model => model.MemberView.Position)</h3>
-    <p>@Model.MemberView.Position</p>
-    <h3>@Html.DisplayNameFor(model => model.MemberView.Speciality)</h3>
-    <p>@Model.MemberView.Speciality.Number "@Model.MemberView.Speciality.Name" (@Model.MemberView.Speciality.ScienceBranch)</p>
+    <h3>Дополнительная информация</h3>
+    <table>
+        <tbody>
+            <tr>
+                <td>Электронный почтовый ящик</td>
+                <td>@Model.User.Email</td>
+            </tr>
+            <tr>
+                <td>Дата регистрации</td>
+                <td>@Model.User.RegistrationDate</td>
+            </tr>
+            <tr>
+                <td>Контактный телефон</td>
+                <td>@Model.User.Phone</td>
+            </tr>
+            @if (Model.User is UD_Granit.Models.Administrator)
+            {
+                <tr>
+                    <td>IP-адрес последнего входа</td>
+                    <td>@((Model.User as UD_Granit.Models.Administrator).LastIP)</td>
+                </tr>
+            }
+            @if (Model.User is UD_Granit.Models.Applicant)
+            {
+                <tr>
+                    <td>Заключение организации</td>
+                    <td>@((Model.User as UD_Granit.Models.Applicant).Organization_Conclusion)</td>
+                </tr>
+                <tr>
+                    <td>Адрес</td>
+                    <td>@((Model.User as UD_Granit.Models.Applicant).Address)</td>
+                </tr>
+                <tr>
+                    <td>Обучался в аспирантуре</td>
+                    <td>@((Model.User as UD_Granit.Models.Applicant).WasInGraduateSchool)</td>
+                </tr>
+                <tr>
+                    <td>Дата рождения</td>
+                    <td>@((Model.User as UD_Granit.Models.Applicant).Birthday)</td>
+                </tr>
+                if ((Model.User as UD_Granit.Models.Applicant).WasInGraduateSchool)
+                {
+                <tr>
+                    <td>Вуз</td>
+                    <td>@((Model.User as UD_Granit.Models.Applicant).University)</td>
+                </tr>
+                <tr>
+                    <td>Кафедра</td>
+                    <td>@((Model.User as UD_Granit.Models.Applicant).University_Departmant)</td>
+                </tr>   
+                }
+            }
+        </tbody>
+    </table>
 }
 
-
-@if (Model.CanControl)
+@if (Model.CanEdit || Model.CanRemove)
 {
     <div class="control">
-        @Html.ActionLink("Редактировать", "Edit", new { id = Model.User_Id })
-        @Html.ActionLink("Удалить", "Delete", new { id = Model.User_Id })
+        @if (Model.CanEdit)
+        {
+            @Html.ActionLink("Редактировать", "Edit", new { id = Model.User.Id })
+        }
+        @if (Model.CanRemove)
+        {
+            @Html.ActionLink("Удалить", "Delete", new { id = Model.User.Id })
+        }
     </div>
 }
