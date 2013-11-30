@@ -27,6 +27,7 @@ namespace UD_Granit.Models
         [Required]
         [Display(Name = "Электронный адрес")]
         public string Email { set; get; }
+
         [Required]
         [Display(Name = "Пароль")]
         public string Password { set; get; }
@@ -34,11 +35,20 @@ namespace UD_Granit.Models
         [Required]
         [Display(Name = "Фамилия")]
         public string FirstName { set; get; }
+
         [Required]
         [Display(Name = "Имя")]
         public string SecondName { set; get; }
+
         [Display(Name = "Отчество")]
         public string LastName { set; get; }
+
+        [Required]
+        [Display(Name = "Дата регистрации")]
+        public DateTime RegistrationDate { set; get; }
+
+        [Display(Name = "Контактный телефон")]
+        public string Phone { set; get; }
     }
 
     public class Applicant : User

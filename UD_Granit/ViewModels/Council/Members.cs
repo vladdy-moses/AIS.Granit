@@ -16,5 +16,6 @@ namespace UD_Granit.ViewModels.Council
     public class Members
     {
         public IEnumerable<MemberView> CouncilMembers;
+        public bool CanControl { set; get; }
     }
 }

@@ -44,12 +44,21 @@
             @Html.DropDownListFor(model => model.Speciality, null)
             @Html.ValidationMessageFor(model => model.Speciality)
         </div>
+
         <div class="editor-label">
             @Html.LabelFor(model => model.User.Degree)
         </div>
         <div class="editor-field">
             @Html.EditorFor(model => model.User.Degree)&nbsp;
             @Html.ValidationMessageFor(model => model.User.Degree)
+        </div>
+
+        <div class="editor-label">
+            @Html.LabelFor(model => model.User.Phone)
+        </div>
+        <div class="editor-field">
+            @Html.EditorFor(model => model.User.Phone)&nbsp;
+            @Html.ValidationMessageFor(model => model.User.Phone)
         </div>
     </fieldset>
     <fieldset>

@@ -36,3 +36,10 @@ else
         Извините, информация о членах диссертационного совета ещё не заполнена.
     </div>
 }
+
+@if ((Model != null) && (Model.CanControl))
+{
+    <div class="control">
+        @Html.ActionLink("Добавить члена совета", "Register", "Account")
+    </div>
+}

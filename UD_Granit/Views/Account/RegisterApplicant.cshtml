@@ -11,88 +11,133 @@
 
     <fieldset>
         <legend>Данные для авторизации</legend>
-        <p>
-            @Html.LabelFor(model => model.User.Email):<br />
+        <div class="editor-label">
+            @Html.LabelFor(model => model.User.Email)
+        </div>
+        <div class="editor-field">
             @Html.EditorFor(model => model.User.Email)&nbsp;
             @Html.ValidationMessageFor(model => model.User.Email)
-        </p>
-        <p>
-            @Html.LabelFor(model => model.User.Password):<br />
+        </div>
+
+        <div class="editor-label">
+            @Html.LabelFor(model => model.User.Password)
+        </div>
+        <div class="editor-field">
             @Html.PasswordFor(model => model.User.Password)&nbsp;
             @Html.ValidationMessageFor(model => model.User.Password)
-        </p>
+        </div>
     </fieldset>
     <fieldset>
         <legend>Личные сведения</legend>
-        <p>
-            @Html.LabelFor(model => model.User.FirstName):<br />
+        <div class="editor-label">
+            @Html.LabelFor(model => model.User.FirstName)
+        </div>
+        <div class="editor-field">
             @Html.EditorFor(model => model.User.FirstName)&nbsp;
             @Html.ValidationMessageFor(model => model.User.FirstName)
-        </p>
-        <p>
-            @Html.LabelFor(model => model.User.SecondName):<br />
+        </div>
+
+        <div class="editor-label">
+            @Html.LabelFor(model => model.User.SecondName)
+        </div>
+        <div class="editor-field">
             @Html.EditorFor(model => model.User.SecondName)&nbsp;
             @Html.ValidationMessageFor(model => model.User.SecondName)
-        </p>
-        <p>
-            @Html.LabelFor(model => model.User.LastName):<br />
+        </div>
+
+        <div class="editor-label">
+            @Html.LabelFor(model => model.User.LastName)
+        </div>
+        <div class="editor-field">
             @Html.EditorFor(model => model.User.LastName)&nbsp;
             @Html.ValidationMessageFor(model => model.User.LastName)
-        </p>
-        <p>
-            @Html.LabelFor(model => model.User.Birthday):<br />
+        </div>
+
+        <div class="editor-label">
+            @Html.LabelFor(model => model.User.Birthday)
+        </div>
+        <div class="editor-field">
             @Html.EditorFor(model => model.User.Birthday)&nbsp;
             @Html.ValidationMessageFor(model => model.User.Birthday)
-        </p>
+        </div>
     </fieldset>
     <fieldset>
         <legend>Сведения об организации</legend>
-        <p>
-            @Html.LabelFor(model => model.User.Organization):<br />
+        <div class="editor-label">
+            @Html.LabelFor(model => model.User.Organization)
+        </div>
+        <div class="editor-field">
             @Html.EditorFor(model => model.User.Organization)&nbsp;
             @Html.ValidationMessageFor(model => model.User.Organization)
-        </p>
-        <p>
-            @Html.LabelFor(model => model.User.Organization_Depatment):<br />
+        </div>
+
+        <div class="editor-label">
+            @Html.LabelFor(model => model.User.Organization_Depatment)
+        </div>
+        <div class="editor-field">
             @Html.EditorFor(model => model.User.Organization_Depatment)&nbsp;
             @Html.ValidationMessageFor(model => model.User.Organization_Depatment)
-        </p>
-        <p>
-            @Html.LabelFor(model => model.User.Organization_Conclusion):<br />
+        </div>
+
+        <div class="editor-label">
+            @Html.LabelFor(model => model.User.Organization_Conclusion)
+        </div>
+        <div class="editor-field">
             @Html.TextAreaFor(model => model.User.Organization_Conclusion)&nbsp;
             @Html.ValidationMessageFor(model => model.User.Organization_Conclusion)
-        </p>
+        </div>
     </fieldset>
     <fieldset>
-        <legend>Место проживания</legend>
-        <p>
-            @Html.LabelFor(model => model.User.City):<br />
+        <legend>Контактные данные</legend>
+        <div class="editor-label">
+            @Html.LabelFor(model => model.User.City)
+        </div>
+        <div class="editor-field">
             @Html.EditorFor(model => model.User.City)&nbsp;
             @Html.ValidationMessageFor(model => model.User.City)
-        </p>
-        <p>
-            @Html.LabelFor(model => model.User.Address):<br />
+        </div>
+
+        <div class="editor-label">
+            @Html.LabelFor(model => model.User.Address)
+        </div>
+        <div class="editor-field">
             @Html.EditorFor(model => model.User.Address)&nbsp;
             @Html.ValidationMessageFor(model => model.User.Address)
-        </p>
+        </div>
+
+        <div class="editor-label">
+            @Html.LabelFor(model => model.User.Phone)
+        </div>
+        <div class="editor-field">
+            @Html.EditorFor(model => model.User.Phone)&nbsp;
+            @Html.ValidationMessageFor(model => model.User.Phone)
+        </div>
     </fieldset>
     <fieldset>
         <legend>Сведения аб аспирантуре</legend>
-        <p>
-            @Html.LabelFor(model => model.User.WasInGraduateSchool):<br />
+        <div class="editor-label">
+            @Html.LabelFor(model => model.User.WasInGraduateSchool)
+        </div>
+        <div class="editor-field">
             @Html.CheckBoxFor(model => model.User.WasInGraduateSchool)&nbsp;
             @Html.ValidationMessageFor(model => model.User.WasInGraduateSchool)
-        </p>
-        <p>
-            @Html.LabelFor(model => model.User.University):<br />
+        </div>
+
+        <div class="editor-label">
+            @Html.LabelFor(model => model.User.University)
+        </div>
+        <div class="editor-field">
             @Html.EditorFor(model => model.User.University)&nbsp;
             @Html.ValidationMessageFor(model => model.User.University)
-        </p>
-        <p>
-            @Html.LabelFor(model => model.User.University_Departmant):<br />
+        </div>
+
+        <div class="editor-label">
+            @Html.LabelFor(model => model.User.University_Departmant)
+        </div>
+        <div class="editor-field">
             @Html.EditorFor(model => model.User.University_Departmant)&nbsp;
             @Html.ValidationMessageFor(model => model.User.University_Departmant)
-        </p>
+        </div>
     </fieldset>
     
     <div class="control">

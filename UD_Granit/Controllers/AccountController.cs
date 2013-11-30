@@ -79,12 +79,7 @@ namespace UD_Granit.Controllers
             UD_Granit.Models.User currentUser = Session.GetUser();
             if (currentUser != null)
             {
-                if (currentUser is UD_Granit.Models.Administrator)
-                {
-                    ViewData["Speciality"] = db.Specialities.Select(s => new SelectListItem { Text = s.Number + " " + s.Name, Value = s.Number });
-                    return View("RegisterMember");
-                }
-                if ((currentUser is Member) && ((currentUser as Member).Position == MemberPosition.Chairman))
+                if(RightsManager.Account.RegisterMember(currentUser))
                 {
                     ViewData["Speciality"] = db.Specialities.Select(s => new SelectListItem { Text = s.Number + " " + s.Name, Value = s.Number });
                     return View("RegisterMember");
@@ -95,6 +90,7 @@ namespace UD_Granit.Controllers
                 return View("RegisterApplicant");
             }
             return HttpNotFound();
+#warning страница с путями регистрации, если возможно зарегать несколько сущеностей (напр, админ и член совета)
         }
 
         //
@@ -103,6 +99,9 @@ namespace UD_Granit.Controllers
         [HttpPost]
         public ActionResult RegisterApplicant(UD_Granit.ViewModels.Account.RegisterApplicant viewModel)
         {
+            if (!RightsManager.Account.RegisterApplicant(Session.GetUser()))
+                return HttpNotFound();
+
             var q = from u in db.Users where u.Email == viewModel.User.Email select u;
             if (q.Count() > 0)
             {
@@ -128,6 +127,9 @@ namespace UD_Granit.Controllers
         [HttpPost]
         public ActionResult RegisterMember(UD_Granit.ViewModels.Account.RegisterMember viewModel)
         {
+            if (!RightsManager.Account.RegisterMember(Session.GetUser()))
+                return HttpNotFound();
+
             var q = from u in db.Users where u.Email == viewModel.User.Email select u;
             if (q.Count() > 0)
             {
