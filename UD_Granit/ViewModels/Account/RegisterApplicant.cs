@@ -6,7 +6,7 @@ using UD_Granit.Models;
 
 namespace UD_Granit.ViewModels.Account
 {
-    public class RegisterNewbie
+    public class RegisterApplicant
     {
         public Applicant User { set; get; }
     }

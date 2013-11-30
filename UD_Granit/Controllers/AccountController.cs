@@ -26,6 +26,9 @@ namespace UD_Granit.Controllers
 
         public ActionResult Login()
         {
+            if (Session.GetUser() != null)
+                return HttpNotFound();
+
             return View();
         }
 
@@ -35,6 +38,9 @@ namespace UD_Granit.Controllers
         [HttpPost]
         public ActionResult Login(UD_Granit.ViewModels.Account.Login viewModel)
         {
+            if (Session.GetUser() != null)
+                return HttpNotFound();
+
             var q = from u in db.Users where ((u.Email == viewModel.Email) && (u.Password == viewModel.Password)) select u;
             if (q.Count() != 0)
             {
@@ -58,15 +64,11 @@ namespace UD_Granit.Controllers
 
         public ActionResult Logout()
         {
-            if (Session.GetUser() != null)
-            {
+            if (Session.GetUser() == null)
+                return HttpNotFound();
+
                 Session.SetUser(null);
                 return RedirectToAction("Index", "Home");
-            }
-            else
-            {
-                return HttpNotFound();
-            }
         }
 
         //
@@ -78,22 +80,28 @@ namespace UD_Granit.Controllers
             if (currentUser != null)
             {
                 if (currentUser is UD_Granit.Models.Administrator)
-                    return View("RegisterAdministrator");
+                {
+                    ViewData["Speciality"] = db.Specialities.Select(s => new SelectListItem { Text = s.Number + " " + s.Name, Value = s.Number });
+                    return View("RegisterMember");
+                }
                 if ((currentUser is Member) && ((currentUser as Member).Position == MemberPosition.Chairman))
-                    return View("RegisterChairman");
+                {
+                    ViewData["Speciality"] = db.Specialities.Select(s => new SelectListItem { Text = s.Number + " " + s.Name, Value = s.Number });
+                    return View("RegisterMember");
+                }
             }
             else
             {
-                return View("RegisterNewbie");
+                return View("RegisterApplicant");
             }
             return HttpNotFound();
         }
 
         //
-        // POST: /Account/RegisterNewbie/
+        // POST: /Account/RegisterApplicant/
 
         [HttpPost]
-        public ActionResult RegisterNewbie(UD_Granit.ViewModels.Account.RegisterNewbie viewModel)
+        public ActionResult RegisterApplicant(UD_Granit.ViewModels.Account.RegisterApplicant viewModel)
         {
             var q = from u in db.Users where u.Email == viewModel.User.Email select u;
             if (q.Count() > 0)
@@ -103,16 +111,45 @@ namespace UD_Granit.Controllers
             }
             else
             {
-                db.Applicants.Add(viewModel.User);
+                Applicant currentUser = viewModel.User;
+                currentUser.IsActive = false;
+
+                db.Applicants.Add(currentUser);
                 db.SaveChanges();
-                Session.SetUser(viewModel.User);
+                Session.SetUser(currentUser);
 
                 return RedirectToAction("Create", "Dissertation");
             }
         }
 
         //
-        // GET: /Account/Details/5
+        // POST: /Account/RegisterMember/
+
+        [HttpPost]
+        public ActionResult RegisterMember(UD_Granit.ViewModels.Account.RegisterMember viewModel)
+        {
+            var q = from u in db.Users where u.Email == viewModel.User.Email select u;
+            if (q.Count() > 0)
+            {
+                ViewData.NotificationAdd(new NotificationManager.Notify() { Type = NotificationManager.Notify.NotifyType.Error, Message = "Пользователь с таким электронным почтовым ящиком уже зарегистрирован. Пожалуйста, выберите другой email." });
+                return View();
+            }
+            else
+            {
+                Member currentUser = viewModel.User;
+                currentUser.Position = (MemberPosition)viewModel.Position;
+                currentUser.Speciality = db.Specialities.Find(viewModel.Speciality);
+
+                db.Members.Add(currentUser);
+                db.SaveChanges();
+                Session.SetUser(currentUser);
+
+                return RedirectToAction("Index", "Home");
+            }
+        }
+
+        //
+        // GET: /Account/Details/[5]
 
         public ActionResult Details(int? id)
         {

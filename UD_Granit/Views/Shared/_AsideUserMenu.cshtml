@@ -24,12 +24,12 @@
             @if ((Session.GetUserPosition() == UD_Granit.Models.MemberPosition.Chairman) ||
             (Session.GetUserPosition() == UD_Granit.Models.MemberPosition.ViceChairman))
             {
-                <li>@Html.ActionLink("Специальности", "Index", "Specialities")</li>
+                <li>@Html.ActionLink("Специальности", "Index", "Speciality")</li>
             }
             @if (Session.GetUser() is UD_Granit.Models.Administrator)
             {
                 <li>@Html.ActionLink("Пользователи", "All", "Account")</li>
-                <li>@Html.ActionLink("Специальности", "Index", "Specialities")</li>
+                <li>@Html.ActionLink("Специальности", "Index", "Speciality")</li>
             }
         </ul>
     </div>

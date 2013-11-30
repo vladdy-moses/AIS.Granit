@@ -1,0 +1,117 @@
+﻿@model UD_Granit.ViewModels.Account.RegisterMember
+
+@{
+    ViewBag.Title = "Регистрация члена диссертационного совета";
+}
+
+<h2>@ViewBag.Title</h2>
+@using (Html.BeginForm("RegisterMember", "Account"))
+{
+    @Html.ValidationSummary(true)
+
+    <fieldset>
+        <legend>Данные для авторизации</legend>
+        <div class="editor-label">
+            @Html.LabelFor(model => model.User.Email)
+        </div>
+        <div class="editor-field">
+            @Html.EditorFor(model => model.User.Email)&nbsp;
+            @Html.ValidationMessageFor(model => model.User.Email)
+        </div>
+
+        <div class="editor-label">
+            @Html.LabelFor(model => model.User.Password)
+        </div>
+        <div class="editor-field">
+            @Html.PasswordFor(model => model.User.Password)&nbsp;
+            @Html.ValidationMessageFor(model => model.User.Password)
+        </div>
+    </fieldset>
+    <fieldset>
+        <legend>Данные для диссертационного совета</legend>
+        <div class="editor-label">
+            @Html.LabelFor(model => model.Position)
+        </div>
+        <div class="editor-field">
+            @Html.EnumDropDownListFor(model => model.Position)&nbsp;
+            @Html.ValidationMessageFor(model => model.Position)
+        </div>
+
+        <div class="editor-label">
+            @Html.LabelFor(model => model.Speciality)
+        </div>
+        <div class="editor-field">
+            @Html.DropDownListFor(model => model.Speciality, null)
+            @Html.ValidationMessageFor(model => model.Speciality)
+        </div>
+        <div class="editor-label">
+            @Html.LabelFor(model => model.User.Degree)
+        </div>
+        <div class="editor-field">
+            @Html.EditorFor(model => model.User.Degree)&nbsp;
+            @Html.ValidationMessageFor(model => model.User.Degree)
+        </div>
+    </fieldset>
+    <fieldset>
+        <legend>Личные сведения</legend>
+        <div class="editor-label">
+            @Html.LabelFor(model => model.User.FirstName)
+        </div>
+        <div class="editor-field">
+            @Html.EditorFor(model => model.User.FirstName)&nbsp;
+            @Html.ValidationMessageFor(model => model.User.FirstName)
+        </div>
+
+        <div class="editor-label">
+            @Html.LabelFor(model => model.User.SecondName)
+        </div>
+        <div class="editor-field">
+            @Html.EditorFor(model => model.User.SecondName)&nbsp;
+            @Html.ValidationMessageFor(model => model.User.SecondName)
+        </div>
+
+        <div class="editor-label">
+            @Html.LabelFor(model => model.User.LastName)
+        </div>
+        <div class="editor-field">
+            @Html.EditorFor(model => model.User.LastName)&nbsp;
+            @Html.ValidationMessageFor(model => model.User.LastName)
+        </div>
+    </fieldset>
+    <fieldset>
+        <legend>Сведения об организации</legend>
+        <div class="editor-label">
+            @Html.LabelFor(model => model.User.Organization)
+        </div>
+        <div class="editor-field">
+            @Html.EditorFor(model => model.User.Organization)&nbsp;
+            @Html.ValidationMessageFor(model => model.User.Organization)
+        </div>
+
+        <div class="editor-label">
+            @Html.LabelFor(model => model.User.Organization_Depatment)
+        </div>
+        <div class="editor-field">
+            @Html.EditorFor(model => model.User.Organization_Depatment)&nbsp;
+            @Html.ValidationMessageFor(model => model.User.Organization_Depatment)
+        </div>
+
+        <div class="editor-label">
+            @Html.LabelFor(model => model.User.Organization_Position)
+        </div>
+        <div class="editor-field">
+            @Html.EditorFor(model => model.User.Organization_Position)&nbsp;
+            @Html.ValidationMessageFor(model => model.User.Organization_Position)
+        </div>
+    </fieldset>
+    
+    <div class="control">
+        <button>Добавить запись о члене совета</button>
+    </div>
+}
+
+<script>
+    $(function () {
+        $("#User_Birthday").datepicker({ changeYear: true });
+    });
+</script>

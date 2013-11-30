@@ -161,11 +161,13 @@ namespace UD_Granit.Controllers
 
         public ActionResult My()
         {
-            if ((Session.GetUser() is Applicant) == false)
+            User currentUser = Session.GetUser();
+
+            if ((currentUser is Applicant) == false)
                 return HttpNotFound();
 
             UD_Granit.ViewModels.Dissertation.My viewModel = new ViewModels.Dissertation.My();
-            viewModel.Dissertations = (from d in db.Dissertations select d);
+            viewModel.Dissertations = (from d in db.Dissertations where d.Applicant_Id == currentUser.Id select d);
             return View(viewModel);
         }
 

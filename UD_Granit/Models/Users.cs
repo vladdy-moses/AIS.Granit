@@ -44,6 +44,10 @@ namespace UD_Granit.Models
     public class Applicant : User
     {
         [Required]
+        [Display(Name = "Учётная запись активна")]
+        public bool IsActive { set; get; }
+
+        [Required]
         [Display(Name = "Наименование организации")]
         public string Organization { set; get; }
 
@@ -59,8 +63,6 @@ namespace UD_Granit.Models
         
         [Display(Name = "Учёная степень")]
         public bool Ph_D { set; get; }
-
-        //Идентификатор руководителя
 
         [Required]
         [Display(Name = "Город")]
@@ -90,24 +92,26 @@ namespace UD_Granit.Models
 
     public class Member : User
     {
-        [Display(Name = "Должность")]
+        [Required]
+        [Display(Name = "Должность в совете")]
         public MemberPosition Position { set; get; }
 
         [Display(Name = "Учёная степень")]
         public string Degree { set; get; }
 
+        [Required]
+        [Display(Name = "Наименование организации")]
+        public string Organization { set; get; }
+
+        [Required]
+        [Display(Name = "Подразделение")]
+        public string Organization_Depatment { set; get; }
+
+        [Display(Name = "Должность в организации")]
+        public string Organization_Position { set; get; }
+
+        [Required]
         [Display(Name = "Специальность")]
         public virtual Speciality Speciality { set; get; }
     }
-
-    /*public class ApplicantCandidate : Applicant
-    {
-        public string DocumentOfEducation { set; get; }
-        public string CandidateExams { set; get; }
-    }
-
-    public class ApplicantDoctor : Applicant
-    {
-        public string CandidateDiplom { set; get; }
-    }*/
 }

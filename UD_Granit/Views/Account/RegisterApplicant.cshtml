@@ -1,11 +1,11 @@
-﻿@model UD_Granit.ViewModels.Account.RegisterNewbie
+﻿@model UD_Granit.ViewModels.Account.RegisterApplicant
 
 @{
     ViewBag.Title = "Регистрация соискателя";
 }
 
 <h2>@ViewBag.Title</h2>
-@using (Html.BeginForm("RegisterNewbie", "Account"))
+@using (Html.BeginForm("RegisterApplicant", "Account"))
 {
     @Html.ValidationSummary(true)
 

@@ -153,7 +153,8 @@
     <Compile Include="Helpers\UserHelper.cs" />
     <Compile Include="ViewModels\Account\Details.cs" />
     <Compile Include="ViewModels\Account\Login.cs" />
-    <Compile Include="ViewModels\Account\RegisterNewbie.cs" />
+    <Compile Include="ViewModels\Account\RegisterApplicant.cs" />
+    <Compile Include="ViewModels\Account\RegisterMember.cs" />
     <Compile Include="ViewModels\Council\Edit.cs" />
     <Compile Include="ViewModels\Council\Index.cs" />
     <Compile Include="ViewModels\Council\Members.cs" />
@@ -277,7 +278,7 @@
   <ItemGroup>
     <Content Include="Views\Shared\_PartialHeader.cshtml" />
     <Content Include="Views\Account\Login.cshtml" />
-    <Content Include="Views\Account\RegisterNewbie.cshtml" />
+    <Content Include="Views\Account\RegisterApplicant.cshtml" />
     <Content Include="Views\Shared\_AsideRegister.cshtml" />
     <Content Include="Views\Shared\_AsideLogin.cshtml" />
     <Content Include="Views\Shared\_AsideUserMenu.cshtml" />
@@ -287,6 +288,7 @@
     <Content Include="Views\Account\Details.cshtml" />
     <Content Include="Views\Council\Members.cshtml" />
     <Content Include="Views\Dissertation\My.cshtml" />
+    <Content Include="Views\Account\RegisterMember.cshtml" />
     <None Include="Views\Shared\Layout.cshtml" />
     <Content Include="Views\Shared\_PartialAside.cshtml" />
     <Content Include="Views\Shared\_PartialFooter.cshtml" />
