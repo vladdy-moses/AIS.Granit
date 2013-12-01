@@ -11,7 +11,7 @@ namespace UD_Granit.Helpers
         public static class Account
         {
             public static bool RegisterApplicant(User user) { return (user == null); }
-            public static bool RegisterMember(User user) { return ((user is Member) && ((user as Member).Position == MemberPosition.Chairman)); }
+            public static bool RegisterMember(User user) { return ((user is Administrator) || ((user is Member) && ((user as Member).Position == MemberPosition.Chairman))); }
             public static bool RegisterAdministrator(User user) { return (user is Administrator); }
 
             public static bool Edit(User user) { return ((user is Administrator) || (((user is Member) && ((user as Member).Position == MemberPosition.Chairman)))); }

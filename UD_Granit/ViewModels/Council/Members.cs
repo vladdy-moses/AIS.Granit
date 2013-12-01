@@ -7,6 +7,7 @@ namespace UD_Granit.ViewModels.Council
 {
     public struct MemberView
     {
+        public int Id;
         public string Name;
         public string Position;
         public string Speciality;

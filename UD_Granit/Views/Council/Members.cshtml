@@ -21,7 +21,7 @@
             @foreach (UD_Granit.ViewModels.Council.MemberView member in Model.CouncilMembers)
             {
                 <tr>
-                    <td>@member.Name</td>
+                    <td>@Html.ActionLink(member.Name, "Details", "Account", new { id = member.Id }, null)</td>
                     <td>@member.Position</td>
                     <td>@member.Speciality</td>
                     <td>@member.Degree</td>

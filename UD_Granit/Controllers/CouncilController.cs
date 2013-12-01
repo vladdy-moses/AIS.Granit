@@ -80,13 +80,12 @@ namespace UD_Granit.Controllers
         public ActionResult Members()
         {
             UD_Granit.ViewModels.Council.Members viewModel = new ViewModels.Council.Members();
-            List<UD_Granit.ViewModels.Council.MemberView> list = new List<UD_Granit.ViewModels.Council.MemberView>();
 
             var q = from m in db.Members orderby m.Position descending select m;
             List<UD_Granit.ViewModels.Council.MemberView> memberList = new List<ViewModels.Council.MemberView>();
             foreach (Member m in q)
             {
-                memberList.Add(new UD_Granit.ViewModels.Council.MemberView() { Name = m.GetFullName(), Degree = m.Degree, Position = m.Position.ToDescription(), Speciality = m.Speciality.GetFullName() });
+                memberList.Add(new UD_Granit.ViewModels.Council.MemberView() { Name = m.GetFullName(), Degree = m.Degree, Position = m.Position.ToDescription(), Speciality = m.Speciality.GetFullName(), Id = m.Id });
             }
 
             viewModel.CouncilMembers = memberList;

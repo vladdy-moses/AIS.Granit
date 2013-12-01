@@ -111,6 +111,8 @@ namespace UD_Granit.Controllers
         {
             if (!RightsManager.Account.RegisterMember(Session.GetUser()))
                 return HttpNotFound();
+
+            ViewData["Speciality"] = db.Specialities.Select(s => new SelectListItem { Text = s.Number + " " + s.Name, Value = s.Number });
             return View();
         }
 
@@ -243,7 +245,21 @@ namespace UD_Granit.Controllers
 
         public ActionResult All()
         {
-            return HttpNotFound();
+            if(!RightsManager.Account.Edit(Session.GetUser()))
+                return HttpNotFound();
+
+            UD_Granit.ViewModels.Account.All viewModel = new ViewModels.Account.All();
+
+            var q = from u in db.Users select u;
+            List<UD_Granit.ViewModels.Account.AccountViev> accountList = new List<ViewModels.Account.AccountViev>();
+            foreach (User u in q)
+            {
+                accountList.Add(new UD_Granit.ViewModels.Account.AccountViev() { Name = u.GetFullName(), Id = u.Id, CanEdit = RightsManager.Account.Edit(Session.GetUser(), u), Email = u.Email, Role = u.GetRole() });
+            }
+
+            viewModel.Accounts = accountList;
+
+            return View(viewModel);
         }
     }
 }

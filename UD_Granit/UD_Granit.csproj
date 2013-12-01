@@ -155,6 +155,7 @@
     <Compile Include="Helpers\UserHelper.cs" />
     <Compile Include="ViewModels\Account\Details.cs" />
     <Compile Include="ViewModels\Account\Login.cs" />
+    <Compile Include="ViewModels\Account\All.cs" />
     <Compile Include="ViewModels\Account\Register.cs" />
     <Compile Include="ViewModels\Account\RegisterApplicant.cs" />
     <Compile Include="ViewModels\Account\RegisterMember.cs" />
@@ -295,6 +296,7 @@
     <Content Include="Views\Account\RegisterMember.cshtml" />
     <Content Include="Views\Account\RegisterAdministrator.cshtml" />
     <Content Include="Views\Account\Register.cshtml" />
+    <Content Include="Views\Account\All.cshtml" />
     <None Include="Views\Shared\Layout.cshtml" />
     <Content Include="Views\Shared\_PartialAside.cshtml" />
     <Content Include="Views\Shared\_PartialFooter.cshtml" />

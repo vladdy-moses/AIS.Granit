@@ -1,0 +1,46 @@
+﻿@model UD_Granit.ViewModels.Account.All
+
+@{
+    ViewBag.Title = "Пользователи системы";
+}
+
+<h2>@ViewBag.Title</h2>
+
+@if ((Model != null) && (Model.Accounts != null) && (Model.Accounts.Count() > 0))
+{
+    <table>
+        <thead>
+            <tr>
+                <td>Электронный адрес</td>
+                <td>Имя</td>
+                <td>Роль в системе</td>
+                <td>Управление</td>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (UD_Granit.ViewModels.Account.AccountViev account in Model.Accounts)
+            {
+                <tr>
+                    <td>@account.Email</td>
+                    <td>@Html.ActionLink(account.Name, "Details", new { id = account.Id })</td>
+                    <td>@account.Role</td>
+                    <td>@if (account.CanEdit)
+                        {
+                            Html.ActionLink("Редактировать", "Edit", new { id = account.Id });
+                        }
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
+}
+else
+{
+    <div class="error">
+        Извините, в системе не зарегистрировано ни одного пользователя.
+    </div>
+}
+
+<div class="control">
+    @Html.ActionLink("Добавить пользователя", "Register")
+</div>
