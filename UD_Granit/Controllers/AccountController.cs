@@ -77,20 +77,21 @@ namespace UD_Granit.Controllers
         public ActionResult Register()
         {
             UD_Granit.Models.User currentUser = Session.GetUser();
-            if (currentUser != null)
-            {
-                if (RightsManager.Account.RegisterMember(currentUser))
-                {
-                    ViewData["Speciality"] = db.Specialities.Select(s => new SelectListItem { Text = s.Number + " " + s.Name, Value = s.Number });
-                    return View("RegisterMember");
-                }
-            }
-            else
-            {
-                return View("RegisterApplicant");
-            }
-            return HttpNotFound();
-#warning страница с путями регистрации, если возможно зарегать несколько сущеностей (напр, админ и член совета)
+
+            bool CanRegisterApplicant = RightsManager.Account.RegisterApplicant(currentUser);
+            bool CanRegisterMember = RightsManager.Account.RegisterMember(currentUser);
+            bool CanRegisterAdministrator = RightsManager.Account.RegisterAdministrator(currentUser);
+
+            if(!CanRegisterAdministrator && !CanRegisterApplicant && !CanRegisterMember)
+                return HttpNotFound();
+
+            UD_Granit.ViewModels.Account.Register viewModel = new ViewModels.Account.Register();
+
+            viewModel.CanRegisterAdministrator = CanRegisterAdministrator;
+            viewModel.CanRegisterApplicant = CanRegisterApplicant;
+            viewModel.CanRegisterMember = CanRegisterMember;
+
+            return View(viewModel);
         }
 
         //
@@ -228,7 +229,7 @@ namespace UD_Granit.Controllers
             User showedUser = q.First();
 
             UD_Granit.ViewModels.Account.Details viewModel = new UD_Granit.ViewModels.Account.Details();
-            
+
             viewModel.User = showedUser;
             viewModel.CanEdit = RightsManager.Account.Edit(currentUser, showedUser);
             viewModel.CanRemove = RightsManager.Account.Remove(currentUser, showedUser);

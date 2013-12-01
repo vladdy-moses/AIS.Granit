@@ -1,0 +1,22 @@
+﻿@model UD_Granit.ViewModels.Account.Register
+
+@{
+    ViewBag.Title = "Регистрация";
+}
+
+<h2>@ViewBag.Title</h2>
+
+<div class="control">
+    @if (Model.CanRegisterApplicant)
+    {
+        @Html.ActionLink("Соискатель", "RegisterApplicant")
+    }
+    @if (Model.CanRegisterMember)
+    {
+        @Html.ActionLink("Член совета", "RegisterMember")
+    }
+    @if (Model.CanRegisterAdministrator)
+    {
+        @Html.ActionLink("Администратор", "RegisterAdministrator")
+    }
+</div>
