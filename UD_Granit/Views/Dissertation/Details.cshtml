@@ -75,41 +75,6 @@
     </tbody>
 </table>
 
-<h3>Сведения о научном руководителе</h3>
-<table>
-    <tr>
-        <td>@Html.LabelFor(model => model.Dissertation.ScientificDirector.FirstName)</td>
-        <td>@Model.Dissertation.ScientificDirector.FirstName</td>
-    </tr>
-    <tr>
-        <td>@Html.LabelFor(model => model.Dissertation.ScientificDirector.SecondName)</td>
-        <td>@Model.Dissertation.ScientificDirector.SecondName</td>
-    </tr>
-    @if (Model.Dissertation.ScientificDirector.LastName != null)
-    {
-        <tr>
-            <td>@Html.LabelFor(model => model.Dissertation.ScientificDirector.LastName)</td>
-            <td>@Model.Dissertation.ScientificDirector.LastName</td>
-        </tr>
-    }
-    <tr>
-        <td>@Html.LabelFor(model => model.Dissertation.ScientificDirector.Degree)</td>
-        <td>@Model.Dissertation.ScientificDirector.Degree</td>
-    </tr>
-    <tr>
-        <td>@Html.LabelFor(model => model.Dissertation.ScientificDirector.Organization)</td>
-        <td>@Model.Dissertation.ScientificDirector.Organization</td>
-    </tr>
-    <tr>
-        <td>@Html.LabelFor(model => model.Dissertation.ScientificDirector.Organization_Department)</td>
-        <td>@Model.Dissertation.ScientificDirector.Organization_Department</td>
-    </tr>
-    <tr>
-        <td>@Html.LabelFor(model => model.Dissertation.ScientificDirector.Organization_Post)</td>
-        <td>@Model.Dissertation.ScientificDirector.Organization_Post</td>
-    </tr>
-</table>
-
 <h3>Сведения об отзывах</h3>
 #warning Добавить отображение отзывов
 

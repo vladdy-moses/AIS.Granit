@@ -14,7 +14,7 @@ namespace UD_Granit.Models
         public DataContext()
             : base("DefaultConnection")
         {
-            var q = from u in this.Administrators select u.Id;
+            var q = from u in this.Administrators select u;
             if (q.Count() == 0)
             {
                 InitDatabase();
@@ -23,6 +23,8 @@ namespace UD_Granit.Models
 
         public DbSet<User> Users { set; get; }
         public DbSet<Applicant> Applicants { set; get; }
+        public DbSet<ApplicantCandidate> ApplicantCandidates { set; get; }
+        public DbSet<ApplicantDoctor> ApplicantDoctors { set; get; }
         public DbSet<Administrator> Administrators { set; get; }
         public DbSet<Member> Members { set; get; }
 
@@ -44,12 +46,18 @@ namespace UD_Granit.Models
 
             modelBuilder.Entity<User>().ToTable("Users");
             modelBuilder.Entity<Applicant>().ToTable("Applicants");
+            modelBuilder.Entity<ApplicantCandidate>().ToTable("ApplicantCandidates");
+            modelBuilder.Entity<ApplicantDoctor>().ToTable("ApplicantDoctors");
             modelBuilder.Entity<Administrator>().ToTable("Administrators");
-            modelBuilder.Entity<Member>().ToTable("Members");
+            modelBuilder.Entity<Member>().ToTable("Members", "guest");
 
             modelBuilder.Entity<Session>().ToTable("Sessions");
             modelBuilder.Entity<SessionDefence>().ToTable("SessionsDefence");
             modelBuilder.Entity<SessionСonsideration>().ToTable("SessionsСonsideration");
+
+            modelBuilder.Entity<Council>().ToTable("Council", "guest");
+
+            modelBuilder.Entity<Applicant>().HasOptional(t => t.Dissertation).WithRequired(t => t.Applicant);
         }
 
         protected void InitDatabase()
@@ -78,8 +86,8 @@ AS
 	    SELECT 1
 RETURN 0
 ";
-            cmd.ExecuteNonQuery();
-            this.SaveChanges();
+            //cmd.ExecuteNonQuery();
+            //this.SaveChanges();
         }
     }
 }

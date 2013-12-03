@@ -67,14 +67,11 @@ namespace UD_Granit.Models
         [Display(Name = "Специальность")]
         public virtual Speciality Speciality { set; get; }
 
-        [Required]
-        [Display(Name = "Научный руководитель")]
-        public virtual ScientificDirector ScientificDirector { set; get; } 
-
-        [Required]
+        /*[Required]
         [ForeignKey("Applicant")]
-        public int Applicant_Id { get; set; }
+        public int Applicant_Id { set; get; }*/
 
+        [Required]
         public virtual Applicant Applicant { set; get; }
     }
 }

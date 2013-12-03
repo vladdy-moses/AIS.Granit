@@ -9,7 +9,8 @@
 <div class="control">
     @if (Model.CanRegisterApplicant)
     {
-        @Html.ActionLink("Соискатель", "RegisterApplicant")
+        @Html.ActionLink("Соискатель на получение степени кандидата", "RegisterApplicantCandidate")
+        @Html.ActionLink("Соискатель на получение степени доктора", "RegisterApplicantDoctor")
     }
     @if (Model.CanRegisterMember)
     {

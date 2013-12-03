@@ -1,11 +1,11 @@
-﻿@model UD_Granit.ViewModels.Account.RegisterApplicant
+﻿@model UD_Granit.ViewModels.Account.RegisterApplicantCandidate
 
 @{
     ViewBag.Title = "Регистрация соискателя";
 }
 
 <h2>@ViewBag.Title</h2>
-@using (Html.BeginForm("RegisterApplicant", "Account"))
+@using (Html.BeginForm("RegisterApplicantCandidate", "Account"))
 {
     @Html.ValidationSummary(true)
 
@@ -137,6 +137,66 @@
         <div class="editor-field">
             @Html.EditorFor(model => model.User.University_Departmant)&nbsp;
             @Html.ValidationMessageFor(model => model.User.University_Departmant)
+        </div>
+    </fieldset>
+    
+    <fieldset>
+        <legend>Информация о научном руководителе</legend>
+
+        <div class="editor-label">
+            @Html.LabelFor(model => model.ScientificDirector.FirstName)
+        </div>
+        <div class="editor-field">
+            @Html.TextBoxFor(model => model.ScientificDirector.FirstName)
+            @Html.ValidationMessageFor(model => model.ScientificDirector.FirstName)
+        </div>
+
+        <div class="editor-label">
+            @Html.LabelFor(model => model.ScientificDirector.SecondName)
+        </div>
+        <div class="editor-field">
+            @Html.TextBoxFor(model => model.ScientificDirector.SecondName)
+            @Html.ValidationMessageFor(model => model.ScientificDirector.SecondName)
+        </div>
+
+        <div class="editor-label">
+            @Html.LabelFor(model => model.ScientificDirector.LastName)
+        </div>
+        <div class="editor-field">
+            @Html.TextBoxFor(model => model.ScientificDirector.LastName)
+            @Html.ValidationMessageFor(model => model.ScientificDirector.LastName)
+        </div>
+
+        <div class="editor-label">
+            @Html.LabelFor(model => model.ScientificDirector.Degree)
+        </div>
+        <div class="editor-field">
+            @Html.TextBoxFor(model => model.ScientificDirector.Degree)
+            @Html.ValidationMessageFor(model => model.ScientificDirector.Degree)
+        </div>
+
+        <div class="editor-label">
+            @Html.LabelFor(model => model.ScientificDirector.Organization)
+        </div>
+        <div class="editor-field">
+            @Html.TextBoxFor(model => model.ScientificDirector.Organization)
+            @Html.ValidationMessageFor(model => model.ScientificDirector.Organization)
+        </div>
+
+        <div class="editor-label">
+            @Html.LabelFor(model => model.ScientificDirector.Organization_Department)
+        </div>
+        <div class="editor-field">
+            @Html.TextBoxFor(model => model.ScientificDirector.Organization_Department)
+            @Html.ValidationMessageFor(model => model.ScientificDirector.Organization_Department)
+        </div>
+
+        <div class="editor-label">
+            @Html.LabelFor(model => model.ScientificDirector.Organization_Post)
+        </div>
+        <div class="editor-field">
+            @Html.TextBoxFor(model => model.ScientificDirector.Organization_Post)
+            @Html.ValidationMessageFor(model => model.ScientificDirector.Organization_Post)
         </div>
     </fieldset>
     

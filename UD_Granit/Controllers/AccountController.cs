@@ -82,7 +82,7 @@ namespace UD_Granit.Controllers
             bool CanRegisterMember = RightsManager.Account.RegisterMember(currentUser);
             bool CanRegisterAdministrator = RightsManager.Account.RegisterAdministrator(currentUser);
 
-            if(!CanRegisterAdministrator && !CanRegisterApplicant && !CanRegisterMember)
+            if (!CanRegisterAdministrator && !CanRegisterApplicant && !CanRegisterMember)
                 return HttpNotFound();
 
             UD_Granit.ViewModels.Account.Register viewModel = new ViewModels.Account.Register();
@@ -95,9 +95,19 @@ namespace UD_Granit.Controllers
         }
 
         //
-        // GET: /Account/RegisterApplicant/
+        // GET: /Account/RegisterApplicantCandidate/
 
-        public ActionResult RegisterApplicant()
+        public ActionResult RegisterApplicantCandidate()
+        {
+            if (!RightsManager.Account.RegisterApplicant(Session.GetUser()))
+                return HttpNotFound();
+            return View();
+        }
+
+        //
+        // GET: /Account/RegisterApplicantDoctor/
+
+        public ActionResult RegisterApplicantDoctor()
         {
             if (!RightsManager.Account.RegisterApplicant(Session.GetUser()))
                 return HttpNotFound();
@@ -127,10 +137,10 @@ namespace UD_Granit.Controllers
         }
 
         //
-        // POST: /Account/RegisterApplicant/
+        // POST: /Account/RegisterApplicantCandidate/
 
         [HttpPost]
-        public ActionResult RegisterApplicant(UD_Granit.ViewModels.Account.RegisterApplicant viewModel)
+        public ActionResult RegisterApplicantCandidate(UD_Granit.ViewModels.Account.RegisterApplicantCandidate viewModel)
         {
             if (!RightsManager.Account.RegisterApplicant(Session.GetUser()))
                 return HttpNotFound();
@@ -143,11 +153,48 @@ namespace UD_Granit.Controllers
             }
             else
             {
-                Applicant currentUser = viewModel.User;
+                ApplicantCandidate currentUser = viewModel.User;
                 currentUser.RegistrationDate = DateTime.Now;
                 currentUser.IsActive = false;
 
-                db.Applicants.Add(currentUser);
+#warning Проверка на существование научного руководителя в БД
+                db.ScientificDirectors.Add(viewModel.ScientificDirector);
+                currentUser.ScientificDirector = viewModel.ScientificDirector;
+
+                db.ApplicantCandidates.Add(currentUser);
+                db.SaveChanges();
+                Session.SetUser(currentUser);
+
+                return RedirectToAction("Create", "Dissertation");
+            }
+        }
+
+        //
+        // POST: /Account/RegisterApplicantDoctor/
+
+        [HttpPost]
+        public ActionResult RegisterApplicantDoctor(UD_Granit.ViewModels.Account.RegisterApplicantDoctor viewModel)
+        {
+            if (!RightsManager.Account.RegisterApplicant(Session.GetUser()))
+                return HttpNotFound();
+
+            var q = from u in db.Users where u.Email == viewModel.User.Email select u;
+            if (q.Count() > 0)
+            {
+                ViewData.NotificationAdd(new NotificationManager.Notify() { Type = NotificationManager.Notify.NotifyType.Error, Message = "Пользователь с таким электронным почтовым ящиком уже зарегистрирован. Пожалуйста, выберите другой email." });
+                return View();
+            }
+            else
+            {
+                ApplicantDoctor currentUser = viewModel.User;
+                currentUser.RegistrationDate = DateTime.Now;
+                currentUser.IsActive = false;
+
+#warning Проверка на существование научного руководителя в БД
+                db.ScientificDirectors.Add(viewModel.ScientificDirector);
+                currentUser.ScientificDirector = viewModel.ScientificDirector;
+
+                db.ApplicantDoctors.Add(currentUser);
                 db.SaveChanges();
                 Session.SetUser(currentUser);
 
@@ -245,7 +292,7 @@ namespace UD_Granit.Controllers
 
         public ActionResult All()
         {
-            if(!RightsManager.Account.Edit(Session.GetUser()))
+            if (!RightsManager.Account.Edit(Session.GetUser()))
                 return HttpNotFound();
 
             UD_Granit.ViewModels.Account.All viewModel = new ViewModels.Account.All();

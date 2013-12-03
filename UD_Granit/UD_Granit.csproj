@@ -157,16 +157,16 @@
     <Compile Include="ViewModels\Account\Login.cs" />
     <Compile Include="ViewModels\Account\All.cs" />
     <Compile Include="ViewModels\Account\Register.cs" />
-    <Compile Include="ViewModels\Account\RegisterApplicant.cs" />
+    <Compile Include="ViewModels\Account\RegisterApplicantCandidate.cs" />
     <Compile Include="ViewModels\Account\RegisterMember.cs" />
     <Compile Include="ViewModels\Account\RegisterAdministrator.cs" />
+    <Compile Include="ViewModels\Account\RegisterApplicantDoctor.cs" />
     <Compile Include="ViewModels\Council\Edit.cs" />
     <Compile Include="ViewModels\Council\Index.cs" />
     <Compile Include="ViewModels\Council\Members.cs" />
     <Compile Include="ViewModels\Dissertation\Create.cs" />
     <Compile Include="ViewModels\Dissertation\Details.cs" />
     <Compile Include="ViewModels\Dissertation\Index.cs" />
-    <Compile Include="ViewModels\Dissertation\My.cs" />
     <Compile Include="ViewModels\Home\Index.cs" />
     <Compile Include="ViewModels\Speciality\Create.cs" />
     <Compile Include="ViewModels\Speciality\Edit.cs" />
@@ -283,7 +283,7 @@
   <ItemGroup>
     <Content Include="Views\Shared\_PartialHeader.cshtml" />
     <Content Include="Views\Account\Login.cshtml" />
-    <Content Include="Views\Account\RegisterApplicant.cshtml" />
+    <Content Include="Views\Account\RegisterApplicantCandidate.cshtml" />
     <Content Include="Views\Shared\_AsideRegister.cshtml" />
     <Content Include="Views\Shared\_AsideLogin.cshtml" />
     <Content Include="Views\Shared\_AsideUserMenu.cshtml" />
@@ -292,11 +292,11 @@
     <Content Include="Views\Dissertation\Create.cshtml" />
     <Content Include="Views\Account\Details.cshtml" />
     <Content Include="Views\Council\Members.cshtml" />
-    <Content Include="Views\Dissertation\My.cshtml" />
     <Content Include="Views\Account\RegisterMember.cshtml" />
     <Content Include="Views\Account\RegisterAdministrator.cshtml" />
     <Content Include="Views\Account\Register.cshtml" />
     <Content Include="Views\Account\All.cshtml" />
+    <Content Include="Views\Account\RegisterApplicantDoctor.cshtml" />
     <None Include="Views\Shared\Layout.cshtml" />
     <Content Include="Views\Shared\_PartialAside.cshtml" />
     <Content Include="Views\Shared\_PartialFooter.cshtml" />

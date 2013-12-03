@@ -69,38 +69,37 @@ namespace UD_Granit.Controllers
         [HttpPost]
         public ActionResult Create(UD_Granit.ViewModels.Dissertation.Create viewModel)
         {
-            if ((Session.GetUser() is Applicant) == false)
+            Applicant currentUser = Session.GetUser() as Applicant;
+
+            if (currentUser == null)
                 return HttpNotFound();
 
-            try
-            {
-                Dissertation currentDissertation = viewModel.Dissertation;
-                currentDissertation.Applicant_Id = Session.GetUser().Id;
-                currentDissertation.File_Abstract = Path.GetExtension(viewModel.File_Abstract.FileName);
-                currentDissertation.File_Text = Path.GetExtension(viewModel.File_Text.FileName);
-                currentDissertation.File_Summary = Path.GetExtension(viewModel.File_Summary.FileName);
-                currentDissertation.Defensed = false;
-                currentDissertation.Speciality = db.Specialities.Find(viewModel.Speciality);
+            //try
+            //{
+            Dissertation currentDissertation = viewModel.Dissertation;
+            currentDissertation.Applicant = db.Applicants.Find(currentUser.Id);
+            currentDissertation.File_Abstract = Path.GetExtension(viewModel.File_Abstract.FileName);
+            currentDissertation.File_Text = Path.GetExtension(viewModel.File_Text.FileName);
+            currentDissertation.File_Summary = Path.GetExtension(viewModel.File_Summary.FileName);
+            currentDissertation.Defensed = false;
+            currentDissertation.Speciality = db.Specialities.Find(viewModel.Speciality);
 
-#warning Проверка на существование научного руководителя в БД
-                db.ScientificDirectors.Add(viewModel.ScientificDirector);
-                currentDissertation.ScientificDirector = viewModel.ScientificDirector;
-
-                db.Dissertations.Add(currentDissertation);
-                db.SaveChanges();
+            db.Dissertations.Add(currentDissertation);
+            db.SaveChanges();
 
 #warning Проверять на существование файлов
-                viewModel.File_Abstract.SaveAs(Server.MapPath(Path.Combine("~/App_Data/", currentDissertation.Id + "_Abstract" + currentDissertation.File_Abstract)));
-                viewModel.File_Text.SaveAs(Server.MapPath(Path.Combine("~/App_Data/", currentDissertation.Id + "_Text" + currentDissertation.File_Text)));
-                viewModel.File_Summary.SaveAs(Server.MapPath(Path.Combine("~/App_Data/", currentDissertation.Id + "_Summary" + currentDissertation.File_Summary)));
+            viewModel.File_Abstract.SaveAs(Server.MapPath(Path.Combine("~/App_Data/", currentDissertation.Id + "_Abstract" + currentDissertation.File_Abstract)));
+            viewModel.File_Text.SaveAs(Server.MapPath(Path.Combine("~/App_Data/", currentDissertation.Id + "_Text" + currentDissertation.File_Text)));
+            viewModel.File_Summary.SaveAs(Server.MapPath(Path.Combine("~/App_Data/", currentDissertation.Id + "_Summary" + currentDissertation.File_Summary)));
 
-                return RedirectToAction("Details", new { id = currentDissertation.Id });
-            }
+            return RedirectToAction("Details", new { id = currentDissertation.Id });
+            /*}
             catch (Exception ex)
             {
                 ViewData.NotificationAdd(new NotificationManager.Notify() { Message = ex.Message, Type = NotificationManager.Notify.NotifyType.Error });
+                ViewData["Speciality"] = db.Specialities.Select(s => new SelectListItem { Text = s.Number + " " + s.Name, Value = s.Number });
                 return View();
-            }
+            }*/
         }
 
         //
@@ -166,9 +165,10 @@ namespace UD_Granit.Controllers
             if ((currentUser is Applicant) == false)
                 return HttpNotFound();
 
-            UD_Granit.ViewModels.Dissertation.My viewModel = new ViewModels.Dissertation.My();
-            viewModel.Dissertations = (from d in db.Dissertations where d.Applicant_Id == currentUser.Id select d);
-            return View(viewModel);
+            var dissertations = db.Dissertations.Where(d => d.Applicant.Id == currentUser.Id);
+            if (dissertations.Count() == 0)
+                return RedirectToAction("Create");
+            return RedirectToAction("Details", new { id = dissertations.Single().Id });
         }
 
         //
@@ -194,7 +194,7 @@ namespace UD_Granit.Controllers
                     fileName = currentDisserrtation.Id + "_Summary" + currentDisserrtation.File_Abstract;
                     break;
             }
-            if(fileName.Length == 0)
+            if (fileName.Length == 0)
                 return HttpNotFound();
 
             return File("~/App_Data/" + fileName, "binary/octet-stream", fileName);
@@ -212,7 +212,7 @@ namespace UD_Granit.Controllers
                 }
                 else
                 {
-                    if ((currentUser is Applicant) && (currentUser.Id != dissertation.Applicant_Id))
+                    if ((currentUser is Applicant) && (currentUser.Id != dissertation.Applicant.Id))
                         if (!dissertation.Defensed || dissertation.Administrative_Use)
                             return false;
                 }
@@ -225,7 +225,7 @@ namespace UD_Granit.Controllers
         {
             User currentUser = Session.GetUser();
 
-            return !((currentUser is Applicant) && (currentUser.Id != dissertation.Applicant_Id));
+            return !((currentUser is Applicant) && (currentUser.Id != dissertation.Applicant.Id));
         }
 
         private bool CanCreateSession()

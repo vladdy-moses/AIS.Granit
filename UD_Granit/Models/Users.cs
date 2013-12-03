@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
 using System.Linq;
 using System.Web;
 
@@ -92,7 +93,22 @@ namespace UD_Granit.Models
         [Display(Name = "Подразделение, где проходил аспирантуру")]
         public string University_Departmant { set; get; }
 
-        public virtual ICollection<Dissertation> Dissertations { set; get; }
+        public Dissertation Dissertation { set; get; }
+
+        /*[Required]*/
+        [Display(Name = "Научный руководитель")]
+        public virtual ScientificDirector ScientificDirector { set; get; } 
+    }
+
+    public class ApplicantCandidate : Applicant
+    {
+        public string DocumentOfEducation { set; get; }
+        public string CandidateExams { set; get; }
+    }
+
+    public class ApplicantDoctor : Applicant
+    {
+        public string CandidateDiplom { set; get; }
     }
 
     public class Administrator : User

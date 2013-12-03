@@ -80,6 +80,44 @@
     </table>
 }
 
+@if (Model.User is UD_Granit.Models.Applicant)
+{
+    <h3>Сведения о научном руководителе</h3>
+    <table>
+        <tr>
+            <td>@Html.LabelFor(model => (Model.User as UD_Granit.Models.Applicant).ScientificDirector.FirstName)</td>
+            <td>@((Model.User as UD_Granit.Models.Applicant).ScientificDirector.FirstName)</td>
+        </tr>
+        <tr>
+            <td>@Html.LabelFor(model => (Model.User as UD_Granit.Models.Applicant).ScientificDirector.SecondName)</td>
+            <td>@((Model.User as UD_Granit.Models.Applicant).ScientificDirector.SecondName)</td>
+        </tr>
+        @if ((Model.User as UD_Granit.Models.Applicant).ScientificDirector.LastName != null)
+        {
+            <tr>
+                <td>@Html.LabelFor(model => (Model.User as UD_Granit.Models.Applicant).ScientificDirector.LastName)</td>
+                <td>@((Model.User as UD_Granit.Models.Applicant).ScientificDirector.LastName)</td>
+            </tr>
+        }
+        <tr>
+            <td>@Html.LabelFor(model => (Model.User as UD_Granit.Models.Applicant).ScientificDirector.Degree)</td>
+            <td>@((Model.User as UD_Granit.Models.Applicant).ScientificDirector.Degree)</td>
+        </tr>
+        <tr>
+            <td>@Html.LabelFor(model => (Model.User as UD_Granit.Models.Applicant).ScientificDirector.Organization)</td>
+            <td>@((Model.User as UD_Granit.Models.Applicant).ScientificDirector.Organization)</td>
+        </tr>
+        <tr>
+            <td>@Html.LabelFor(model => (Model.User as UD_Granit.Models.Applicant).ScientificDirector.Organization_Department)</td>
+            <td>@((Model.User as UD_Granit.Models.Applicant).ScientificDirector.Organization_Department)</td>
+        </tr>
+        <tr>
+            <td>@Html.LabelFor(model => (Model.User as UD_Granit.Models.Applicant).ScientificDirector.Organization_Post)</td>
+            <td>@((Model.User as UD_Granit.Models.Applicant).ScientificDirector.Organization_Post)</td>
+        </tr>
+    </table>
+}
+
 @if (Model.CanShowAdditionalInfo)
 {
     <h3>Дополнительная информация</h3>

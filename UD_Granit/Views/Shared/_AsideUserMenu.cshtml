@@ -7,13 +7,13 @@
         <ul class="menu">
             @if (Session.GetUser() is UD_Granit.Models.Applicant)
             {
-                <li>@Html.ActionLink("Мои диссертации", "My", "Dissertation")</li>
-                <li>@Html.ActionLink("Мои заседания", "My", "Session")</li>
+                <li>@Html.ActionLink("Диссертация", "My", "Dissertation")</li>
+                <li>@Html.ActionLink("Заседания", "My", "Session")</li>
             }
 
             @if (Session.GetUserPosition() == UD_Granit.Models.MemberPosition.Member)
             {
-                <li>@Html.ActionLink("Мои заседания", "My", "Session")</li>
+                <li>@Html.ActionLink("Заседания", "My", "Session")</li>
                 <li>@Html.ActionLink("Соискатели", "ShowApplicants", "Account")</li>
             }
             @if (Session.GetUserPosition() == UD_Granit.Models.MemberPosition.Secretary)
