@@ -78,7 +78,47 @@
 <h3>Сведения об отзывах</h3>
 @if ((Model.Dissertation.Replies != null) && (Model.Dissertation.Replies.Count > 0))
 {
-#warning Добавить отображение отзывов
+    foreach (UD_Granit.Models.Reply reply in Model.Dissertation.Replies)
+    {
+    <table>
+        <tbody>
+            <tr>
+                <td>Автор отзыва</td>
+                <td>@reply.Author</td>
+            </tr>
+            <tr>
+                <td>Организация</td>
+                <td>@reply.Organization</td>
+            </tr>
+            <tr>
+                <td>Подразделение</td>
+                <td>@reply.Departmant</td>
+            </tr>
+            <tr>
+                <td>Учёная степень</td>
+                <td>@reply.Ph_D</td>
+            </tr>
+            <tr>
+                <td colspan="2">Текст отзыва</td>
+            </tr>
+            <tr>
+                <td colspan="2">
+                    <pre>@reply.Text</pre>
+                </td>
+            </tr>
+            @if (Model.CanAddReplies)
+            {
+                <tr>
+                    <td>Управление</td>
+                    <td>
+                        @Html.ActionLink("Удалить", "Delete", "Reply", new { id = reply.Id }, null)
+                    </td>
+                </tr>   
+            }
+        </tbody>
+    </table>
+    <p></p>
+    }
 }
 else
 {

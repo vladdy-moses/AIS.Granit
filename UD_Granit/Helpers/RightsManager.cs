@@ -47,5 +47,10 @@ namespace UD_Granit.Helpers
         {
 
         }
+
+        public static class Reply
+        {
+            public static bool AddReply(User user, Models.Dissertation dissertation) { return ((user is Applicant) && (dissertation != null) && ((user as Applicant).Id == dissertation.Id)); }
+        }
     }
 }

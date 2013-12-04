@@ -1,0 +1,67 @@
+﻿@model UD_Granit.ViewModels.Reply.Create
+
+@{
+    ViewBag.Title = "Create";
+}
+
+<h2>Create</h2>
+
+@using (Html.BeginForm())
+{
+    @Html.AntiForgeryToken()
+    @Html.ValidationSummary(true)
+
+    <fieldset>
+        <legend>Reply</legend>
+
+        @Html.HiddenFor(model => Model.Dissertation_Id)
+
+        <div class="editor-label">
+            @Html.LabelFor(model => model.Reply.Author)
+        </div>
+        <div class="editor-field">
+            @Html.EditorFor(model => model.Reply.Author)
+            @Html.ValidationMessageFor(model => model.Reply.Author)
+        </div>
+
+        <div class="editor-label">
+            @Html.LabelFor(model => model.Reply.Organization)
+        </div>
+        <div class="editor-field">
+            @Html.EditorFor(model => model.Reply.Organization)
+            @Html.ValidationMessageFor(model => model.Reply.Organization)
+        </div>
+
+        <div class="editor-label">
+            @Html.LabelFor(model => model.Reply.Departmant)
+        </div>
+        <div class="editor-field">
+            @Html.EditorFor(model => model.Reply.Departmant)
+            @Html.ValidationMessageFor(model => model.Reply.Departmant)
+        </div>
+
+        <div class="editor-label">
+            @Html.LabelFor(model => model.Reply.Ph_D)
+        </div>
+        <div class="editor-field">
+            @Html.EditorFor(model => model.Reply.Ph_D)
+            @Html.ValidationMessageFor(model => model.Reply.Ph_D)
+        </div>
+
+        <div class="editor-label">
+            @Html.LabelFor(model => model.Reply.Text)
+        </div>
+        <div class="editor-field">
+            @Html.EditorFor(model => model.Reply.Text)
+            @Html.ValidationMessageFor(model => model.Reply.Text)
+        </div>
+
+        <div class="control">
+            <button>Добавить отзыв</button>
+        </div>
+    </fieldset>
+}
+
+<div>
+    @Html.ActionLink("Back to List", "Index")
+</div>

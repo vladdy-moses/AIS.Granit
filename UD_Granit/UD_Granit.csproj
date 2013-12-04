@@ -171,6 +171,7 @@
     <Compile Include="ViewModels\Dissertation\Index.cs" />
     <Compile Include="ViewModels\Dissertation\Edit.cs" />
     <Compile Include="ViewModels\Home\Index.cs" />
+    <Compile Include="ViewModels\Reply\Create.cs" />
     <Compile Include="ViewModels\Speciality\Create.cs" />
     <Compile Include="ViewModels\Speciality\Edit.cs" />
     <Compile Include="ViewModels\Speciality\Index.cs" />
@@ -302,6 +303,7 @@
     <Content Include="Views\Account\RegisterApplicantDoctor.cshtml" />
     <Content Include="Views\Dissertation\Edit.cshtml" />
     <Content Include="Views\Dissertation\Delete.cshtml" />
+    <Content Include="Views\Reply\Create.cshtml" />
     <None Include="Views\Shared\Layout.cshtml" />
     <Content Include="Views\Shared\_PartialAside.cshtml" />
     <Content Include="Views\Shared\_PartialFooter.cshtml" />

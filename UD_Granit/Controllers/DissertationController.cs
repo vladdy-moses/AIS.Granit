@@ -172,10 +172,8 @@ namespace UD_Granit.Controllers
         {
 #warning При удалении удалять также заседания (каскадно), если у него больше нет диссертаций и ФАЙЛЫ НА СЕРВЕРЕ
             Dissertation currentDissertation = db.Dissertations.Find(id);
-            if (currentDissertation == null)
-                return HttpNotFound();
 
-            if (!CanEdit(currentDissertation))
+            if (!RightsManager.Reply.AddReply(Session.GetUser(), currentDissertation))
                 return HttpNotFound();
 
             UD_Granit.ViewModels.Dissertation.Delete viewModel = new ViewModels.Dissertation.Delete();
