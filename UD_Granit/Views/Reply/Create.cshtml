@@ -41,18 +41,18 @@
         </div>
 
         <div class="editor-label">
-            @Html.LabelFor(model => model.Reply.Ph_D)
+            @Html.LabelFor(model => model.Reply.Degree)
         </div>
         <div class="editor-field">
-            @Html.EditorFor(model => model.Reply.Ph_D)
-            @Html.ValidationMessageFor(model => model.Reply.Ph_D)
+            @Html.EditorFor(model => model.Reply.Degree)
+            @Html.ValidationMessageFor(model => model.Reply.Degree)
         </div>
 
         <div class="editor-label">
             @Html.LabelFor(model => model.Reply.Text)
         </div>
         <div class="editor-field">
-            @Html.EditorFor(model => model.Reply.Text)
+            @Html.TextAreaFor(model => model.Reply.Text)
             @Html.ValidationMessageFor(model => model.Reply.Text)
         </div>
 
