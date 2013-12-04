@@ -62,14 +62,11 @@ namespace UD_Granit.Models
         public DateTime? Date_Preliminary_Defense { set; get; }
 
         public virtual ICollection<Reply> Replies { set; get; }
+        public virtual ICollection<Session> Sessions { set; get; }
 
         [Required]
         [Display(Name = "Специальность")]
         public virtual Speciality Speciality { set; get; }
-
-        /*[Required]
-        [ForeignKey("Applicant")]
-        public int Applicant_Id { set; get; }*/
 
         [Required]
         public virtual Applicant Applicant { set; get; }
