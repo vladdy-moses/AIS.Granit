@@ -131,6 +131,7 @@
     <Compile Include="Controllers\DissertationController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="App_Start\FilterConfig.cs" />
+    <Compile Include="Controllers\ReplyController.cs" />
     <Compile Include="Controllers\SpecialityController.cs" />
     <Compile Include="Controllers\StyleController.cs" />
     <Compile Include="Global.asax.cs">
@@ -165,8 +166,10 @@
     <Compile Include="ViewModels\Council\Index.cs" />
     <Compile Include="ViewModels\Council\Members.cs" />
     <Compile Include="ViewModels\Dissertation\Create.cs" />
+    <Compile Include="ViewModels\Dissertation\Delete.cs" />
     <Compile Include="ViewModels\Dissertation\Details.cs" />
     <Compile Include="ViewModels\Dissertation\Index.cs" />
+    <Compile Include="ViewModels\Dissertation\Edit.cs" />
     <Compile Include="ViewModels\Home\Index.cs" />
     <Compile Include="ViewModels\Speciality\Create.cs" />
     <Compile Include="ViewModels\Speciality\Edit.cs" />
@@ -297,6 +300,8 @@
     <Content Include="Views\Account\Register.cshtml" />
     <Content Include="Views\Account\All.cshtml" />
     <Content Include="Views\Account\RegisterApplicantDoctor.cshtml" />
+    <Content Include="Views\Dissertation\Edit.cshtml" />
+    <Content Include="Views\Dissertation\Delete.cshtml" />
     <None Include="Views\Shared\Layout.cshtml" />
     <Content Include="Views\Shared\_PartialAside.cshtml" />
     <Content Include="Views\Shared\_PartialFooter.cshtml" />

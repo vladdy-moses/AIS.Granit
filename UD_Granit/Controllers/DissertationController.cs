@@ -35,6 +35,8 @@ namespace UD_Granit.Controllers
                 User currentUser = Session.GetUser();
                 viewModel.CanEdit = CanEdit(dissertation);
                 viewModel.CanCreateSession = CanCreateSession();
+                viewModel.CanAddReplies = currentUser.Id == dissertation.Applicant.Id;
+                viewModel.CanEditReplies = currentUser.Id == dissertation.Applicant.Id;
 
                 return View(viewModel);
             }
@@ -51,13 +53,18 @@ namespace UD_Granit.Controllers
                 User currentUser = Session.GetUser();
                 if (currentUser is Applicant)
                 {
-                    var dissertations = from d in db.Dissertations where d.Applicant.Id == currentUser.Id select d;
+                    var dissertations = db.Dissertations.Where(d => d.Applicant.Id == currentUser.Id);
                     if (dissertations.Count() == 0)
+                    {
                         ViewData.NotificationAdd(new NotificationManager.Notify() { Type = NotificationManager.Notify.NotifyType.Info, Message = "Заполните информацию о Вашей диссертации. Вы можете сделать это позже, также как и отредактировать информацию о ней." });
-#warning Добавить проверку на то, что нельзя больше одной незащищённой диссертации
+                        ViewData["Speciality"] = db.Specialities.Select(s => new SelectListItem { Text = s.Number + " " + s.Name, Value = s.Number });
 
-                    ViewData["Speciality"] = db.Specialities.Select(s => new SelectListItem { Text = s.Number + " " + s.Name, Value = s.Number });
-                    return View();
+                        return View();
+                    }
+                    else
+                    {
+                        return RedirectToAction("Details", new { id = dissertations.Single().Id });
+                    }
                 }
             }
             return HttpNotFound();
@@ -74,9 +81,11 @@ namespace UD_Granit.Controllers
             if (currentUser == null)
                 return HttpNotFound();
 
-            //try
-            //{
+            if (db.Dissertations.Where(d => d.Applicant.Id == currentUser.Id).Count() != 0)
+                return HttpNotFound();
+
             Dissertation currentDissertation = viewModel.Dissertation;
+            currentDissertation.Type = (currentUser is ApplicantCandidate) ? DissertationType.Candidate : DissertationType.Doctor;
             currentDissertation.Applicant = db.Applicants.Find(currentUser.Id);
             currentDissertation.File_Abstract = Path.GetExtension(viewModel.File_Abstract.FileName);
             currentDissertation.File_Text = Path.GetExtension(viewModel.File_Text.FileName);
@@ -93,13 +102,6 @@ namespace UD_Granit.Controllers
             viewModel.File_Summary.SaveAs(Server.MapPath(Path.Combine("~/App_Data/", currentDissertation.Id + "_Summary" + currentDissertation.File_Summary)));
 
             return RedirectToAction("Details", new { id = currentDissertation.Id });
-            /*}
-            catch (Exception ex)
-            {
-                ViewData.NotificationAdd(new NotificationManager.Notify() { Message = ex.Message, Type = NotificationManager.Notify.NotifyType.Error });
-                ViewData["Speciality"] = db.Specialities.Select(s => new SelectListItem { Text = s.Number + " " + s.Name, Value = s.Number });
-                return View();
-            }*/
         }
 
         //
@@ -107,24 +109,59 @@ namespace UD_Granit.Controllers
 
         public ActionResult Edit(int id)
         {
-            return View();
+#warning только когда нет прикрепленных сессий
+            Applicant currentUser = Session.GetUser() as Applicant;
+            if (currentUser == null)
+                return HttpNotFound();
+
+            if (id != currentUser.Id)
+                return HttpNotFound();
+#warning CanEdit...
+
+            UD_Granit.ViewModels.Dissertation.Edit viewModel = new ViewModels.Dissertation.Edit();
+            viewModel.Dissertation = db.Dissertations.Find(id);
+
+            ViewData["Speciality"] = db.Specialities.Select(s => new SelectListItem { Text = s.Number + " " + s.Name, Value = s.Number });
+            return View(viewModel);
         }
 
         //
         // POST: /Dissertation/Edit/5
 
         [HttpPost]
-        public ActionResult Edit(int id, FormCollection collection)
+        public ActionResult Edit(UD_Granit.ViewModels.Dissertation.Edit viewModel)
         {
             try
             {
-                // TODO: Add update logic here
+                Dissertation currentDissertation = viewModel.Dissertation;
+                currentDissertation.Speciality = db.Specialities.Find(viewModel.Speciality);
 
-                return RedirectToAction("Index");
+                Dissertation baseDissertation = db.Dissertations.Find(currentDissertation.Id);
+
+                baseDissertation.Title = currentDissertation.Title;
+                baseDissertation.Publications = currentDissertation.Publications;
+                baseDissertation.Administrative_Use = currentDissertation.Administrative_Use;
+                baseDissertation.Date_Preliminary_Defense = currentDissertation.Date_Preliminary_Defense;
+                baseDissertation.Date_Sending = currentDissertation.Date_Sending;
+                baseDissertation.Defensed = currentDissertation.Defensed;
+                baseDissertation.References = currentDissertation.References;
+
+                baseDissertation.Speciality = currentDissertation.Speciality;
+                baseDissertation.Applicant = db.Applicants.Find(Session.GetUser().Id);
+
+#warning файлы
+
+                db.Entry<Dissertation>(baseDissertation).State = System.Data.Entity.EntityState.Modified;
+                db.SaveChanges();
+
+
+                return RedirectToAction("Details", new { id = currentDissertation.Id });
             }
-            catch
+            catch (Exception ex)
             {
-                return View();
+                ViewData["Speciality"] = db.Specialities.Select(s => new SelectListItem { Text = s.Number + " " + s.Name, Value = s.Number });
+                ViewData.NotificationAdd(new NotificationManager.Notify() { Type = NotificationManager.Notify.NotifyType.Error, Message = ex.Message });
+                return View(viewModel);
             }
         }
 
@@ -133,25 +170,47 @@ namespace UD_Granit.Controllers
 
         public ActionResult Delete(int id)
         {
-#warning При удалении удалять также заседания (каскадно), научного руководителя, если у него больше нет диссертаций и ФАЙЛЫ НА СЕРВЕРЕ
-            return View();
+#warning При удалении удалять также заседания (каскадно), если у него больше нет диссертаций и ФАЙЛЫ НА СЕРВЕРЕ
+            Dissertation currentDissertation = db.Dissertations.Find(id);
+            if (currentDissertation == null)
+                return HttpNotFound();
+
+            if (!CanEdit(currentDissertation))
+                return HttpNotFound();
+
+            UD_Granit.ViewModels.Dissertation.Delete viewModel = new ViewModels.Dissertation.Delete();
+            viewModel.Id = currentDissertation.Id;
+            viewModel.Title = currentDissertation.Title;
+            return View(viewModel);
         }
 
         //
         // POST: /Dissertation/Delete/5
 
         [HttpPost]
-        public ActionResult Delete(int id, FormCollection collection)
+        public ActionResult Delete(ViewModels.Dissertation.Delete viewModel)
         {
             try
             {
-                // TODO: Add delete logic here
+#warning При удалении удалять также заседания (каскадно), если у него больше нет диссертаций и ФАЙЛЫ НА СЕРВЕРЕ
+                Dissertation currentDissertation = db.Dissertations.Find(viewModel.Id);
+                if (currentDissertation == null)
+                    return HttpNotFound();
 
-                return RedirectToAction("Index");
+                if (!CanEdit(currentDissertation))
+                    return HttpNotFound();
+
+                System.IO.File.Delete(Server.MapPath(Path.Combine("~/App_Data/", currentDissertation.Id + "_Abstract" + currentDissertation.File_Abstract)));
+                System.IO.File.Delete(Server.MapPath(Path.Combine("~/App_Data/", currentDissertation.Id + "_Text" + currentDissertation.File_Text)));
+                System.IO.File.Delete(Server.MapPath(Path.Combine("~/App_Data/", currentDissertation.Id + "_Summary" + currentDissertation.File_Summary)));
+                db.Dissertations.Remove(currentDissertation);
+                db.SaveChanges();
+
+                return RedirectToAction("Index", "Home");
             }
             catch
             {
-                return View();
+                return RedirectToAction("Details", new { id = viewModel.Id });
             }
         }
 
@@ -223,9 +282,9 @@ namespace UD_Granit.Controllers
 
         private bool CanEdit(Dissertation dissertation)
         {
-            User currentUser = Session.GetUser();
+            Applicant currentUser = Session.GetUser() as Applicant;
 
-            return !((currentUser is Applicant) && (currentUser.Id != dissertation.Applicant.Id));
+            return ((currentUser != null) && (currentUser.Id == dissertation.Applicant.Id));
         }
 
         private bool CanCreateSession()

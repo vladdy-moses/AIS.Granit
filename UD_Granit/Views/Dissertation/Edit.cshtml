@@ -1,15 +1,15 @@
-﻿@model UD_Granit.ViewModels.Dissertation.Create
+﻿@model UD_Granit.ViewModels.Dissertation.Edit
 
 @{
-    ViewBag.Title = "Создать запись о диссертации";
+    ViewBag.Title = "Редактировать запись о диссертации";
 }
 
 <h2>@ViewBag.Title</h2>
-<p>На этой странице Вы должны заполнить информацию о Вашей диссертации. Записи о диссертациях, в которые будет занесена неверная информация, будут удалены из системы.</p>
 
-@using (Html.BeginForm("Create", "Dissertation", FormMethod.Post, new { enctype = "multipart/form-data" }))
+@using (Html.BeginForm("Edit", "Dissertation", FormMethod.Post, new { enctype = "multipart/form-data" }))
 {
     @Html.ValidationSummary(true)
+    @Html.HiddenFor(model => model.Dissertation.Id)
 
     <fieldset>
         <legend>Основная информация о диссертации</legend>
@@ -105,7 +105,7 @@
     </fieldset>
 
     <div class="control">
-        <button>Добавить запись о диссертации</button>
+        <button>Изменить запись о диссертации</button>
     </div>
 }
 

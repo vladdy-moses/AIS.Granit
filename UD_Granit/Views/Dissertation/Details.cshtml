@@ -76,7 +76,14 @@
 </table>
 
 <h3>Сведения об отзывах</h3>
+@if ((Model.Dissertation.Replies != null) && (Model.Dissertation.Replies.Count > 0))
+{
 #warning Добавить отображение отзывов
+}
+else
+{
+    <div class="error">Сведения об отзывах ещё не добавлены соискателем.</div>
+}
 
 <div class="control">
     @if (Model.CanEdit)
@@ -86,6 +93,10 @@
     }
     @if (Model.CanCreateSession)
     {
-        @Html.ActionLink("Создать заседание на основании диссертации", "Create", "Session", new { id = Model.Dissertation.Id })
+        @Html.ActionLink("Создать заседание на основании диссертации", "Create", "Session", new { id = Model.Dissertation.Id }, null)
+    }
+    @if (Model.CanAddReplies)
+    {
+        @Html.ActionLink("Добавить отзыв", "Create", "Reply", new { id = Model.Dissertation.Id }, null)
     }
 </div>

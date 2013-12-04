@@ -11,5 +11,7 @@ namespace UD_Granit.ViewModels.Dissertation
 
         public bool CanEdit { set; get; }
         public bool CanCreateSession { set; get; }
+        public bool CanAddReplies { set; get; }
+        public bool CanEditReplies { set; get; }
     }
 }

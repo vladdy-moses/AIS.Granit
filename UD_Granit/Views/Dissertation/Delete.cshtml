@@ -1,0 +1,20 @@
+﻿@model UD_Granit.ViewModels.Dissertation.Delete
+
+@{
+    ViewBag.Title = "Delete";
+}
+
+<h2>Delete</h2>
+
+@using (Html.BeginForm("Delete", "Dissertation", FormMethod.Post, new { enctype = "multipart/form-data" }))
+{
+    @Html.ValidationSummary(true)
+    @Html.HiddenFor(model => model.Id)
+
+    <p>Вы действительно хотите удалить запись о диссертации <b>@Model.Title</b>?</p>
+    
+    <div class="control">
+        <button>Да</button>
+        @Html.ActionLink("Отмена", "Details", new { Id = Model.Id })
+    </div>
+}
