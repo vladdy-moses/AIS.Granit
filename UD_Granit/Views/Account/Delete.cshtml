@@ -1,0 +1,30 @@
+﻿@model UD_Granit.ViewModels.Account.Delete
+
+@{
+    ViewBag.Title = "Delete";
+}
+
+<h2>Delete</h2>
+
+@if (Model.CanDelete)
+{
+    using (Html.BeginForm("Delete", "Account"))
+    {
+    @Html.ValidationSummary(true)
+    @Html.HiddenFor(model => model.Id)
+    @Html.HiddenFor(model => model.Referer)
+
+    <p>Вы действительно хотите удалить запись о пользователе <b>@Model.Name</b>?</p>
+    
+    <div class="control">
+        <button>Да</button>
+        @Html.ActionLink("Отмена", "Details", new { Id = Model.Id })
+    </div>
+    }
+}
+else
+{
+    <div class="control">
+        <a href="@Model.Referer">Назад</a>
+    </div>   
+}

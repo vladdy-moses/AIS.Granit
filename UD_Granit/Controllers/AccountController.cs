@@ -308,5 +308,53 @@ namespace UD_Granit.Controllers
 
             return View(viewModel);
         }
+
+        //
+        // GET: /Account/Delete/5
+
+        public ActionResult Delete(int id)
+        {
+            User currentUser = Session.GetUser();
+            User deletedUser = db.Users.Find(id);
+
+            if (!RightsManager.Account.Remove(currentUser, deletedUser))
+                return HttpNotFound();
+
+            ViewModels.Account.Delete viewModel = new ViewModels.Account.Delete();
+            viewModel.CanDelete = true;
+
+            if (deletedUser is Applicant)
+            {
+                if (db.Dissertations.Find(deletedUser.Id) != null)
+                {
+                    ViewData.NotificationAdd(new NotificationManager.Notify() { Type = NotificationManager.Notify.NotifyType.Error, Message = "Невозможно удалить соискателя, так как он завёл запись о диссертации. Удалите диссертацию сначала." });
+                    viewModel.CanDelete = false;
+                }
+            }
+
+            viewModel.Id = id;
+            viewModel.Name = deletedUser.GetFullName();
+            viewModel.Referer = Request.UrlReferrer.AbsolutePath;
+            return View(viewModel);
+        }
+
+        //
+        // POST: /Account/Delete
+
+        [HttpPost]
+        public ActionResult Delete(ViewModels.Account.Delete viewModel)
+        {
+            User currentUser = Session.GetUser();
+            User deletedUser = db.Users.Find(viewModel.Id);
+
+            if (!RightsManager.Account.Remove(currentUser, deletedUser))
+                return HttpNotFound();
+
+#warning удаление пользователя
+
+            if (viewModel.Referer == null)
+                return RedirectToAction("Index", "Home");
+            return Redirect(viewModel.Referer);
+        }
     }
 }

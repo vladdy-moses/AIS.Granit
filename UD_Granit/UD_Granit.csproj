@@ -161,6 +161,7 @@
     <Compile Include="App_Start\RouteConfig.cs" />
     <Compile Include="App_Start\WebApiConfig.cs" />
     <Compile Include="Helpers\UserHelper.cs" />
+    <Compile Include="ViewModels\Account\Delete.cs" />
     <Compile Include="ViewModels\Account\Details.cs" />
     <Compile Include="ViewModels\Account\Login.cs" />
     <Compile Include="ViewModels\Account\All.cs" />
@@ -311,6 +312,7 @@
     <Content Include="Views\Dissertation\Edit.cshtml" />
     <Content Include="Views\Dissertation\Delete.cshtml" />
     <Content Include="Views\Reply\Create.cshtml" />
+    <Content Include="Views\Account\Delete.cshtml" />
     <None Include="Views\Shared\Layout.cshtml" />
     <Content Include="Views\Shared\_PartialAside.cshtml" />
     <Content Include="Views\Shared\_PartialFooter.cshtml" />

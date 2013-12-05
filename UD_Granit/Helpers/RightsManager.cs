@@ -22,7 +22,7 @@ namespace UD_Granit.Helpers
 
             public static bool Remove(User user) { return (user is Administrator); }
             public static bool Remove(User user, User removedUser) {
-                if (user == null) return false;
+                if ((user == null) || (removedUser == null)) return false;
                 return ((user is Administrator) || (user.Id == removedUser.Id) || ((user is Member) && ((user as Member).Position == MemberPosition.Chairman)));
             }
 

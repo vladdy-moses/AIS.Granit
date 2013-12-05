@@ -6,7 +6,7 @@
 
 <h2>Delete</h2>
 
-@using (Html.BeginForm("Delete", "Dissertation", FormMethod.Post, new { enctype = "multipart/form-data" }))
+@using (Html.BeginForm("Delete", "Dissertation"))
 {
     @Html.ValidationSummary(true)
     @Html.HiddenFor(model => model.Id)
