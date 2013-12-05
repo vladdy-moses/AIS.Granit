@@ -49,7 +49,7 @@ namespace UD_Granit.Models
 
         public virtual Dissertation Dissertation { set; get; }
 
-        /*[Required]*/
+        [Required]
         [Display(Name = "Научный руководитель")]
         public virtual ScientificDirector ScientificDirector { set; get; }
     }

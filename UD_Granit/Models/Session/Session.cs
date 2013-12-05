@@ -18,11 +18,7 @@ namespace UD_Granit.Models
         [Required]
         public bool Was { set; get; }
 
-        [Required]
-        [ForeignKey("Dissertation")]
-        public int Dissertation_Id { get; set; }
         public virtual Dissertation Dissertation { set; get; }
-
         public virtual ICollection<Member> Members { set; get; }
     }
 }

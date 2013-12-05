@@ -43,5 +43,7 @@ namespace UD_Granit.Models
         [Required]
         [Display(Name = "Специальность")]
         public virtual Speciality Speciality { set; get; }
+
+        public virtual ICollection<Session> Sessions { set; get; }
     }
 }

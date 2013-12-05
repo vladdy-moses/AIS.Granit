@@ -133,7 +133,8 @@ else
     }
     @if (Model.CanCreateSession)
     {
-        @Html.ActionLink("Создать заседание на основании диссертации", "Create", "Session", new { id = Model.Dissertation.Id }, null)
+        @Html.ActionLink("Создать заседание по рассмотрению", "CreateConsideration", "Session", new { id = Model.Dissertation.Id }, null)
+        @Html.ActionLink("Создать заседание по защите", "CreateDefence", "Session", new { id = Model.Dissertation.Id }, null)
     }
     @if (Model.CanAddReplies)
     {

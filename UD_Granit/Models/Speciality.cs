@@ -22,5 +22,7 @@ namespace UD_Granit.Models
         [Required]
         [Display(Name = "Название специальности")]
         public string Name { set; get; }
+
+        public virtual ICollection<Member> Members { set; get; }
     }
 }

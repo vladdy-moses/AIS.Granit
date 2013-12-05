@@ -58,6 +58,8 @@ namespace UD_Granit.Models
             modelBuilder.Entity<Council>().ToTable("Council", "guest");
 
             modelBuilder.Entity<Applicant>().HasOptional(t => t.Dissertation).WithRequired(t => t.Applicant);
+            //modelBuilder.Entity<Member>().HasRequired(t => t.Speciality).WithOptional().WillCascadeOnDelete(false);
+            //modelBuilder.Entity<Speciality>().HasOptional(t => t.Members).WithOptionalDependent().WillCascadeOnDelete(false);
             /*modelBuilder.Entity<Session>().HasMany(s => s.Members).WithMany()
                 .Map(m =>
                 {
@@ -72,6 +74,7 @@ namespace UD_Granit.Models
             Speciality s = new Speciality() { Number = "10.001.2001", Name = "Информатика и вычислительная техника", ScienceBranch = "Технические науки" };
             this.Specialities.Add(s);
             this.Specialities.Add(new Speciality() { Number = "15.001.2001", Name = "Конфликтология", ScienceBranch = "Философские науки" });
+            this.SaveChanges();
 
             ScientificDirector sd = new ScientificDirector() { Degree = "Кандидат магических наук", FirstName = "Руководтелев", SecondName = "Руководитель", Organization = "СГУ", Organization_Department = "КНИиТ", Organization_Post = "Профессор" };
             this.ScientificDirectors.Add(sd);

@@ -1,0 +1,32 @@
+﻿@model UD_Granit.ViewModels.Session.CreateConsideration
+
+@{
+    ViewBag.Title = "Create";
+}
+
+<h2>Create</h2>
+
+@using (Html.BeginForm()) {
+    @Html.ValidationSummary(true)
+    @Html.HiddenFor(model => model.Dissertation_Id)
+
+    <fieldset>
+        <legend>Session</legend>
+
+        <div class="editor-label">
+            @Html.LabelFor(model => model.Session.Date)
+        </div>
+        <div class="editor-field">
+            @Html.EditorFor(model => model.Session.Date)
+            @Html.ValidationMessageFor(model => model.Session.Date)
+        </div>
+        
+        <div class="control">
+            <button>Создать заседание</button>
+        </div>
+    </fieldset>
+}
+
+<div>
+    @Html.ActionLink("Back to List", "Index")
+</div>

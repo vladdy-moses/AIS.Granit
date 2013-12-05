@@ -132,6 +132,7 @@
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="App_Start\FilterConfig.cs" />
     <Compile Include="Controllers\ReplyController.cs" />
+    <Compile Include="Controllers\SessionController.cs" />
     <Compile Include="Controllers\SpecialityController.cs" />
     <Compile Include="Controllers\StyleController.cs" />
     <Compile Include="Global.asax.cs">
@@ -180,6 +181,7 @@
     <Compile Include="ViewModels\Dissertation\Edit.cs" />
     <Compile Include="ViewModels\Home\Index.cs" />
     <Compile Include="ViewModels\Reply\Create.cs" />
+    <Compile Include="ViewModels\Session\CreateConsideration.cs" />
     <Compile Include="ViewModels\Speciality\Create.cs" />
     <Compile Include="ViewModels\Speciality\Edit.cs" />
     <Compile Include="ViewModels\Speciality\Index.cs" />
@@ -313,6 +315,7 @@
     <Content Include="Views\Dissertation\Delete.cshtml" />
     <Content Include="Views\Reply\Create.cshtml" />
     <Content Include="Views\Account\Delete.cshtml" />
+    <Content Include="Views\Session\CreateConsideration.cshtml" />
     <None Include="Views\Shared\Layout.cshtml" />
     <Content Include="Views\Shared\_PartialAside.cshtml" />
     <Content Include="Views\Shared\_PartialFooter.cshtml" />

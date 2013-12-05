@@ -14,8 +14,8 @@ namespace UD_Granit.ViewModels.Home
 
     public class Index
     {
-        public IEnumerable<Session> SessionsWill { set; get; }
-        public IEnumerable<Session> SessionsWas { set; get; }
+        public IEnumerable<Models.Session> SessionsWill { set; get; }
+        public IEnumerable<Models.Session> SessionsWas { set; get; }
         public IEnumerable<MemberView> Members { set; get; }
     }
 }
