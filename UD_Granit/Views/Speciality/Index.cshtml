@@ -30,7 +30,10 @@
                     <td>@speciality.ScienceBranch</td>
                     @if (Model.CanControl)
                     {
-                        <td>@Html.ActionLink("Редактировать", "Edit", new { id = speciality.Number })</td>
+                        <td>
+                            @Html.ActionLink("Редактировать", "Edit", new { id = speciality.Number }) |
+                            @Html.ActionLink("Удалить", "Delete", new { id = speciality.Number })
+                        </td>
                     }
                 </tr>
             }

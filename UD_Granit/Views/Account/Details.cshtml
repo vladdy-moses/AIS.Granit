@@ -75,6 +75,13 @@
                     <td>Город</td>
                     <td>@((Model.User as UD_Granit.Models.Applicant).City)</td>
                 </tr>
+                if ((Model.User as UD_Granit.Models.Applicant).Dissertation != null)
+                {
+                <tr>
+                    <td>Диссертация</td>
+                    <td>@Html.ActionLink((Model.User as UD_Granit.Models.Applicant).Dissertation.Title, "Details", "Dissertation", new { id = (Model.User as UD_Granit.Models.Applicant).Dissertation.Id }, null)</td>
+                </tr>
+                }
             }
         </tbody>
     </table>

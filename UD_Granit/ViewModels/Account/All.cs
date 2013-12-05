@@ -12,6 +12,7 @@ namespace UD_Granit.ViewModels.Account
         public string Role;
         public string Email;
         public bool CanEdit;
+        public bool CanRemove;
     }
 
     public class All

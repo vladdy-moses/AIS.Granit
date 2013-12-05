@@ -16,7 +16,7 @@ namespace UD_Granit.Helpers
 
             public static bool Edit(User user) { return ((user is Administrator) || (((user is Member) && ((user as Member).Position == MemberPosition.Chairman)))); }
             public static bool Edit(User user, User editedUser) {
-                if (user == null) return false;
+                if ((user == null) || (editedUser == null)) return false;
                 return ((user.Id == editedUser.Id) || (user is Administrator) || (((user is Member) && ((user as Member).Position == MemberPosition.Chairman) && !(editedUser is Administrator))));
             }
 
@@ -28,7 +28,7 @@ namespace UD_Granit.Helpers
 
             public static bool ShowAdditionalInfo(User user) { return ((user is Member) || (user is Administrator)); }
             public static bool ShowAdditionalInfo(User user, User showedUser) {
-                if (user == null) return false;
+                if ((user == null) || (showedUser == null)) return false;
                 return ((user.Id == showedUser.Id) || (user is Member) || (user is Administrator));
             }
         }

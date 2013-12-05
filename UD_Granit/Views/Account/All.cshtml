@@ -24,9 +24,16 @@
                     <td>@account.Email</td>
                     <td>@Html.ActionLink(account.Name, "Details", new { id = account.Id })</td>
                     <td>@account.Role</td>
-                    <td>@if (account.CanEdit)
+                    <td>@if ((account.CanEdit) || (account.CanRemove))
                         {
-                            Html.ActionLink("Редактировать", "Edit", new { id = account.Id });
+                            if (account.CanEdit)
+                            {
+                                <span>@Html.ActionLink("Редактировать", "Edit", new { id = account.Id })</span><br />
+                            }
+                            if (account.CanRemove)
+                            {
+                                <span>@Html.ActionLink("Удалить", "Delete", new { id = account.Id })</span>
+                            }
                         }
                     </td>
                 </tr>

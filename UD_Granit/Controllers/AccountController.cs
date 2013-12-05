@@ -292,7 +292,9 @@ namespace UD_Granit.Controllers
 
         public ActionResult All()
         {
-            if (!RightsManager.Account.Edit(Session.GetUser()))
+            User currentUser = Session.GetUser();
+
+            if (!RightsManager.Account.Edit(currentUser))
                 return HttpNotFound();
 
             UD_Granit.ViewModels.Account.All viewModel = new ViewModels.Account.All();
@@ -301,7 +303,7 @@ namespace UD_Granit.Controllers
             List<UD_Granit.ViewModels.Account.AccountViev> accountList = new List<ViewModels.Account.AccountViev>();
             foreach (User u in q)
             {
-                accountList.Add(new UD_Granit.ViewModels.Account.AccountViev() { Name = u.GetFullName(), Id = u.Id, CanEdit = RightsManager.Account.Edit(Session.GetUser(), u), Email = u.Email, Role = u.GetRole() });
+                accountList.Add(new UD_Granit.ViewModels.Account.AccountViev() { Name = u.GetFullName(), Id = u.Id, CanEdit = RightsManager.Account.Edit(currentUser, u), CanRemove = RightsManager.Account.Remove(currentUser, u), Email = u.Email, Role = u.GetRole() });
             }
 
             viewModel.Accounts = accountList;
@@ -323,13 +325,19 @@ namespace UD_Granit.Controllers
             ViewModels.Account.Delete viewModel = new ViewModels.Account.Delete();
             viewModel.CanDelete = true;
 
-            if (deletedUser is Applicant)
+            if ((deletedUser is Applicant) && (db.Dissertations.Find(deletedUser.Id) != null))
             {
-                if (db.Dissertations.Find(deletedUser.Id) != null)
-                {
-                    ViewData.NotificationAdd(new NotificationManager.Notify() { Type = NotificationManager.Notify.NotifyType.Error, Message = "Невозможно удалить соискателя, так как он завёл запись о диссертации. Удалите диссертацию сначала." });
-                    viewModel.CanDelete = false;
-                }
+                ViewData.NotificationAdd(new NotificationManager.Notify() { Type = NotificationManager.Notify.NotifyType.Error, Message = "Невозможно удалить соискателя, так как он завёл запись о диссертации. Удалите диссертацию сначала." });
+                viewModel.CanDelete = false;
+            }
+
+#warning нельзя удалять членов совета, если есть сессии с ним
+            //if((deletedUser is Member) 
+
+            if ((deletedUser is Administrator) && (db.Administrators.Count() == 1))
+            {
+                ViewData.NotificationAdd(new NotificationManager.Notify() { Type = NotificationManager.Notify.NotifyType.Error, Message = "Невозможно удалить последнего администратора в системе." });
+                viewModel.CanDelete = false;
             }
 
             viewModel.Id = id;

@@ -18,12 +18,13 @@
     
     <div class="control">
         <button>Да</button>
-        @Html.ActionLink("Отмена", "Details", new { Id = Model.Id })
+        <a href="@Model.Referer">Отмена</a>
     </div>
     }
 }
 else
 {
+    <p>Извините, произошла ошибка при проверке условий на удаление записи о пользователе. Текст ошибки Вы можете видеть выше. Вы можете вернуться назад и исправить возникшие ошибки.</p>
     <div class="control">
         <a href="@Model.Referer">Назад</a>
     </div>   

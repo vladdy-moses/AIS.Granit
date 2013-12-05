@@ -47,7 +47,7 @@ namespace UD_Granit.Models
         [Display(Name = "Подразделение, где проходил аспирантуру")]
         public string University_Departmant { set; get; }
 
-        public Dissertation Dissertation { set; get; }
+        public virtual Dissertation Dissertation { set; get; }
 
         /*[Required]*/
         [Display(Name = "Научный руководитель")]

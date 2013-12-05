@@ -13,13 +13,16 @@ namespace UD_Granit.Controllers
         private DataContext db = new DataContext();
 
         //
-        // GET: /Speciality/
+        // GET: /Speciality/[1]
 
-        public ActionResult Index()
+        public ActionResult Index(int? err)
         {
             UD_Granit.ViewModels.Speciality.Index viewModel = new ViewModels.Speciality.Index();
             viewModel.Specialities = db.Specialities;
             viewModel.CanControl = CanControl();
+
+            if (err.HasValue && (err.Value == 1))
+                ViewData.NotificationAdd(new NotificationManager.Notify() { Type = NotificationManager.Notify.NotifyType.Error, Message = "Специальность связана с диссертациями и (или) членами совета. Удаление невозможно." });
 
             return View(viewModel);
         }
@@ -116,25 +119,28 @@ namespace UD_Granit.Controllers
         public ActionResult Delete(string id)
         {
 #warning Удалять только те, к которым не прикреплено что-либо (процедура)
-            return HttpNotFound();
-        }
+            
+            if(!CanControl())
+                return HttpNotFound();
 
-        //
-        // POST: /Speciality/Delete/5
+            Speciality currentSpeciality = db.Specialities.Find(id);
+            int err;
 
-        [HttpPost]
-        public ActionResult Delete(int id, FormCollection collection)
-        {
-            try
+            if(currentSpeciality == null)
+                return HttpNotFound();
+
+            if ((db.Members.Where(m => m.Speciality.Number == id).Count() == 0) && (db.Dissertations.Where(d => d.Speciality.Number == id).Count() == 0))
             {
-                // TODO: Add delete logic here
-
-                return RedirectToAction("Index");
+                err = 0;
+                db.Specialities.Remove(currentSpeciality);
+                db.SaveChanges();
             }
-            catch
+            else
             {
-                return View();
+                err = 1;
             }
+
+            return RedirectToAction("Index", new { err = err });
         }
 
         private bool CanControl()
