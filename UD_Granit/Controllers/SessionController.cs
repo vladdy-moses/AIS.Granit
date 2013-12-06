@@ -3,11 +3,15 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Web;
 using System.Web.Mvc;
+using UD_Granit.Models;
+using UD_Granit.Helpers;
 
 namespace UD_Granit.Controllers
 {
     public class SessionController : Controller
     {
+        private DataContext db = new DataContext();
+
         //
         // GET: /Session/
 
@@ -31,9 +35,18 @@ namespace UD_Granit.Controllers
         {
             UD_Granit.ViewModels.Session.CreateConsideration viewModel = new ViewModels.Session.CreateConsideration();
 
-#warning TODO
-            viewModel.Dissertation_Id = 0;
-            viewModel.Dissertation_Title = "";
+            Dissertation currentDissertation = db.Dissertations.Find(id);
+            if (currentDissertation == null)
+                return HttpNotFound();
+
+            viewModel.Dissertation_Id = id;
+            viewModel.Dissertation_Title = currentDissertation.Title;
+            viewModel.MemberList = new List<SelectListItem>();
+
+            foreach (var member in db.Members)
+            {
+                viewModel.MemberList.Add(new SelectListItem() { Text = member.GetFullName(), Value = member.Id.ToString() });
+            }
 
             return View(viewModel);
         }

@@ -13,9 +13,11 @@ namespace UD_Granit.Models
         public int Id { set; get; }
 
         [Required]
+        [Display(Name = "Дата проведения заседания")]
         public DateTime Date { set; get; }
 
         [Required]
+        [Display(Name = "Заседание состоялось")]
         public bool Was { set; get; }
 
         public virtual Dissertation Dissertation { set; get; }

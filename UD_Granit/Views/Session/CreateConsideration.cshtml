@@ -6,9 +6,11 @@
 
 <h2>Create</h2>
 
-@using (Html.BeginForm()) {
+@using (Html.BeginForm())
+{
     @Html.ValidationSummary(true)
     @Html.HiddenFor(model => model.Dissertation_Id)
+    @Html.HiddenFor(model => model.MembersCount)
 
     <fieldset>
         <legend>Session</legend>
@@ -20,7 +22,14 @@
             @Html.EditorFor(model => model.Session.Date)
             @Html.ValidationMessageFor(model => model.Session.Date)
         </div>
-        
+
+        <div id="membersContainer">
+            @for (int i = 0; i < Model.MemberList.Count; i++)
+            {
+                <div id="Member@(i)">@Html.DropDownList("Member" + i, Model.MemberList)</div>
+            }
+        </div>
+
         <div class="control">
             <button>Создать заседание</button>
         </div>
@@ -30,3 +39,33 @@
 <div>
     @Html.ActionLink("Back to List", "Index")
 </div>
+
+<script>
+    $(function () {
+        $("#Session_Date").datepicker({ changeYear: true });
+        HideMembers();
+    });
+
+    var membersCount = @(Model.MemberList.Count);
+    var membersShowed = 0;
+
+    AddMember = function() {
+        if(membersShowed < membersCount) {
+            $('#Member' + membersShowed.toString()).show();
+            ++membersShowed;
+            $('#MembersCount').val(membersShowed);
+        }
+    }
+
+    DeleteMember = function() {
+        if(membersShowed > 0) {
+            $('#Member' + (--membersShowed).toString()).hide();
+            $('#MembersCount').val(membersShowed);
+        }
+    }
+
+    HideMembers = function () {
+        $('#membersContainer').children().hide();
+        $('#MembersCount').val(membersShowed);
+    }
+</script>

@@ -245,10 +245,10 @@ namespace UD_Granit.Controllers
                     fileName = currentDisserrtation.Id + "_Abstract" + currentDisserrtation.File_Abstract;
                     break;
                 case "Text":
-                    fileName = currentDisserrtation.Id + "_Text" + currentDisserrtation.File_Abstract;
+                    fileName = currentDisserrtation.Id + "_Text" + currentDisserrtation.File_Text;
                     break;
                 case "Summary":
-                    fileName = currentDisserrtation.Id + "_Summary" + currentDisserrtation.File_Abstract;
+                    fileName = currentDisserrtation.Id + "_Summary" + currentDisserrtation.File_Summary;
                     break;
             }
             if (fileName.Length == 0)
