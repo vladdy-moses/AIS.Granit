@@ -1,0 +1,19 @@
+﻿@model UD_Granit.ViewModels.Session.My
+
+@{
+    ViewBag.Title = "My";
+}
+
+<h2>My</h2>
+@if ((Model.Sessions != null) && (Model.Sessions.Count() > 0))
+{
+    <ul>
+        @foreach(UD_Granit.Models.Session currentSession in Model.Sessions) {
+            <li>@currentSession.Dissertation.Title + @currentSession.Date + @currentSession.Was</li>
+        }
+    </ul>
+}
+else
+{
+    <div class="error">Извините, Вы не числитесь ни в одном заседании.</div>
+}
