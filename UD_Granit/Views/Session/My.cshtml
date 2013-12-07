@@ -21,7 +21,7 @@
             @foreach (UD_Granit.Models.Session currentSession in Model.Sessions)
             {
                 <tr>
-                    <td>@((currentSession is UD_Granit.Models.SessionСonsideration)? "Рассмотрение" : "Защита")</td>
+                    <td>@((currentSession is UD_Granit.Models.SessionConsideration)? "Рассмотрение" : "Защита")</td>
                     <td>@(currentSession.Was ? "Проведено" : "Не проведено")</td>
                     <td>@currentSession.Date</td>
                     <td>@Html.ActionLink(currentSession.Dissertation.Title, "Details", "Dissertation", new { id = currentSession.Dissertation.Id }, null)</td>

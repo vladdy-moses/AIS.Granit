@@ -1,4 +1,4 @@
-﻿@model UD_Granit.ViewModels.Session.CreateConsideration
+﻿@model UD_Granit.ViewModels.Session.Create
 
 @{
     ViewBag.Title = "Create";
@@ -6,11 +6,12 @@
 
 <h2>Create</h2>
 
-@using (Html.BeginForm())
+@using (Html.BeginForm("Create", "Session"))
 {
     @Html.ValidationSummary(true)
     @Html.HiddenFor(model => model.Dissertation_Id)
     @Html.HiddenFor(model => model.MembersCount)
+    @Html.HiddenFor(model => model.SessionType)
 
     <fieldset>
         <legend>Session</legend>

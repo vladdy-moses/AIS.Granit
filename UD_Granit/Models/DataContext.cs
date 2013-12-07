@@ -34,7 +34,7 @@ namespace UD_Granit.Models
 
         public DbSet<Session> Sessions { set; get; }
         public DbSet<SessionDefence> SessionsDefence { set; get; }
-        public DbSet<SessionСonsideration> SessionsСonsideration { set; get; }
+        public DbSet<SessionConsideration> SessionsСonsideration { set; get; }
 
         public DbSet<Council> Council { set; get; }
 
@@ -53,7 +53,7 @@ namespace UD_Granit.Models
 
             modelBuilder.Entity<Session>().ToTable("Sessions");
             modelBuilder.Entity<SessionDefence>().ToTable("SessionsDefence");
-            modelBuilder.Entity<SessionСonsideration>().ToTable("SessionsСonsideration");
+            modelBuilder.Entity<SessionConsideration>().ToTable("SessionsСonsideration");
 
             modelBuilder.Entity<Council>().ToTable("Council", "guest");
 

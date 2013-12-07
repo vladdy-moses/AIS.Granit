@@ -21,42 +21,60 @@ namespace UD_Granit.Controllers
         }
 
         //
-        // GET: /Session/Details/5
-
-        public ActionResult Details(int id)
-        {
-            return HttpNotFound();
-        }
-
-        //
         // GET: /Session/CreateConsideration
 
         public ActionResult CreateConsideration(int id)
         {
-            UD_Granit.ViewModels.Session.CreateConsideration viewModel = new ViewModels.Session.CreateConsideration();
+            UD_Granit.ViewModels.Session.Create viewModel = new ViewModels.Session.Create();
 
             Dissertation currentDissertation = db.Dissertations.Find(id);
             if (currentDissertation == null)
                 return HttpNotFound();
 
+            viewModel.SessionType = "Consideration";
             viewModel.Dissertation_Id = id;
             viewModel.Dissertation_Title = currentDissertation.Title;
             viewModel.MemberList = new List<SelectListItem>();
 
-            viewModel.MemberList.Add(new SelectListItem() { Text = "==Выберите члена совета из списка==", Value = "-1", Selected = true });
+            viewModel.MemberList.Add(new SelectListItem() { Text = "== Выберите члена совета из списка ==", Value = "-1", Selected = true });
             foreach (var member in db.Members)
             {
                 viewModel.MemberList.Add(new SelectListItem() { Text = member.GetFullName(), Value = member.Id.ToString() });
             }
 
-            return View(viewModel);
+            return View("Create", viewModel);
         }
 
         //
-        // POST: /Session/CreateConsideration
+        // GET: /Session/CreateDefence
+
+        public ActionResult CreateDefence(int id)
+        {
+            UD_Granit.ViewModels.Session.Create viewModel = new ViewModels.Session.Create();
+
+            Dissertation currentDissertation = db.Dissertations.Find(id);
+            if (currentDissertation == null)
+                return HttpNotFound();
+
+            viewModel.SessionType = "Defence";
+            viewModel.Dissertation_Id = id;
+            viewModel.Dissertation_Title = currentDissertation.Title;
+            viewModel.MemberList = new List<SelectListItem>();
+
+            viewModel.MemberList.Add(new SelectListItem() { Text = "== Выберите члена совета из списка ==", Value = "-1", Selected = true });
+            foreach (var member in db.Members)
+            {
+                viewModel.MemberList.Add(new SelectListItem() { Text = member.GetFullName(), Value = member.Id.ToString() });
+            }
+
+            return View("Create", viewModel);
+        }
+
+        //
+        // POST: /Session/Create
 
         [HttpPost]
-        public ActionResult CreateConsideration(UD_Granit.ViewModels.Session.CreateConsideration viewModel)
+        public ActionResult Create(UD_Granit.ViewModels.Session.Create viewModel)
         {
             Dissertation currentDissertation = db.Dissertations.Find(viewModel.Dissertation_Id);
             if (currentDissertation == null)
@@ -64,7 +82,7 @@ namespace UD_Granit.Controllers
 
             try
             {
-                SessionСonsideration currentSession = viewModel.Session;
+                Session currentSession = viewModel.Session;
                 currentSession.Dissertation = db.Dissertations.Find(viewModel.Dissertation_Id);
                 currentSession.Was = false;
 
@@ -83,7 +101,17 @@ namespace UD_Granit.Controllers
                     }
                 }
 
-                db.SessionsСonsideration.Add(currentSession);
+                switch (viewModel.SessionType)
+                {
+                    case "Consideration":
+                        currentSession = new SessionConsideration() { Dissertation = currentSession.Dissertation, Date = currentSession.Date, Was = currentSession.Was, Members = currentSession.Members };
+                        db.SessionsСonsideration.Add(currentSession as SessionConsideration);
+                        break;
+                    case "Defence":
+                        currentSession = new SessionDefence() { Dissertation = currentSession.Dissertation, Date = currentSession.Date, Was = currentSession.Was, Members = currentSession.Members };
+                        db.SessionsDefence.Add(currentSession as SessionDefence);
+                        break;
+                }
                 db.SaveChanges();
 
                 return RedirectToAction("Details", new { id = currentSession.Id });
@@ -100,7 +128,7 @@ namespace UD_Granit.Controllers
                 }
 
                 ViewData.NotificationAdd(new NotificationManager.Notify() { Type = NotificationManager.Notify.NotifyType.Error, Message = ex.Message });
-                return View();
+                return View(viewModel);
             }
         }
 
@@ -113,7 +141,7 @@ namespace UD_Granit.Controllers
             if (currentUser == null)
                 return HttpNotFound();
 
-            if(!(currentUser is Member) && !(currentUser is Applicant))
+            if (!(currentUser is Member) && !(currentUser is Applicant))
                 return HttpNotFound();
 
             UD_Granit.ViewModels.Session.My viewModel = new ViewModels.Session.My();
@@ -128,6 +156,22 @@ namespace UD_Granit.Controllers
                 Dissertation currentDissertation = db.Dissertations.Find(currentUser.Id);
                 viewModel.Sessions = (currentDissertation != null) ? db.Dissertations.Find(currentUser.Id).Sessions.OrderBy(s => s.Was).ThenByDescending(s => s.Date) : null;
             }
+            return View(viewModel);
+        }
+
+        //
+        // GET: /Session/Details/5
+
+        public ActionResult Details(int id)
+        {
+            User currentUser = Session.GetUser() as User;
+            Session currentSession = db.Sessions.Find(id);
+
+            if (currentUser == null)
+                return HttpNotFound();
+#warning Проверка на дозволенность действий
+            UD_Granit.ViewModels.Session.Details viewModel = new ViewModels.Session.Details();
+            viewModel.Session = currentSession;
             return View(viewModel);
         }
     }

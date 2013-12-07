@@ -1,0 +1,74 @@
+﻿@model UD_Granit.ViewModels.Session.Details
+@using UD_Granit.Helpers
+
+@{
+    ViewBag.Title = "Details";
+}
+
+<h2>Details</h2>
+<h3>Основная информация</h3>
+<table>
+    <tbody>
+        <tr>
+            <td>Тип заседания</td>
+            <td>@((Model.Session is UD_Granit.Models.SessionConsideration) ? "Рассмотрение" : "Защита")</td>
+        </tr>
+        <tr>
+            <td>Отметка о проведении</td>
+            <td>@(Model.Session.Was ? "Проведено" : "Не проведено")</td>
+        </tr>
+        <tr>
+            <td>Дата проведения</td>
+            <td>@Model.Session.Date</td>
+        </tr>
+        <tr>
+            <td>Диссертация</td>
+            <td>@Html.ActionLink(Model.Session.Dissertation.Title, "Details", "Dissertation", new { id = Model.Session.Dissertation.Id }, null)</td>
+        </tr>
+        <tr>
+            <td>Соискатель</td>
+            <td>@Html.ActionLink(Model.Session.Dissertation.Applicant.GetFullNameWithInitials(), "Details", "Account", new { id = Model.Session.Dissertation.Id }, null)</td>
+        </tr>
+    </tbody>
+</table>
+
+@if ((Model.Session.Members != null) && (Model.Session.Members.Count > 0))
+{
+    <h3>Информация о членах совета, записанных на заседание</h3>
+    <table>
+        <thead>
+            <tr>
+                <td>Фамилия Имя Отчество</td>
+                <td>Специальность</td>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach(UD_Granit.Models.Member currentMember in Model.Session.Members){
+            <tr>
+                <td>@currentMember.GetFullName()</td>
+                <td>@currentMember.Speciality.GetFullName()</td>
+            </tr>
+            }
+        </tbody>
+    </table>
+}
+
+@if(Model.Session.Was) {
+    <h3>Результат заседания</h3>
+    <table>
+        <tbody>
+            @if (Model.Session is UD_Granit.Models.SessionConsideration)
+            {
+                <tr>
+                    <td>
+                        <pre>@((Model.Session as UD_Granit.Models.SessionConsideration).Result)</pre>
+                    </td>
+                </tr>
+            }
+            @if (Model.Session is UD_Granit.Models.SessionDefence)
+            {
+                <tr></tr>
+            }
+        </tbody>
+    </table>
+}
