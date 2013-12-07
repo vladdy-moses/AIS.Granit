@@ -109,12 +109,25 @@ namespace UD_Granit.Controllers
 
         public ActionResult My()
         {
-            Member currentUser = Session.GetUser() as Member;
+            User currentUser = Session.GetUser() as User;
             if (currentUser == null)
                 return HttpNotFound();
 
+            if(!(currentUser is Member) && !(currentUser is Applicant))
+                return HttpNotFound();
+
             UD_Granit.ViewModels.Session.My viewModel = new ViewModels.Session.My();
-            viewModel.Sessions = db.Members.Find(currentUser.Id).Sessions;
+            if (currentUser is Member)
+            {
+                viewModel.ViewType = ViewModels.Session.SessionViewType.MemberView;
+                viewModel.Sessions = db.Members.Find(currentUser.Id).Sessions.OrderBy(s => s.Was).ThenByDescending(s => s.Date);
+            }
+            if (currentUser is Applicant)
+            {
+                viewModel.ViewType = ViewModels.Session.SessionViewType.ApplicantView;
+                Dissertation currentDissertation = db.Dissertations.Find(currentUser.Id);
+                viewModel.Sessions = (currentDissertation != null) ? db.Dissertations.Find(currentUser.Id).Sessions.OrderBy(s => s.Was).ThenByDescending(s => s.Date) : null;
+            }
             return View(viewModel);
         }
     }

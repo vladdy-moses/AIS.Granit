@@ -7,13 +7,42 @@
 <h2>My</h2>
 @if ((Model.Sessions != null) && (Model.Sessions.Count() > 0))
 {
-    <ul>
-        @foreach(UD_Granit.Models.Session currentSession in Model.Sessions) {
-            <li>@currentSession.Dissertation.Title + @currentSession.Date + @currentSession.Was</li>
-        }
-    </ul>
+    <table>
+        <thead>
+            <tr>
+                <td>Тип заседания</td>
+                <td>Отметка о проведении</td>
+                <td>Дата проведения</td>
+                <td>Название дисиертации</td>
+                <td>Детали</td>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (UD_Granit.Models.Session currentSession in Model.Sessions)
+            {
+                <tr>
+                    <td>@((currentSession is UD_Granit.Models.SessionСonsideration)? "Рассмотрение" : "Защита")</td>
+                    <td>@(currentSession.Was ? "Проведено" : "Не проведено")</td>
+                    <td>@currentSession.Date</td>
+                    <td>@Html.ActionLink(currentSession.Dissertation.Title, "Details", "Dissertation", new { id = currentSession.Dissertation.Id }, null)</td>
+                    <td>@Html.ActionLink("Подробнее", "Details", new { id = currentSession.Id })</td>
+                </tr>
+            }
+        </tbody>
+    </table>
 }
 else
 {
-    <div class="error">Извините, Вы не числитесь ни в одном заседании.</div>
+    if (Model.ViewType == UD_Granit.ViewModels.Session.SessionViewType.ApplicantView)
+    {
+    <div class="error">
+        Извините, нет ни одного заседания по поводу вашей диссертации.
+    </div>
+    }
+    if (Model.ViewType == UD_Granit.ViewModels.Session.SessionViewType.MemberView)
+    {
+    <div class="error">
+        Извините, Вы не числитесь ни в одном заседании.
+    </div>
+    }
 }
