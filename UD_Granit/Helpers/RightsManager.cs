@@ -54,7 +54,7 @@ namespace UD_Granit.Helpers
                     }
                     else
                     {
-                        if ((user is Applicant) && (user.Id != dissertation.Applicant.Id))
+                        if ((user is Applicant) && (user.Id != dissertation.Id))
                             if (!dissertation.Defensed || dissertation.Administrative_Use)
                                 return false;
                     }

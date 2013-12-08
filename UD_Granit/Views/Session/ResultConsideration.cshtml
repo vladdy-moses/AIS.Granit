@@ -1,5 +1,27 @@
-﻿@{
+﻿@model UD_Granit.ViewModels.Session.ResultConsideration
+
+@{
     ViewBag.Title = "ResultConsideration";
 }
 
 <h2>ResultConsideration</h2>
+<h3>@Model.DissertationTitle (@Model.Date)</h3>
+
+@using (Html.BeginForm("ResultConsideration", "Session"))
+{
+    @Html.ValidationSummary(true)
+    @Html.HiddenFor(model => model.Id)
+    
+    <div class="editor-label">
+        @Html.LabelFor(model => model.Result)
+    </div>
+    <div class="editor-field">
+        @Html.TextAreaFor(model => model.Result)
+        @Html.ValidationMessageFor(model => model.Result)
+    </div>
+    
+    <div class="control">
+        <button>Заполнить результат</button>
+        @Html.ActionLink("Отмена", "Details", new { id = Model.Id }, null)
+    </div>
+}

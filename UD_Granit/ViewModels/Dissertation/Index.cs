@@ -7,5 +7,6 @@ namespace UD_Granit.ViewModels.Dissertation
 {
     public class Index
     {
+        public ICollection<Models.Dissertation> Dissertations { set; get; }
     }
 }

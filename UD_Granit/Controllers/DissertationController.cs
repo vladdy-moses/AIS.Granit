@@ -18,7 +18,20 @@ namespace UD_Granit.Controllers
 
         public ActionResult Index()
         {
-            return View();
+            UD_Granit.ViewModels.Dissertation.Index viewModel = new ViewModels.Dissertation.Index();
+            viewModel.Dissertations = new List<Dissertation>();
+
+            var dissertations = db.Database.SqlQuery<Dissertation>("GetDissertations");
+            foreach (var currentDissertation in dissertations)
+            {
+                if (RightsManager.Dissertation.Show(Session.GetUser(), currentDissertation))
+                {
+                    viewModel.Dissertations.Add(db.Dissertations.Find(currentDissertation.Id));
+                }
+            }
+
+            
+            return View(viewModel);
         }
 
         //

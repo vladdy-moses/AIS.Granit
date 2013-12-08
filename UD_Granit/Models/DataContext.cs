@@ -89,18 +89,13 @@ namespace UD_Granit.Models
             DbCommand cmd = Database.Connection.CreateCommand();
             cmd.CommandText = @"
 CREATE PROCEDURE [dbo].[GetDissertations]
-	@type int = 0
 AS
-    IF @type == 0
-    BEGIN
-        SELECT @type + 1
-    END
-    ELSE
-	    SELECT 1
-RETURN 0
+BEGIN
+    SELECT D.* FROM [Dissertations] AS D ORDER BY D.Defensed ASC, D.[Type] DESC, D.Title ASC
+END
 ";
-            //cmd.ExecuteNonQuery();
-            //this.SaveChanges();
+            cmd.ExecuteNonQuery();
+            this.SaveChanges();
         }
     }
 }

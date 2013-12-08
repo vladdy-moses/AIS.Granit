@@ -170,7 +170,7 @@ namespace UD_Granit.Controllers
 
         public ActionResult Details(int id)
         {
-            User currentUser = Session.GetUser() as User;
+            User currentUser = Session.GetUser();
             Session currentSession = db.Sessions.Find(id);
 
             if (!RightsManager.Dissertation.Show(currentUser, currentSession.Dissertation))
@@ -181,6 +181,7 @@ namespace UD_Granit.Controllers
 
             UD_Granit.ViewModels.Session.Details viewModel = new ViewModels.Session.Details();
             viewModel.Session = currentSession;
+            viewModel.CanResult = RightsManager.Session.Result(currentUser);
             return View(viewModel);
         }
 
@@ -198,10 +199,32 @@ namespace UD_Granit.Controllers
 
             if (currentSession == null)
                 return HttpNotFound();
-#warning TODO
-            /*UD_Granit.ViewModels.Session.Result viewModel = new ViewModels.Session.Result();
-            viewModel.Session = currentSession;
-            return View(viewModel);*/
+
+            if (currentSession is SessionConsideration)
+            {
+                ViewModels.Session.ResultConsideration viewModel = new ViewModels.Session.ResultConsideration();
+
+                viewModel.DissertationTitle = currentSession.Dissertation.Title;
+                viewModel.Id = currentSession.Id;
+                viewModel.Date = currentSession.Date;
+
+                return View("ResultConsideration", viewModel);
+            }
+            if (currentSession is SessionDefence)
+            {
+                ViewModels.Session.ResultDefence viewModel = new ViewModels.Session.ResultDefence();
+                viewModel.Session = new SessionDefence() { Id = currentSession.Id, Dissertation = currentSession.Dissertation, Date = currentSession.Date };
+                return View("ResultDefence", viewModel);
+            }
+            return HttpNotFound();
+        }
+
+        //
+        // POST: /Session/ResultConsideration
+
+        [HttpPost]
+        public ActionResult ResultConsideration(ViewModels.Session.ResultConsideration viewModel)
+        {
             return HttpNotFound();
         }
     }

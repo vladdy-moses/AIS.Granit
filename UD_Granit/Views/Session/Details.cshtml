@@ -72,3 +72,10 @@
         </tbody>
     </table>
 }
+
+@if (Model.CanResult)
+{
+    <div class="control">
+        @Html.ActionLink("Заполнить результат заседания", "Result", new { id = Model.Session.Id }, null)
+    </div>
+}

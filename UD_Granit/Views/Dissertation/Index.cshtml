@@ -1,4 +1,5 @@
-﻿@model IEnumerable<UD_Granit.Models.Dissertation>
+﻿@model UD_Granit.ViewModels.Dissertation.Index
+@using UD_Granit.Helpers
 
 @{
     ViewBag.Title = "Просмотр диссертаций";
@@ -6,3 +7,34 @@
 
 <h2>@ViewBag.Title</h2>
 <p>На этой странице Вы можете просмотреть список диссертаций, которые уже защищены, или будут защищены в ближайшее время. Для фильтрации полученной информации можно использовать поля определённых критериев поиска, которые расположены ниже.</p>
+
+@if (Model.Dissertations.Count > 0)
+{
+    <table>
+        <thead>
+            <tr>
+                <td>Заголовок</td>
+                <td>Тип</td>
+                <td>Специальность</td>
+                <td>Соискатель</td>
+                <td>Детали</td>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (UD_Granit.Models.Dissertation currentDissertation in Model.Dissertations)
+            {
+                <tr>
+                    <td>@currentDissertation.Title</td>
+                    <td>@currentDissertation.Type.ToDescription()</td>
+                    <td>@currentDissertation.Speciality.GetFullName()</td>
+                    <td>@currentDissertation.Applicant.GetFullName()</td>
+                    <td>@Html.ActionLink("Подробности", "Details", new { id = currentDissertation.Id }, null)</td>
+                </tr>
+            }
+        </tbody>
+    </table>
+}
+else
+{
+    <div class="error">Нет ни одной записи о диссертации.</div>
+}
