@@ -27,14 +27,14 @@ namespace UD_Granit.Controllers
         public ActionResult Details(int id)
         {
             Dissertation dissertation = db.Dissertations.Find(id);
-            if (CanShow(dissertation))
+            if (RightsManager.Dissertation.Show(Session.GetUser(), dissertation))
             {
                 UD_Granit.ViewModels.Dissertation.Details viewModel = new ViewModels.Dissertation.Details();
                 viewModel.Dissertation = dissertation;
 
                 User currentUser = Session.GetUser();
-                viewModel.CanEdit = CanEdit(dissertation);
-                viewModel.CanCreateSession = CanCreateSession();
+                viewModel.CanEdit = RightsManager.Dissertation.Edit(currentUser, dissertation);
+                viewModel.CanCreateSession = RightsManager.Dissertation.CreateSession(currentUser);
                 viewModel.CanAddReplies = currentUser.Id == dissertation.Applicant.Id;
                 viewModel.CanEditReplies = currentUser.Id == dissertation.Applicant.Id;
 
@@ -96,7 +96,6 @@ namespace UD_Granit.Controllers
             db.Dissertations.Add(currentDissertation);
             db.SaveChanges();
 
-#warning Проверять на существование файлов
             viewModel.File_Abstract.SaveAs(Server.MapPath(Path.Combine("~/App_Data/", currentDissertation.Id + "_Abstract" + currentDissertation.File_Abstract)));
             viewModel.File_Text.SaveAs(Server.MapPath(Path.Combine("~/App_Data/", currentDissertation.Id + "_Text" + currentDissertation.File_Text)));
             viewModel.File_Summary.SaveAs(Server.MapPath(Path.Combine("~/App_Data/", currentDissertation.Id + "_Summary" + currentDissertation.File_Summary)));
@@ -111,15 +110,16 @@ namespace UD_Granit.Controllers
         {
 #warning только когда нет прикрепленных сессий
             Applicant currentUser = Session.GetUser() as Applicant;
-            if (currentUser == null)
+            Dissertation currentDissertation = db.Dissertations.Find(id);
+
+            if (currentDissertation == null)
                 return HttpNotFound();
 
-            if (id != currentUser.Id)
+            if (!RightsManager.Dissertation.Edit(currentUser, currentDissertation))
                 return HttpNotFound();
-#warning CanEdit...
 
             UD_Granit.ViewModels.Dissertation.Edit viewModel = new ViewModels.Dissertation.Edit();
-            viewModel.Dissertation = db.Dissertations.Find(id);
+            viewModel.Dissertation = currentDissertation;
 
             ViewData["Speciality"] = db.Specialities.Select(s => new SelectListItem { Text = s.Number + " " + s.Name, Value = s.Number });
             return View(viewModel);
@@ -149,7 +149,24 @@ namespace UD_Granit.Controllers
                 baseDissertation.Speciality = currentDissertation.Speciality;
                 baseDissertation.Applicant = db.Applicants.Find(Session.GetUser().Id);
 
-#warning файлы
+                if (viewModel.File_Abstract != null)
+                {
+                    System.IO.File.Delete(Server.MapPath(Path.Combine("~/App_Data/", currentDissertation.Id + "_Abstract" + baseDissertation.File_Abstract)));
+                    baseDissertation.File_Abstract = Path.GetExtension(viewModel.File_Abstract.FileName);
+                    viewModel.File_Abstract.SaveAs(Server.MapPath(Path.Combine("~/App_Data/", currentDissertation.Id + "_Abstract" + baseDissertation.File_Abstract)));
+                }
+                if (viewModel.File_Text != null)
+                {
+                    System.IO.File.Delete(Server.MapPath(Path.Combine("~/App_Data/", currentDissertation.Id + "_Text" + baseDissertation.File_Text)));
+                    baseDissertation.File_Text = Path.GetExtension(viewModel.File_Text.FileName);
+                    viewModel.File_Text.SaveAs(Server.MapPath(Path.Combine("~/App_Data/", currentDissertation.Id + "_Text" + baseDissertation.File_Text)));
+                }
+                if (viewModel.File_Summary != null)
+                {
+                    System.IO.File.Delete(Server.MapPath(Path.Combine("~/App_Data/", currentDissertation.Id + "_Summary" + baseDissertation.File_Summary)));
+                    baseDissertation.File_Summary = Path.GetExtension(viewModel.File_Summary.FileName);
+                    viewModel.File_Summary.SaveAs(Server.MapPath(Path.Combine("~/App_Data/", currentDissertation.Id + "_Summary" + baseDissertation.File_Summary)));
+                }
 
                 db.Entry<Dissertation>(baseDissertation).State = System.Data.Entity.EntityState.Modified;
                 db.SaveChanges();
@@ -195,7 +212,7 @@ namespace UD_Granit.Controllers
                 if (currentDissertation == null)
                     return HttpNotFound();
 
-                if (!CanEdit(currentDissertation))
+                if (!RightsManager.Dissertation.Edit(Session.GetUser(), currentDissertation))
                     return HttpNotFound();
 
                 System.IO.File.Delete(Server.MapPath(Path.Combine("~/App_Data/", currentDissertation.Id + "_Abstract" + currentDissertation.File_Abstract)));
@@ -234,7 +251,7 @@ namespace UD_Granit.Controllers
         public ActionResult Download(int id, string type)
         {
             Dissertation currentDisserrtation = db.Dissertations.Find(id);
-            if (!CanShow(currentDisserrtation))
+            if (!RightsManager.Dissertation.Show(Session.GetUser(), currentDisserrtation))
                 return HttpNotFound();
 
             string fileName = string.Empty;
@@ -255,39 +272,6 @@ namespace UD_Granit.Controllers
                 return HttpNotFound();
 
             return File("~/App_Data/" + fileName, "binary/octet-stream", fileName);
-        }
-
-        private bool CanShow(Dissertation dissertation)
-        {
-            if (dissertation != null)
-            {
-                User currentUser = Session.GetUser();
-                if (currentUser == null)
-                {
-                    if (!dissertation.Defensed || dissertation.Administrative_Use)
-                        return false;
-                }
-                else
-                {
-                    if ((currentUser is Applicant) && (currentUser.Id != dissertation.Applicant.Id))
-                        if (!dissertation.Defensed || dissertation.Administrative_Use)
-                            return false;
-                }
-                return true;
-            }
-            return false;
-        }
-
-        private bool CanEdit(Dissertation dissertation)
-        {
-            Applicant currentUser = Session.GetUser() as Applicant;
-
-            return ((currentUser != null) && (currentUser.Id == dissertation.Applicant.Id));
-        }
-
-        private bool CanCreateSession()
-        {
-            return ((Session.GetUserPosition() == MemberPosition.Chairman) || (Session.GetUser() is Administrator));
         }
     }
 }

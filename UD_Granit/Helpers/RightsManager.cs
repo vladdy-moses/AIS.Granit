@@ -40,7 +40,35 @@ namespace UD_Granit.Helpers
 
         public static class Dissertation
         {
+            public static bool Show(User user, Models.Dissertation dissertation)
+            {
+                if (dissertation != null)
+                {
+                    if (user == null)
+                    {
+                        if (!dissertation.Defensed || dissertation.Administrative_Use)
+                            return false;
+                    }
+                    else
+                    {
+                        if ((user is Applicant) && (user.Id != dissertation.Applicant.Id))
+                            if (!dissertation.Defensed || dissertation.Administrative_Use)
+                                return false;
+                    }
+                    return true;
+                }
+                return false;
+            }
 
+            public static bool Edit(User user, Models.Dissertation dissertation)
+            {
+                return ((user is Applicant) && (user.Id == dissertation.Applicant.Id));
+            }
+
+            public static bool CreateSession(User user)
+            {
+                return ((user is Administrator) || ((user is Member) && ((user as Member).Position == MemberPosition.Chairman)));
+            }
         }
 
         public static class Speciality

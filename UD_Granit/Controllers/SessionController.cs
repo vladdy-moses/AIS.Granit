@@ -121,7 +121,7 @@ namespace UD_Granit.Controllers
                 viewModel.Dissertation_Title = currentDissertation.Title;
                 viewModel.MemberList = new List<SelectListItem>();
 
-                viewModel.MemberList.Add(new SelectListItem() { Text = "==Выберите члена совета из списка==", Value = "-1", Selected = true });
+                viewModel.MemberList.Add(new SelectListItem() { Text = "== Выберите члена совета из списка ==", Value = "-1", Selected = true });
                 foreach (var member in db.Members)
                 {
                     viewModel.MemberList.Add(new SelectListItem() { Text = member.GetFullName(), Value = member.Id.ToString() });
