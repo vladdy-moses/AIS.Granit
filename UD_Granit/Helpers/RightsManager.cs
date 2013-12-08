@@ -15,19 +15,22 @@ namespace UD_Granit.Helpers
             public static bool RegisterAdministrator(User user) { return (user is Administrator); }
 
             public static bool Edit(User user) { return ((user is Administrator) || (((user is Member) && ((user as Member).Position == MemberPosition.Chairman)))); }
-            public static bool Edit(User user, User editedUser) {
+            public static bool Edit(User user, User editedUser)
+            {
                 if ((user == null) || (editedUser == null)) return false;
                 return ((user.Id == editedUser.Id) || (user is Administrator) || (((user is Member) && ((user as Member).Position == MemberPosition.Chairman) && !(editedUser is Administrator))));
             }
 
             public static bool Remove(User user) { return (user is Administrator); }
-            public static bool Remove(User user, User removedUser) {
+            public static bool Remove(User user, User removedUser)
+            {
                 if ((user == null) || (removedUser == null)) return false;
                 return ((user is Administrator) || (user.Id == removedUser.Id) || ((user is Member) && ((user as Member).Position == MemberPosition.Chairman)));
             }
 
             public static bool ShowAdditionalInfo(User user) { return ((user is Member) || (user is Administrator)); }
-            public static bool ShowAdditionalInfo(User user, User showedUser) {
+            public static bool ShowAdditionalInfo(User user, User showedUser)
+            {
                 if ((user == null) || (showedUser == null)) return false;
                 return ((user.Id == showedUser.Id) || (user is Member) || (user is Administrator));
             }
@@ -60,15 +63,7 @@ namespace UD_Granit.Helpers
                 return false;
             }
 
-            public static bool Edit(User user, Models.Dissertation dissertation)
-            {
-                return ((user is Applicant) && (user.Id == dissertation.Applicant.Id));
-            }
-
-            public static bool CreateSession(User user)
-            {
-                return ((user is Administrator) || ((user is Member) && ((user as Member).Position == MemberPosition.Chairman)));
-            }
+            public static bool Edit(User user, Models.Dissertation dissertation) { return ((user is Applicant) && (user.Id == dissertation.Applicant.Id)); }
         }
 
         public static class Speciality
@@ -79,6 +74,12 @@ namespace UD_Granit.Helpers
         public static class Reply
         {
             public static bool AddReply(User user, Models.Dissertation dissertation) { return ((user is Applicant) && (dissertation != null) && ((user as Applicant).Id == dissertation.Id)); }
+        }
+
+        public static class Session
+        {
+            public static bool Create(User user) { return ((user is Administrator) || ((user is Member) && ((user as Member).Position == MemberPosition.Chairman))); }
+            public static bool Result(User user) { return ((user is Administrator) || ((user is Member) && (((user as Member).Position == MemberPosition.Chairman) || ((user as Member).Position == MemberPosition.Secretary)))); }
         }
     }
 }

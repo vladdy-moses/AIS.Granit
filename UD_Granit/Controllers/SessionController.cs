@@ -50,6 +50,9 @@ namespace UD_Granit.Controllers
 
         public ActionResult CreateDefence(int id)
         {
+            if (!RightsManager.Session.Create(Session.GetUser()))
+                return HttpNotFound();
+
             UD_Granit.ViewModels.Session.Create viewModel = new ViewModels.Session.Create();
 
             Dissertation currentDissertation = db.Dissertations.Find(id);
@@ -76,6 +79,9 @@ namespace UD_Granit.Controllers
         [HttpPost]
         public ActionResult Create(UD_Granit.ViewModels.Session.Create viewModel)
         {
+            if (!RightsManager.Session.Create(Session.GetUser()))
+                return HttpNotFound();
+
             Dissertation currentDissertation = db.Dissertations.Find(viewModel.Dissertation_Id);
             if (currentDissertation == null)
                 return HttpNotFound();
@@ -167,12 +173,36 @@ namespace UD_Granit.Controllers
             User currentUser = Session.GetUser() as User;
             Session currentSession = db.Sessions.Find(id);
 
-            if (currentUser == null)
+            if (!RightsManager.Dissertation.Show(currentUser, currentSession.Dissertation))
                 return HttpNotFound();
-#warning Проверка на дозволенность действий
+
+            if (currentSession == null)
+                return HttpNotFound();
+
             UD_Granit.ViewModels.Session.Details viewModel = new ViewModels.Session.Details();
             viewModel.Session = currentSession;
             return View(viewModel);
+        }
+
+        //
+        // GET: /Session/Result/5
+
+        public ActionResult Result(int id)
+        {
+
+            User currentUser = Session.GetUser() as User;
+            Session currentSession = db.Sessions.Find(id);
+
+            if (!RightsManager.Session.Result(currentUser))
+                return HttpNotFound();
+
+            if (currentSession == null)
+                return HttpNotFound();
+#warning TODO
+            /*UD_Granit.ViewModels.Session.Result viewModel = new ViewModels.Session.Result();
+            viewModel.Session = currentSession;
+            return View(viewModel);*/
+            return HttpNotFound();
         }
     }
 }

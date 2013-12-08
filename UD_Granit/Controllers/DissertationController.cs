@@ -34,7 +34,7 @@ namespace UD_Granit.Controllers
 
                 User currentUser = Session.GetUser();
                 viewModel.CanEdit = RightsManager.Dissertation.Edit(currentUser, dissertation);
-                viewModel.CanCreateSession = RightsManager.Dissertation.CreateSession(currentUser);
+                viewModel.CanCreateSession = RightsManager.Session.Create(currentUser);
                 viewModel.CanAddReplies = currentUser.Id == dissertation.Applicant.Id;
                 viewModel.CanEditReplies = currentUser.Id == dissertation.Applicant.Id;
 
