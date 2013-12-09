@@ -1,5 +1,59 @@
-﻿@{
+﻿@model UD_Granit.ViewModels.Session.ResultDefence
+
+@{
     ViewBag.Title = "ResultDefence";
 }
 
 <h2>ResultDefence</h2>
+<h3>@Model.DissertationTitle (@Model.Date)</h3>
+
+@using (Html.BeginForm("ResultDefence", "Session"))
+{
+    @Html.ValidationSummary(true)
+    @Html.HiddenFor(model => model.Id)
+    
+    <div class="editor-label">
+        @Html.LabelFor(model => model.Result)
+    </div>
+    <div class="editor-field">
+        @Html.CheckBoxFor(model => model.Result)
+        @Html.ValidationMessageFor(model => model.Result)
+    </div>
+    
+    <div class="editor-label">
+        @Html.LabelFor(model => model.Vote_Result)
+    </div>
+    <div class="editor-field">
+        @Html.TextBoxFor(model => model.Vote_Result)
+        @Html.ValidationMessageFor(model => model.Vote_Result)
+    </div>
+    
+    <div class="editor-label">
+        @Html.LabelFor(model => model.Reliability)
+    </div>
+    <div class="editor-field">
+        @Html.TextAreaFor(model => model.Reliability)
+        @Html.ValidationMessageFor(model => model.Reliability)
+    </div>
+    
+    <div class="editor-label">
+        @Html.LabelFor(model => model.Novelty)
+    </div>
+    <div class="editor-field">
+        @Html.TextAreaFor(model => model.Novelty)
+        @Html.ValidationMessageFor(model => model.Novelty)
+    </div>
+    
+    <div class="editor-label">
+        @Html.LabelFor(model => model.Significance)
+    </div>
+    <div class="editor-field">
+        @Html.TextAreaFor(model => model.Significance)
+        @Html.ValidationMessageFor(model => model.Significance)
+    </div>
+    
+    <div class="control">
+        <button>Заполнить результат</button>
+        @Html.ActionLink("Отмена", "Details", new { id = Model.Id }, null)
+    </div>
+}

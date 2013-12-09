@@ -190,7 +190,6 @@ namespace UD_Granit.Controllers
 
         public ActionResult Result(int id)
         {
-
             User currentUser = Session.GetUser() as User;
             Session currentSession = db.Sessions.Find(id);
 
@@ -213,7 +212,11 @@ namespace UD_Granit.Controllers
             if (currentSession is SessionDefence)
             {
                 ViewModels.Session.ResultDefence viewModel = new ViewModels.Session.ResultDefence();
-                viewModel.Session = new SessionDefence() { Id = currentSession.Id, Dissertation = currentSession.Dissertation, Date = currentSession.Date };
+
+                viewModel.DissertationTitle = currentSession.Dissertation.Title;
+                viewModel.Id = currentSession.Id;
+                viewModel.Date = currentSession.Date;
+
                 return View("ResultDefence", viewModel);
             }
             return HttpNotFound();
@@ -225,7 +228,49 @@ namespace UD_Granit.Controllers
         [HttpPost]
         public ActionResult ResultConsideration(ViewModels.Session.ResultConsideration viewModel)
         {
-            return HttpNotFound();
+            User currentUser = Session.GetUser() as User;
+            SessionConsideration currentSession = db.SessionsСonsideration.Find(viewModel.Id);
+
+            if (!RightsManager.Session.Result(currentUser))
+                return HttpNotFound();
+
+            if ((currentSession == null) || (currentSession.Was))
+                return HttpNotFound();
+
+            currentSession.Result = viewModel.Result;
+            currentSession.Was = true;
+            db.Entry<SessionConsideration>(currentSession).State = System.Data.Entity.EntityState.Modified;
+            db.SaveChanges();
+
+            return RedirectToAction("Details", new { id = currentSession.Id });
+        }
+
+        //
+        // POST: /Session/ResultDefence
+
+        [HttpPost]
+        public ActionResult ResultDefence(ViewModels.Session.ResultDefence viewModel)
+        {
+            User currentUser = Session.GetUser() as User;
+            SessionDefence currentSession = db.SessionsDefence.Find(viewModel.Id);
+
+            if (!RightsManager.Session.Result(currentUser))
+                return HttpNotFound();
+
+            if ((currentSession == null) || (currentSession.Was))
+                return HttpNotFound();
+
+            currentSession.Result = viewModel.Result;
+            currentSession.Novelty = viewModel.Novelty;
+            currentSession.Reliability = viewModel.Reliability;
+            currentSession.Significance = viewModel.Significance;
+            currentSession.Vote_Result = viewModel.Vote_Result;
+
+            currentSession.Was = true;
+            db.Entry<SessionDefence>(currentSession).State = System.Data.Entity.EntityState.Modified;
+            db.SaveChanges();
+
+            return RedirectToAction("Details", new { id = currentSession.Id });
         }
     }
 }

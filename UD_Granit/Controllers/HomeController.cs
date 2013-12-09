@@ -29,8 +29,8 @@ namespace UD_Granit.Controllers
                 }
             }
 
-            var prevSessions = db.Sessions.Where(s => s.Was).OrderByDescending(s => s.Date).Take(5);
-            var nextSessions = db.Sessions.Where(s => ((!s.Was) && (s.Date > DateTime.Now))).OrderBy(s => s.Date).Take(5);
+            var prevSessions = db.Sessions.Where(s => (!s.Dissertation.Administrative_Use && s.Was)).OrderByDescending(s => s.Date).Take(5);
+            var nextSessions = db.Sessions.Where(s => (!s.Dissertation.Administrative_Use && !s.Was && (s.Date > DateTime.Now))).OrderBy(s => s.Date).Take(5);
 
             UD_Granit.ViewModels.Home.Index viewModel = new ViewModels.Home.Index();
             viewModel.SessionsWas = prevSessions;

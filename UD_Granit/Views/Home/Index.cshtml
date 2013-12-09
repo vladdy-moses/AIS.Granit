@@ -13,7 +13,12 @@
         <h3>Недавно прошедшие заседания</h3>
         @if ((Model != null) && (Model.SessionsWas != null) && (Model.SessionsWas.Count() > 0))
         {
-#warning Добавить вывод, когда будут данные из контроллера
+            <ul>
+                @foreach (UD_Granit.Models.Session currentSession in Model.SessionsWas)
+                {
+                    <li>@(currentSession.Date). @currentSession.Dissertation.Title</li>
+                }
+            </ul>
         }
         else
         {
@@ -24,7 +29,12 @@
         <h3>Предстоящие заседания</h3>
         @if ((Model != null) && (Model.SessionsWill != null) && (Model.SessionsWill.Count() > 0))
         {
-#warning Добавить вывод, когда будут данные из контроллера
+            <ul>
+                @foreach (UD_Granit.Models.Session currentSession in Model.SessionsWill)
+                {
+                    <li>@(currentSession.Date). @currentSession.Dissertation.Title</li>
+                }
+            </ul>
         }
         else
         {
