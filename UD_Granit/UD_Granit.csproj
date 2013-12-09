@@ -149,7 +149,7 @@
     <Compile Include="Models\Session\SessionConsideration.cs" />
     <Compile Include="Models\Session\SessionDefence.cs" />
     <Compile Include="Models\Speciality.cs" />
-    <Compile Include="Models\DataContext.cs" />
+    <Compile Include="Models\Context\DataContext.cs" />
     <Compile Include="Models\Dissertation.cs" />
     <Compile Include="Models\Reply.cs" />
     <Compile Include="Models\User\Administrator.cs" />

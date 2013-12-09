@@ -19,6 +19,9 @@ namespace UD_Granit
             WebApiConfig.Register(GlobalConfiguration.Configuration);
             FilterConfig.RegisterGlobalFilters(GlobalFilters.Filters);
             RouteConfig.RegisterRoutes(RouteTable.Routes);
+
+            UD_Granit.Models.DataContext db = new UD_Granit.Models.DataContext();
+            HttpContext.Current.Application["Name"] = (db.Council.Count() == 0) ? "Гранит" : db.Council.First().Number;
         }
     }
 }

@@ -58,15 +58,6 @@ namespace UD_Granit.Models
             modelBuilder.Entity<Council>().ToTable("Council", "guest");
 
             modelBuilder.Entity<Applicant>().HasOptional(t => t.Dissertation).WithRequired(t => t.Applicant);
-            //modelBuilder.Entity<Member>().HasRequired(t => t.Speciality).WithOptional().WillCascadeOnDelete(false);
-            //modelBuilder.Entity<Speciality>().HasOptional(t => t.Members).WithOptionalDependent().WillCascadeOnDelete(false);
-            /*modelBuilder.Entity<Session>().HasMany(s => s.Members).WithMany()
-                .Map(m =>
-                {
-                    m.MapLeftKey("SessionId");
-                    m.MapRightKey("UserId");
-                    m.ToTable("SessionMember");
-                });*/
         }
 
         protected void InitDatabase()
@@ -87,6 +78,8 @@ namespace UD_Granit.Models
 
             Database.Connection.Open();
             DbCommand cmd = null;
+
+            // Хранимая процедура, получающая все диссертации
             cmd = Database.Connection.CreateCommand();
             cmd.CommandText = @"
 CREATE PROCEDURE [dbo].[GetDissertations]
@@ -97,17 +90,7 @@ END
 ";
             cmd.ExecuteNonQuery();
 
-
-            cmd = Database.Connection.CreateCommand();
-            cmd.CommandText = @"
-CREATE PROCEDURE [dbo].[GetMembersBySpeciality]
-	@speciality nvarchar(128)
-AS
-	SELECT U.*, M.* FROM [Users] AS U INNER JOIN [guest].[Members] AS M ON U.Id = M.Id WHERE M.Speciality_Number = @speciality
-RETURN 0
-";
-            cmd.ExecuteNonQuery();
-
+            // Хранимая процедура для получения списка членов совета по отраслям наук
             cmd = Database.Connection.CreateCommand();
             cmd.CommandText = @"
 CREATE PROCEDURE [dbo].[GetMembersByScienceBranch]
@@ -118,6 +101,7 @@ RETURN 0
 ";
             cmd.ExecuteNonQuery();
 
+            // Хранимая процедура для получения отраслей наук по зяявленным специальностям
             cmd = Database.Connection.CreateCommand();
             cmd.CommandText = @"
 CREATE PROCEDURE [dbo].[GetScienceBranches]
@@ -127,6 +111,7 @@ RETURN 0
 ";
             cmd.ExecuteNonQuery();
 
+            // Хранимая процедура для поиска диссертаций по названию
             cmd = Database.Connection.CreateCommand();
             cmd.CommandText = @"
 CREATE PROCEDURE [dbo].[FindDissertations]

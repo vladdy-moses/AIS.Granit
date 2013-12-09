@@ -6,6 +6,7 @@ using System.Web.Mvc;
 using UD_Granit.Models;
 using UD_Granit.Helpers;
 using System.Web.Mvc.Html;
+using System.Data.SqlClient;
 
 namespace UD_Granit.Controllers
 {
@@ -65,6 +66,7 @@ namespace UD_Granit.Controllers
                     db.Entry(viewModel.Council).State = System.Data.Entity.EntityState.Modified;
                 }
                 db.SaveChanges();
+                HttpContext.Application["Name"] = viewModel.Council.Number;
 
                 return RedirectToAction("Index");
             }
@@ -77,18 +79,69 @@ namespace UD_Granit.Controllers
         //
         // GET: /Council/Members
 
-        public ActionResult Members()
+        public ActionResult Members(string filter)
         {
             UD_Granit.ViewModels.Council.Members viewModel = new ViewModels.Council.Members();
 
-            var q = from m in db.Members orderby m.Position descending select m;
-            List<UD_Granit.ViewModels.Council.MemberView> memberList = new List<ViewModels.Council.MemberView>();
-            foreach (Member m in q)
+            if (filter == null)
             {
-                memberList.Add(new UD_Granit.ViewModels.Council.MemberView() { Name = m.GetFullName(), Degree = m.Degree, Position = m.Position.ToDescription(), Speciality = m.Speciality.GetFullName(), Id = m.Id });
-            }
+                var q = from m in db.Members orderby m.Position select m;
+                List<UD_Granit.ViewModels.Council.MemberView> memberList = new List<ViewModels.Council.MemberView>();
+                foreach (Member m in q)
+                {
+                    memberList.Add(new UD_Granit.ViewModels.Council.MemberView() { Name = m.GetFullName(), Degree = m.Degree, Position = m.Position.ToDescription(), Speciality = m.Speciality.GetFullName(), Id = m.Id });
+                }
 
-            viewModel.CouncilMembers = memberList;
+                viewModel.CouncilMembers = memberList;
+            }
+            else
+            {
+                switch (filter)
+                {
+                    case "speciality":
+                        var specialities = db.Specialities;
+                        if (specialities != null)
+                        {
+                            viewModel.FilteredMembers = new Dictionary<string, IEnumerable<ViewModels.Council.MemberView>>();
+                            foreach (var speciality in specialities)
+                            {
+                                var members = db.Members.Where(m => (m.Speciality.Number == speciality.Number));
+                                if (members.Count() > 0)
+                                {
+                                    List<UD_Granit.ViewModels.Council.MemberView> memberList = new List<ViewModels.Council.MemberView>();
+                                    foreach (Member m in members)
+                                    {
+                                        memberList.Add(new UD_Granit.ViewModels.Council.MemberView() { Name = m.GetFullName(), Degree = m.Degree, Position = m.Position.ToDescription(), Speciality = m.Speciality.GetFullName(), Id = m.Id });
+                                    }
+                                    viewModel.FilteredMembers.Add(speciality.GetFullName(), memberList);
+                                }
+                            }
+                        }
+                        break;
+                    case "scienceBranch":
+                        var branches = db.Database.SqlQuery<string>("GetScienceBranches");
+                        if (branches != null)
+                        {
+                            viewModel.FilteredMembers = new Dictionary<string, IEnumerable<ViewModels.Council.MemberView>>();
+                            foreach (var scienceBranch in branches)
+                            {
+                                var members = db.Database.SqlQuery<Member>("GetMembersByScienceBranch @Branch", new SqlParameter("Branch", scienceBranch));
+
+                                List<UD_Granit.ViewModels.Council.MemberView> memberList = new List<ViewModels.Council.MemberView>();
+                                foreach (Member m in members)
+                                {
+                                    m.Speciality = db.Members.Find(m.Id).Speciality;
+                                    memberList.Add(new UD_Granit.ViewModels.Council.MemberView() { Name = m.GetFullName(), Degree = m.Degree, Position = m.Position.ToDescription(), Speciality = m.Speciality.GetFullName(), Id = m.Id });
+                                }
+                                viewModel.FilteredMembers.Add(scienceBranch, memberList);
+
+                                if (memberList.Count == 0)
+                                    viewModel.FilteredMembers.Remove(scienceBranch);
+                            }
+                        }
+                        break;
+                }
+            }
 
             viewModel.CanControl = false;
             if ((Session.GetUser() is Administrator) || (Session.GetUserPosition() == MemberPosition.Chairman))

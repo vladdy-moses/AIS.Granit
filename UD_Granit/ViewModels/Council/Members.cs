@@ -16,7 +16,9 @@ namespace UD_Granit.ViewModels.Council
 
     public class Members
     {
-        public IEnumerable<MemberView> CouncilMembers;
+        public IEnumerable<MemberView> CouncilMembers { set; get; }
+        public Dictionary<string, IEnumerable<MemberView>> FilteredMembers { set; get; }
+
         public bool CanControl { set; get; }
     }
 }
