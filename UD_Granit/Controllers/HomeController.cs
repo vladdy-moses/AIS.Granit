@@ -29,13 +29,12 @@ namespace UD_Granit.Controllers
                 }
             }
 
-            /*var members = db.Database.SqlQuery<Member>("GetMembersBySpeciality @speciality", new SqlParameter("speciality", "10.001.2001"));
-            foreach (var member in members)
-            {
-                string nya = member.GetFullName();
-            }*/
+            var prevSessions = db.Sessions.Where(s => s.Was).OrderByDescending(s => s.Date).Take(5);
+            var nextSessions = db.Sessions.Where(s => ((!s.Was) && (s.Date > DateTime.Now))).OrderBy(s => s.Date).Take(5);
 
             UD_Granit.ViewModels.Home.Index viewModel = new ViewModels.Home.Index();
+            viewModel.SessionsWas = prevSessions;
+            viewModel.SessionsWill = nextSessions;
             return View(viewModel);
         }
     }
