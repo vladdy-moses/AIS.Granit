@@ -6,6 +6,7 @@ using System.Web.Mvc;
 using UD_Granit.Models;
 using UD_Granit.Helpers;
 using System.IO;
+using System.Data.SqlClient;
 
 namespace UD_Granit.Controllers
 {
@@ -16,12 +17,24 @@ namespace UD_Granit.Controllers
         //
         // GET: /Dissertation/
 
-        public ActionResult Index()
+        public ActionResult Index(string search)
         {
             UD_Granit.ViewModels.Dissertation.Index viewModel = new ViewModels.Dissertation.Index();
             viewModel.Dissertations = new List<Dissertation>();
 
-            var dissertations = db.Database.SqlQuery<Dissertation>("GetDissertations");
+            IEnumerable<Dissertation> dissertations = null;
+
+            if ((search != null) && (search.Length > 0))
+            {
+                viewModel.SearchHaveResults = true;
+                viewModel.SearchString = search;
+                dissertations = db.Database.SqlQuery<Dissertation>("FindDissertations @phrase", new SqlParameter("phrase", search));
+            }
+            else
+            {
+                dissertations = db.Database.SqlQuery<Dissertation>("GetDissertations");
+            }
+            
             foreach (var currentDissertation in dissertations)
             {
                 if (RightsManager.Dissertation.Show(Session.GetUser(), currentDissertation))
@@ -29,8 +42,6 @@ namespace UD_Granit.Controllers
                     viewModel.Dissertations.Add(db.Dissertations.Find(currentDissertation.Id));
                 }
             }
-
-            
             return View(viewModel);
         }
 

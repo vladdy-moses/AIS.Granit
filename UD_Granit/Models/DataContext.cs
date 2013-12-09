@@ -127,6 +127,16 @@ RETURN 0
 ";
             cmd.ExecuteNonQuery();
 
+            cmd = Database.Connection.CreateCommand();
+            cmd.CommandText = @"
+CREATE PROCEDURE [dbo].[FindDissertations]
+	@phrase nvarchar(MAX)
+AS
+	SELECT D.* FROM Dissertations as D WHERE LOWER(D.Title) LIKE '%' + LOWER(@phrase) + '%'
+RETURN 0
+";
+            cmd.ExecuteNonQuery();
+
             this.SaveChanges();
         }
     }

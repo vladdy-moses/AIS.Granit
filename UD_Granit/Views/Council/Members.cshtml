@@ -8,6 +8,13 @@
 
 @if ((Model != null) && (Model.CouncilMembers != null) && (Model.CouncilMembers.Count() > 0))
 {
+    <h3>Фильтры</h3>
+    <p>Вы можете использовать фильтрацию:</p>
+    <ul>
+        <li>@Html.ActionLink("По специальностям", "Members", new { filter = "speciality" }, null)</li>
+        <li>@Html.ActionLink("По отраслям науки", "Members", new { filter = "scienceBranch" }, null)</li>
+        <li>@Html.ActionLink("Без фильтрации", "Members")</li>
+    </ul>
     <table>
         <thead>
             <tr>

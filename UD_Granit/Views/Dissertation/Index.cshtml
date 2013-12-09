@@ -8,8 +8,30 @@
 <h2>@ViewBag.Title</h2>
 <p>На этой странице Вы можете просмотреть список диссертаций, которые уже защищены, или будут защищены в ближайшее время. Для фильтрации полученной информации можно использовать поля определённых критериев поиска, которые расположены ниже.</p>
 
+@if ((Model.Dissertations.Count > 0) || Model.SearchHaveResults)
+{
+    <h3>Поиск</h3>
+    <p>Вы можете найти необходимую диссертацию при помощи текстового поля ниже. Введите заголовок диссертации или его часть в текстовое поле и нажмите на кнопку "Поиск".</p>
+    using (Html.BeginForm("Index", "Dissertation", FormMethod.Get))
+    {
+    <div>
+        @Html.TextBox("search", @Model.SearchString)
+        <button>Поиск</button>
+        @if(Model.SearchHaveResults){
+            @Html.ActionLink("Очистить результаты поиска", "Index", "Dissertation")
+        }
+    </div>
+    }
+}
+
+@if (Model.SearchHaveResults)
+{
+    <h3>Отображене результатов поиска по запросу "@(Model.SearchString)":</h3>
+}
+
 @if (Model.Dissertations.Count > 0)
 {
+    <h3>Список диссертаций</h3>
     <table>
         <thead>
             <tr>
