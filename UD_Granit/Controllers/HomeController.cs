@@ -29,6 +29,12 @@ namespace UD_Granit.Controllers
                 }
             }
 
+            var members = db.Database.SqlQuery<Member>("GetMembersBySpeciality @speciality", new SqlParameter("speciality", "10.001.2001"));
+            foreach (var member in members)
+            {
+                string nya = member.GetFullName();
+            }
+
             UD_Granit.ViewModels.Home.Index viewModel = new ViewModels.Home.Index();
             return View(viewModel);
         }

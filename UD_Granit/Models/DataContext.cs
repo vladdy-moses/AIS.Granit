@@ -86,7 +86,8 @@ namespace UD_Granit.Models
             this.SaveChanges();
 
             Database.Connection.Open();
-            DbCommand cmd = Database.Connection.CreateCommand();
+            DbCommand cmd = null;
+            cmd = Database.Connection.CreateCommand();
             cmd.CommandText = @"
 CREATE PROCEDURE [dbo].[GetDissertations]
 AS
@@ -95,6 +96,37 @@ BEGIN
 END
 ";
             cmd.ExecuteNonQuery();
+
+
+            cmd = Database.Connection.CreateCommand();
+            cmd.CommandText = @"
+CREATE PROCEDURE [dbo].[GetMembersBySpeciality]
+	@speciality nvarchar(128)
+AS
+	SELECT U.*, M.* FROM [Users] AS U INNER JOIN [guest].[Members] AS M ON U.Id = M.Id WHERE M.Speciality_Number = @speciality
+RETURN 0
+";
+            cmd.ExecuteNonQuery();
+
+            cmd = Database.Connection.CreateCommand();
+            cmd.CommandText = @"
+CREATE PROCEDURE [dbo].[GetMembersByScienceBranch]
+	@scienceBranch nvarchar(128)
+AS
+	SELECT U.*, M.* FROM [Users] AS U INNER JOIN [guest].[Members] AS M ON U.Id = M.Id WHERE M.Speciality_Number IN (SELECT S.Number FROM Specialities AS S WHERE S.ScienceBranch = @scienceBranch)
+RETURN 0
+";
+            cmd.ExecuteNonQuery();
+
+            cmd = Database.Connection.CreateCommand();
+            cmd.CommandText = @"
+CREATE PROCEDURE [dbo].[GetScienceBranches]
+AS
+	SELECT S.ScienceBranch FROM Specialities AS S GROUP BY S.ScienceBranch
+RETURN 0
+";
+            cmd.ExecuteNonQuery();
+
             this.SaveChanges();
         }
     }
