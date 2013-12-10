@@ -17,7 +17,26 @@ namespace UD_Granit.Controllers
 
         public ActionResult Index()
         {
-            return HttpNotFound();
+            User currentUser = Session.GetUser();
+
+            var prevSessions = db.Sessions.Where(s => (s.Was)).OrderByDescending(s => s.Date);
+            var nextSessions = db.Sessions.Where(s => (!s.Was)).OrderBy(s => s.Date);
+
+            List<Session> SessionsWas = new List<Session>();
+            List<Session> SessionsWill = new List<Session>();
+
+            foreach (Session currentSession in prevSessions)
+                if (RightsManager.Dissertation.Show(currentUser, currentSession.Dissertation))
+                    SessionsWas.Add(currentSession);
+
+            foreach (Session currentSession in nextSessions)
+                if (RightsManager.Dissertation.Show(currentUser, currentSession.Dissertation))
+                    SessionsWill.Add(currentSession);
+
+            ViewModels.Session.Index viewModel = new ViewModels.Session.Index();
+            viewModel.SessionsWas = SessionsWas;
+            viewModel.SessionsWill = SessionsWill;
+            return View(viewModel);
         }
 
         //
