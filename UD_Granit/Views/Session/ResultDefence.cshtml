@@ -7,7 +7,7 @@
 <h2>ResultDefence</h2>
 <h3>@Model.DissertationTitle (@Model.Date)</h3>
 
-@using (Html.BeginForm("ResultDefence", "Session"))
+@using (Html.BeginForm("ResultDefence", "Session", FormMethod.Post, new { enctype = "multipart/form-data" }))
 {
     @Html.ValidationSummary(true)
     @Html.HiddenFor(model => model.Id)
@@ -50,6 +50,14 @@
     <div class="editor-field">
         @Html.TextAreaFor(model => model.Significance)
         @Html.ValidationMessageFor(model => model.Significance)
+    </div>
+    
+    <div class="editor-label">
+        @Html.LabelFor(model => model.File_Recording)
+    </div>
+    <div class="editor-field">
+        @Html.TextBoxFor(model => model.File_Recording, new { type = "file" })
+        @Html.ValidationMessageFor(model => model.File_Recording)
     </div>
     
     <div class="control">

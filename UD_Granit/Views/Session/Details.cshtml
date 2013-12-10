@@ -67,7 +67,30 @@
             }
             @if (Model.Session is UD_Granit.Models.SessionDefence)
             {
-                <tr></tr>
+                <tr>
+                    <td>Итог защиты</td>
+                    <td>@(((Model.Session as UD_Granit.Models.SessionDefence).Result) ? "Защищена" : "Не защищена")</td>
+                </tr>
+                <tr>
+                    <td>Итог голосования</td>
+                    <td>@((Model.Session as UD_Granit.Models.SessionDefence).Vote_Result)</td>
+                </tr>
+                <tr>
+                    <td>Научная новизна результатов</td>
+                    <td><pre>@((Model.Session as UD_Granit.Models.SessionDefence).Novelty)</pre></td>
+                </tr>
+                <tr>
+                    <td>Степень достоверности результатов</td>
+                    <td><pre>@((Model.Session as UD_Granit.Models.SessionDefence).Reliability)</pre></td>
+                </tr>
+                <tr>
+                    <td>Значимость работы</td>
+                    <td><pre>@((Model.Session as UD_Granit.Models.SessionDefence).Significance)</pre></td>
+                </tr>
+                <tr>
+                    <td>Аудиовидеозапись защиты</td>
+                    <td>@Html.ActionLink("Загрузить", "Download", new { id = Model.Session.Id }, null)</td>
+                </tr>
             }
         </tbody>
     </table>

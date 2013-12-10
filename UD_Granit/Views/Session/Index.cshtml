@@ -1,4 +1,5 @@
 ﻿@model UD_Granit.ViewModels.Session.Index
+@using UD_Granit.Helpers
 
 @{
     ViewBag.Title = "Index";
@@ -8,8 +9,48 @@
 @if (Model.SessionsWas.Count > 0)
 {
     <h3>Проведённые заседания</h3>
+    
+    <table>
+        <thead>
+            <tr>
+                <td>Название диссертации</td>
+                <td>Дата проведения</td>
+                <td>Соискатель</td>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (UD_Granit.Models.Session currentSession in Model.SessionsWas)
+            {
+                <tr>
+                    <td>@Html.ActionLink(currentSession.Dissertation.Title, "Details", "Dissertation", new { id = currentSession.Dissertation.Id }, null)</td>
+                    <td>@currentSession.Date</td>
+                    <td>@Html.ActionLink(currentSession.Dissertation.Applicant.GetFullName(), "Details", "Account", new { id = currentSession.Dissertation.Applicant.Id }, null)</td>
+                </tr>
+            }
+        </tbody>
+    </table>
 }
 @if (Model.SessionsWill.Count > 0)
 {
     <h3>Непроведённые заседания</h3>
+    
+    <table>
+        <thead>
+            <tr>
+                <td>Название диссертации</td>
+                <td>Дата проведения</td>
+                <td>Соискатель</td>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (UD_Granit.Models.Session currentSession in Model.SessionsWas)
+            {
+                <tr>
+                    <td>@Html.ActionLink(currentSession.Dissertation.Title, "Details", "Dissertation", new { id = currentSession.Dissertation.Id }, null)</td>
+                    <td>@currentSession.Date</td>
+                    <td>@Html.ActionLink(currentSession.Dissertation.Applicant.GetFullName(), "Details", "Account", new { id = currentSession.Dissertation.Applicant.Id }, null)</td>
+                </tr>
+            }
+        </tbody>
+    </table>
 }

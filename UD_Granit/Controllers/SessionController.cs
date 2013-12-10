@@ -5,6 +5,7 @@ using System.Web;
 using System.Web.Mvc;
 using UD_Granit.Models;
 using UD_Granit.Helpers;
+using System.IO;
 
 namespace UD_Granit.Controllers
 {
@@ -195,9 +196,6 @@ namespace UD_Granit.Controllers
             if (!RightsManager.Dissertation.Show(currentUser, currentSession.Dissertation))
                 return HttpNotFound();
 
-            if (currentSession == null)
-                return HttpNotFound();
-
             UD_Granit.ViewModels.Session.Details viewModel = new ViewModels.Session.Details();
             viewModel.Session = currentSession;
             viewModel.CanResult = RightsManager.Session.Result(currentUser);
@@ -213,9 +211,6 @@ namespace UD_Granit.Controllers
             Session currentSession = db.Sessions.Find(id);
 
             if (!RightsManager.Session.Result(currentUser))
-                return HttpNotFound();
-
-            if (currentSession == null)
                 return HttpNotFound();
 
             if (currentSession is SessionConsideration)
@@ -253,7 +248,7 @@ namespace UD_Granit.Controllers
             if (!RightsManager.Session.Result(currentUser))
                 return HttpNotFound();
 
-            if ((currentSession == null) || (currentSession.Was))
+            if (currentSession.Was)
                 return HttpNotFound();
 
             currentSession.Result = viewModel.Result;
@@ -276,7 +271,7 @@ namespace UD_Granit.Controllers
             if (!RightsManager.Session.Result(currentUser))
                 return HttpNotFound();
 
-            if ((currentSession == null) || (currentSession.Was))
+            if (currentSession.Was)
                 return HttpNotFound();
 
             currentSession.Result = viewModel.Result;
@@ -284,12 +279,38 @@ namespace UD_Granit.Controllers
             currentSession.Reliability = viewModel.Reliability;
             currentSession.Significance = viewModel.Significance;
             currentSession.Vote_Result = viewModel.Vote_Result;
+            currentSession.File_Recording = Path.GetExtension(viewModel.File_Recording.FileName);
 
             currentSession.Was = true;
             db.Entry<SessionDefence>(currentSession).State = System.Data.Entity.EntityState.Modified;
             db.SaveChanges();
 
+            viewModel.File_Recording.SaveAs(Server.MapPath(Path.Combine("~/App_Data/", currentSession.Id + "_Recording" + currentSession.File_Recording)));
+
+#warning вставить транзакцию (добавление результата -- задание свойства в диссертации)
+
+            /*Dissertation currentDissertation = db.Dissertations.Find(currentSession.Dissertation.Id);
+            currentDissertation.Defensed = viewModel.Result;
+            db.Entry<Dissertation>(currentDissertation).State = System.Data.Entity.EntityState.Modified;
+            db.SaveChanges();
+            */
+
             return RedirectToAction("Details", new { id = currentSession.Id });
+        }
+
+        //
+        // GET: /Session/Download/5
+
+        public ActionResult Download(int id)
+        {
+            User currentUser = Session.GetUser();
+            SessionDefence currentSession = db.SessionsDefence.Find(id);
+
+            if (!RightsManager.Dissertation.Show(currentUser, currentSession.Dissertation))
+                return HttpNotFound();
+
+            string fileName = currentSession.Id + "_Recording" + currentSession.File_Recording;
+            return File("~/App_Data/" + fileName, "binary/octet-stream", fileName);
         }
     }
 }
