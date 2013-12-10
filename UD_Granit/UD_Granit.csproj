@@ -182,6 +182,7 @@
     <Compile Include="ViewModels\Home\Index.cs" />
     <Compile Include="ViewModels\Reply\Create.cs" />
     <Compile Include="ViewModels\Session\Create.cs" />
+    <Compile Include="ViewModels\Session\Delete.cs" />
     <Compile Include="ViewModels\Session\Details.cs" />
     <Compile Include="ViewModels\Session\Index.cs" />
     <Compile Include="ViewModels\Session\My.cs" />
@@ -326,6 +327,7 @@
     <Content Include="Views\Session\ResultConsideration.cshtml" />
     <Content Include="Views\Session\ResultDefence.cshtml" />
     <Content Include="Views\Session\Index.cshtml" />
+    <Content Include="Views\Session\Delete.cshtml" />
     <None Include="Views\Shared\Layout.cshtml" />
     <Content Include="Views\Shared\_PartialAside.cshtml" />
     <Content Include="Views\Shared\_PartialFooter.cshtml" />

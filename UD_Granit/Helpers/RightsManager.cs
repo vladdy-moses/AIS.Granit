@@ -79,7 +79,7 @@ namespace UD_Granit.Helpers
         public static class Session
         {
             public static bool Create(User user) { return ((user is Administrator) || ((user is Member) && ((user as Member).Position == MemberPosition.Chairman))); }
-            public static bool Result(User user) { return ((user is Administrator) || ((user is Member) && (((user as Member).Position == MemberPosition.Chairman) || ((user as Member).Position == MemberPosition.Secretary)))); }
+            public static bool Edit(User user) { return ((user is Administrator) || ((user is Member) && (((user as Member).Position == MemberPosition.Chairman) || ((user as Member).Position == MemberPosition.Secretary)))); }
         }
     }
 }

@@ -193,12 +193,15 @@ namespace UD_Granit.Controllers
             User currentUser = Session.GetUser();
             Session currentSession = db.Sessions.Find(id);
 
+            if (currentSession == null)
+                return HttpNotFound();
+
             if (!RightsManager.Dissertation.Show(currentUser, currentSession.Dissertation))
                 return HttpNotFound();
 
             UD_Granit.ViewModels.Session.Details viewModel = new ViewModels.Session.Details();
             viewModel.Session = currentSession;
-            viewModel.CanResult = RightsManager.Session.Result(currentUser);
+            viewModel.CanControl = RightsManager.Session.Edit(currentUser);
             return View(viewModel);
         }
 
@@ -210,7 +213,7 @@ namespace UD_Granit.Controllers
             User currentUser = Session.GetUser() as User;
             Session currentSession = db.Sessions.Find(id);
 
-            if (!RightsManager.Session.Result(currentUser))
+            if (!RightsManager.Session.Edit(currentUser))
                 return HttpNotFound();
 
             if (currentSession is SessionConsideration)
@@ -245,7 +248,7 @@ namespace UD_Granit.Controllers
             User currentUser = Session.GetUser() as User;
             SessionConsideration currentSession = db.SessionsСonsideration.Find(viewModel.Id);
 
-            if (!RightsManager.Session.Result(currentUser))
+            if (!RightsManager.Session.Edit(currentUser))
                 return HttpNotFound();
 
             if (currentSession.Was)
@@ -268,7 +271,7 @@ namespace UD_Granit.Controllers
             User currentUser = Session.GetUser() as User;
             SessionDefence currentSession = db.SessionsDefence.Find(viewModel.Id);
 
-            if (!RightsManager.Session.Result(currentUser))
+            if (!RightsManager.Session.Edit(currentUser))
                 return HttpNotFound();
 
             if (currentSession.Was)
@@ -311,6 +314,48 @@ namespace UD_Granit.Controllers
 
             string fileName = currentSession.Id + "_Recording" + currentSession.File_Recording;
             return File("~/App_Data/" + fileName, "binary/octet-stream", fileName);
+        }
+
+        //
+        // GET: /Dissertation/Delete/5
+
+        public ActionResult Delete(int id)
+        {
+            User currentUser = Session.GetUser() as User;
+            Session currentSession = db.Sessions.Find(id);
+
+            if (!RightsManager.Session.Edit(currentUser))
+                return HttpNotFound();
+
+            ViewModels.Session.Delete viewModel = new ViewModels.Session.Delete();
+            
+            viewModel.Id = id;
+            viewModel.Title = currentSession.Dissertation.Title;
+            viewModel.Date = currentSession.Date;
+
+            return View(viewModel);
+        }
+
+        //
+        // POST: /Dissertation/Delete
+
+        [HttpPost]
+        public ActionResult Delete(ViewModels.Session.Delete viewModel)
+        {
+            User currentUser = Session.GetUser() as User;
+            Session currentSession = db.Sessions.Find(viewModel.Id);
+
+            if (!RightsManager.Session.Edit(currentUser))
+                return HttpNotFound();
+
+            if (currentSession is SessionDefence)
+            {
+                System.IO.File.Delete(Server.MapPath(Path.Combine("~/App_Data/", currentSession.Id + "_Recording" + (currentSession as SessionDefence).File_Recording)));
+            }
+            db.Sessions.Remove(currentSession);
+            db.SaveChanges();
+
+            return RedirectToAction("Index");
         }
     }
 }
