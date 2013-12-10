@@ -157,7 +157,7 @@ namespace UD_Granit.Controllers
                 currentUser.RegistrationDate = DateTime.Now;
                 currentUser.IsActive = false;
 
-#warning Проверка на существование научного руководителя в БД
+#warning Проверка на существование научного руководителя в БД (хранимая процедура, триггер)
                 db.ScientificDirectors.Add(viewModel.ScientificDirector);
                 currentUser.ScientificDirector = viewModel.ScientificDirector;
 
@@ -190,7 +190,7 @@ namespace UD_Granit.Controllers
                 currentUser.RegistrationDate = DateTime.Now;
                 currentUser.IsActive = false;
 
-#warning Проверка на существование научного руководителя в БД
+#warning Проверка на существование научного руководителя в БД (триггер или хранимая процедура)
                 db.ScientificDirectors.Add(viewModel.ScientificDirector);
                 currentUser.ScientificDirector = viewModel.ScientificDirector;
 
@@ -331,8 +331,11 @@ namespace UD_Granit.Controllers
                 viewModel.CanDelete = false;
             }
 
-#warning нельзя удалять членов совета, если есть сессии с ним
-            //if((deletedUser is Member) 
+            if ((deletedUser is Member) && ((deletedUser as Member).Sessions.Count > 0))
+            {
+                ViewData.NotificationAdd(new NotificationManager.Notify() { Type = NotificationManager.Notify.NotifyType.Error, Message = "Невозможно удалить члена диссертационного совета, так как он участвует в заседаниях. Удалите заседания сначала." });
+                viewModel.CanDelete = false;
+            }
 
             if ((deletedUser is Administrator) && (db.Administrators.Count() == 1))
             {
@@ -358,7 +361,11 @@ namespace UD_Granit.Controllers
             if (!RightsManager.Account.Remove(currentUser, deletedUser))
                 return HttpNotFound();
 
-#warning удаление пользователя
+            db.Users.Remove(deletedUser);
+            db.SaveChanges();
+
+            if (currentUser.Id == deletedUser.Id)
+                return RedirectToAction("Logout");
 
             if (viewModel.Referer == null)
                 return RedirectToAction("Index", "Home");

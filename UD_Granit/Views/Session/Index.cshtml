@@ -15,7 +15,8 @@
             <tr>
                 <td>Название диссертации</td>
                 <td>Дата проведения</td>
-                <td>Соискатель</td>
+                <td>Соискатель</td>                
+                <td>Подробности</td>
             </tr>
         </thead>
         <tbody>
@@ -25,6 +26,7 @@
                     <td>@Html.ActionLink(currentSession.Dissertation.Title, "Details", "Dissertation", new { id = currentSession.Dissertation.Id }, null)</td>
                     <td>@currentSession.Date</td>
                     <td>@Html.ActionLink(currentSession.Dissertation.Applicant.GetFullName(), "Details", "Account", new { id = currentSession.Dissertation.Applicant.Id }, null)</td>
+                    <td>@Html.ActionLink("Подробности", "Details", "Session", new { id = currentSession.Id }, null)</td>
                 </tr>
             }
         </tbody>
@@ -40,15 +42,17 @@
                 <td>Название диссертации</td>
                 <td>Дата проведения</td>
                 <td>Соискатель</td>
+                <td>Подробности</td>
             </tr>
         </thead>
         <tbody>
-            @foreach (UD_Granit.Models.Session currentSession in Model.SessionsWas)
+            @foreach (UD_Granit.Models.Session currentSession in Model.SessionsWill)
             {
                 <tr>
                     <td>@Html.ActionLink(currentSession.Dissertation.Title, "Details", "Dissertation", new { id = currentSession.Dissertation.Id }, null)</td>
                     <td>@currentSession.Date</td>
                     <td>@Html.ActionLink(currentSession.Dissertation.Applicant.GetFullName(), "Details", "Account", new { id = currentSession.Dissertation.Applicant.Id }, null)</td>
+                    <td>@Html.ActionLink("Подробности", "Details", "Session", new { id = currentSession.Id }, null)</td>
                 </tr>
             }
         </tbody>

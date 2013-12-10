@@ -96,16 +96,12 @@
     </table>
 }
 
-@if (Model.CanControl && !Model.Session.Was)
+@if (Model.CanControl)
 {
     <div class="control">
-        @Html.ActionLink("Заполнить результат заседания", "Result", new { id = Model.Session.Id }, null)
-    </div>
-}
-
-@if (Model.CanControl && Model.Session.Was)
-{
-    <div class="control">
+        @if(!Model.Session.Was) {
+            @Html.ActionLink("Заполнить результат заседания", "Result", new { id = Model.Session.Id }, null)
+        }
         @Html.ActionLink("Удалить", "Delete", new { id = Model.Session.Id }, null)
     </div>
 }
