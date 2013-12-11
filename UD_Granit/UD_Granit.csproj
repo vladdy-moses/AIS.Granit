@@ -193,6 +193,7 @@
     <Compile Include="ViewModels\Speciality\Index.cs" />
   </ItemGroup>
   <ItemGroup>
+    <Content Include="App_Start\AdditionalScripts.sql" />
     <Content Include="Content\css\basic\main.css" />
     <Content Include="Content\css\lite\main.css" />
     <Content Include="Content\js\script.js" />

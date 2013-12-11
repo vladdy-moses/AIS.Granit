@@ -122,6 +122,34 @@ RETURN 0
 ";
             cmd.ExecuteNonQuery();
 
+            // Триггер для предотвращения дублирования научных руководителей 
+            cmd = Database.Connection.CreateCommand();
+            cmd.CommandText = @"
+CREATE TRIGGER ScientificDirectorSafeTrigger on ScientificDirectors
+INSTEAD OF INSERT
+AS
+BEGIN
+	SET NOCOUNT ON;
+	
+	DECLARE @realyHave int;
+	SELECT @realyHave = COUNT(*) FROM ScientificDirectors WHERE
+		FirstName = (SELECT FirstName FROM inserted) AND
+		SecondName = (SELECT SecondName FROM inserted) AND
+		Organization = (SELECT Organization FROM inserted);
+
+	IF @realyHave = 0
+	BEGIN
+		INSERT INTO ScientificDirectors SELECT FirstName, SecondName, LastName, Degree, Organization, Organization_Department, Organization_Post FROM inserted;
+		SELECT TOP(1) * FROM ScientificDirectors WHERE Id = SCOPE_IDENTITY();
+	END
+	ELSE
+		SELECT TOP(1) * FROM ScientificDirectors WHERE
+		FirstName = (SELECT FirstName FROM inserted) AND
+		SecondName = (SELECT SecondName FROM inserted) AND
+		Organization = (SELECT Organization FROM inserted);
+END;
+";
+            cmd.ExecuteNonQuery();
             this.SaveChanges();
         }
     }
