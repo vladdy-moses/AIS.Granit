@@ -5,9 +5,18 @@
 }
 
 <h2>@ViewBag.Title</h2>
+<h3>Фильтры</h3>
+<p>Вы можете использовать фильтрацию:</p>
+<ul>
+    <li>@Html.ActionLink("Только администраторы", "All", new { filter = "administrators" }, null)</li>
+    <li>@Html.ActionLink("Только члены совета", "All", new { filter = "members" }, null)</li>
+    <li>@Html.ActionLink("Только соискатели", "All", new { filter = "applicants" }, null)</li>
+    <li>@Html.ActionLink("Без фильтрации", "All")</li>
+</ul>
 
-@if ((Model != null) && (Model.Accounts != null) && (Model.Accounts.Count() > 0))
+@if ((Model.Administrators != null) && (Model.Administrators.Count() > 0))
 {
+    <h3>Администраторы</h3>
     <table>
         <thead>
             <tr>
@@ -18,7 +27,7 @@
             </tr>
         </thead>
         <tbody>
-            @foreach (UD_Granit.ViewModels.Account.AccountViev account in Model.Accounts)
+            @foreach (UD_Granit.ViewModels.Account.AccountViev account in Model.Administrators)
             {
                 <tr>
                     <td>@account.Email</td>
@@ -28,11 +37,11 @@
                         {
                             if (account.CanEdit)
                             {
-                                <span>@Html.ActionLink("Редактировать", "Edit", new { id = account.Id })</span><br />
+                        <span>@Html.ActionLink("Редактировать", "Edit", new { id = account.Id })</span><br />
                             }
                             if (account.CanRemove)
                             {
-                                <span>@Html.ActionLink("Удалить", "Delete", new { id = account.Id })</span>
+                        <span>@Html.ActionLink("Удалить", "Delete", new { id = account.Id })</span>
                             }
                         }
                     </td>
@@ -41,11 +50,79 @@
         </tbody>
     </table>
 }
-else
+
+@if ((Model.Members != null) && (Model.Members.Count() > 0))
 {
-    <div class="error">
-        Извините, в системе не зарегистрировано ни одного пользователя.
-    </div>
+    <h3>Члены совета</h3>
+    <table>
+        <thead>
+            <tr>
+                <td>Электронный адрес</td>
+                <td>Имя</td>
+                <td>Роль в системе</td>
+                <td>Управление</td>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (UD_Granit.ViewModels.Account.AccountViev account in Model.Members)
+            {
+                <tr>
+                    <td>@account.Email</td>
+                    <td>@Html.ActionLink(account.Name, "Details", new { id = account.Id })</td>
+                    <td>@account.Role</td>
+                    <td>@if ((account.CanEdit) || (account.CanRemove))
+                        {
+                            if (account.CanEdit)
+                            {
+                        <span>@Html.ActionLink("Редактировать", "Edit", new { id = account.Id })</span><br />
+                            }
+                            if (account.CanRemove)
+                            {
+                        <span>@Html.ActionLink("Удалить", "Delete", new { id = account.Id })</span>
+                            }
+                        }
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
+}
+
+@if ((Model.Applicants != null) && (Model.Applicants.Count() > 0))
+{
+    <h3>Соискатели</h3>
+    <table>
+        <thead>
+            <tr>
+                <td>Электронный адрес</td>
+                <td>Имя</td>
+                <td>Роль в системе</td>
+                <td>Управление</td>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (UD_Granit.ViewModels.Account.AccountViev account in Model.Applicants)
+            {
+                <tr>
+                    <td>@account.Email</td>
+                    <td>@Html.ActionLink(account.Name, "Details", new { id = account.Id })</td>
+                    <td>@account.Role</td>
+                    <td>@if ((account.CanEdit) || (account.CanRemove))
+                        {
+                            if (account.CanEdit)
+                            {
+                        <span>@Html.ActionLink("Редактировать", "Edit", new { id = account.Id })</span><br />
+                            }
+                            if (account.CanRemove)
+                            {
+                        <span>@Html.ActionLink("Удалить", "Delete", new { id = account.Id })</span>
+                            }
+                        }
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
 }
 
 <div class="control">

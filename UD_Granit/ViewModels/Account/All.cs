@@ -17,6 +17,8 @@ namespace UD_Granit.ViewModels.Account
 
     public class All
     {
-        public IEnumerable<AccountViev> Accounts;
+        public ICollection<AccountViev> Administrators;
+        public ICollection<AccountViev> Members;
+        public ICollection<AccountViev> Applicants;
     }
 }
