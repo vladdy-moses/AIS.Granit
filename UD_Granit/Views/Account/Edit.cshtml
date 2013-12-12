@@ -1,0 +1,66 @@
+﻿@model UD_Granit.ViewModels.Account.Edit
+
+@{
+    ViewBag.Title = "Edit";
+}
+
+<h2>Edit</h2>
+
+@using (Html.BeginForm()) {
+    @Html.AntiForgeryToken()
+    @Html.ValidationSummary(true)
+
+    @Html.HiddenFor(model => model.Id)
+
+    <fieldset>
+        <legend>Edit</legend>
+        
+        <div class="editor-label">
+            @Html.LabelFor(model => model.OldPassword)
+        </div>
+        <div class="editor-field">
+            @Html.PasswordFor(model => model.OldPassword)
+            @Html.ValidationMessageFor(model => model.OldPassword)
+        </div>
+
+        <div class="editor-label">
+            @Html.LabelFor(model => model.NewPassword)
+        </div>
+        <div class="editor-field">
+            @Html.PasswordFor(model => model.NewPassword)
+            @Html.ValidationMessageFor(model => model.NewPassword)
+        </div>
+
+        <div class="editor-label">
+            @Html.LabelFor(model => model.FirstName)
+        </div>
+        <div class="editor-field">
+            @Html.EditorFor(model => model.FirstName)
+            @Html.ValidationMessageFor(model => model.FirstName)
+        </div>
+
+        <div class="editor-label">
+            @Html.LabelFor(model => model.SecondName)
+        </div>
+        <div class="editor-field">
+            @Html.EditorFor(model => model.SecondName)
+            @Html.ValidationMessageFor(model => model.SecondName)
+        </div>
+
+        <div class="editor-label">
+            @Html.LabelFor(model => model.LastName)
+        </div>
+        <div class="editor-field">
+            @Html.EditorFor(model => model.LastName)
+            @Html.ValidationMessageFor(model => model.LastName)
+        </div>
+
+        <div class="control">
+            <button>Сохранить изменения</button>
+        </div>
+    </fieldset>
+}
+
+<div>
+    @Html.ActionLink("Back to List", "Index")
+</div>

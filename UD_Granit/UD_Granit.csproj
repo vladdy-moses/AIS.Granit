@@ -164,6 +164,7 @@
     <Compile Include="Helpers\UserHelper.cs" />
     <Compile Include="ViewModels\Account\Delete.cs" />
     <Compile Include="ViewModels\Account\Details.cs" />
+    <Compile Include="ViewModels\Account\Edit.cs" />
     <Compile Include="ViewModels\Account\Login.cs" />
     <Compile Include="ViewModels\Account\All.cs" />
     <Compile Include="ViewModels\Account\Register.cs" />
@@ -329,6 +330,7 @@
     <Content Include="Views\Session\ResultDefence.cshtml" />
     <Content Include="Views\Session\Index.cshtml" />
     <Content Include="Views\Session\Delete.cshtml" />
+    <Content Include="Views\Account\Edit.cshtml" />
     <None Include="Views\Shared\Layout.cshtml" />
     <Content Include="Views\Shared\_PartialAside.cshtml" />
     <Content Include="Views\Shared\_PartialFooter.cshtml" />

@@ -371,5 +371,79 @@ namespace UD_Granit.Controllers
                 return RedirectToAction("Index", "Home");
             return Redirect(viewModel.Referer);
         }
+
+        //
+        // GET: /Account/Edit
+
+        public ActionResult Edit(int id)
+        {
+            User currentUser = Session.GetUser();
+            User editedUser = db.Users.Find(id);
+
+            if (!RightsManager.Account.Edit(currentUser, editedUser))
+                return HttpNotFound();
+
+            ViewModels.Account.Edit viewModel = new ViewModels.Account.Edit()
+            {
+                Id = editedUser.Id,
+                FirstName = editedUser.FirstName,
+                SecondName = editedUser.SecondName,
+                LastName = editedUser.LastName
+            };
+            return View(viewModel);
+        }
+
+        //
+        // POST: /Account/Edit
+
+        [HttpPost]
+        public ActionResult Edit(ViewModels.Account.Edit viewModel)
+        {
+            User currentUser = Session.GetUser();
+            User editedUser = db.Users.Find(viewModel.Id);
+
+            if (!RightsManager.Account.Edit(currentUser, editedUser))
+                return HttpNotFound();
+
+            if (viewModel.OldPassword != currentUser.Password)
+            {
+                ViewData.NotificationAdd(new NotificationManager.Notify() { Type = NotificationManager.Notify.NotifyType.Error, Message = "Неверный текущий пароль. Пожалуйста, попытайтесь снова." });
+                return View(viewModel);
+            }
+
+            if (viewModel.NewPassword != null)
+                editedUser.Password = viewModel.NewPassword;
+
+            if (viewModel.FirstName != editedUser.FirstName)
+                editedUser.FirstName = viewModel.FirstName;
+
+            if (viewModel.SecondName != editedUser.SecondName)
+                editedUser.SecondName = viewModel.SecondName;
+
+            if (viewModel.LastName != null)
+                editedUser.LastName = viewModel.LastName;
+            else
+                editedUser.LastName = null;
+
+            db.Entry<User>(editedUser).State = System.Data.Entity.EntityState.Modified;
+            try
+            {
+                db.Configuration.ValidateOnSaveEnabled = false;
+                db.SaveChanges();
+                db.Configuration.ValidateOnSaveEnabled = true;
+            }
+            catch (Exception ex)
+            {
+                ViewData.NotificationAdd(new NotificationManager.Notify() { Type = NotificationManager.Notify.NotifyType.Error, Message = ex.Message });
+                return View(viewModel);
+            }
+
+            if (currentUser.Id == editedUser.Id)
+            {
+                Session.SetUser(editedUser);
+                return RedirectToAction("Details");
+            }
+            return RedirectToAction("Details", new { id = editedUser.Id });
+        }
     }
 }
