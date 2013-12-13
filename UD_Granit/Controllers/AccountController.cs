@@ -157,7 +157,6 @@ namespace UD_Granit.Controllers
                 currentUser.RegistrationDate = DateTime.Now;
                 currentUser.IsActive = false;
 
-#warning Проверка на существование научного руководителя в БД (хранимая процедура, триггер)
                 db.ScientificDirectors.Add(viewModel.ScientificDirector);
                 currentUser.ScientificDirector = viewModel.ScientificDirector;
 
@@ -190,7 +189,6 @@ namespace UD_Granit.Controllers
                 currentUser.RegistrationDate = DateTime.Now;
                 currentUser.IsActive = false;
 
-#warning Проверка на существование научного руководителя в БД (триггер или хранимая процедура)
                 db.ScientificDirectors.Add(viewModel.ScientificDirector);
                 currentUser.ScientificDirector = viewModel.ScientificDirector;
 

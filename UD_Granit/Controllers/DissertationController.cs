@@ -195,7 +195,6 @@ namespace UD_Granit.Controllers
                 db.Entry<Dissertation>(baseDissertation).State = System.Data.Entity.EntityState.Modified;
                 db.SaveChanges();
 
-
                 return RedirectToAction("Details", new { id = currentDissertation.Id });
             }
             catch (Exception ex)

@@ -1,13 +1,14 @@
 ﻿@model UD_Granit.ViewModels.Session.Create
 
 @{
-    ViewBag.Title = "Create";
+    ViewBag.Title = "Новое заседание";
 }
 
-<h2>Create</h2>
+<h2>Создание записи о заседании</h2>
 
 @using (Html.BeginForm("Create", "Session"))
 {
+    @Html.AntiForgeryToken()
     @Html.ValidationSummary(true)
     @Html.HiddenFor(model => model.Dissertation_Id)
     @Html.HiddenFor(model => model.MembersCount)

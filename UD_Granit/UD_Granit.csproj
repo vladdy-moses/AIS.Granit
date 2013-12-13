@@ -331,6 +331,8 @@
     <Content Include="Views\Session\Index.cshtml" />
     <Content Include="Views\Session\Delete.cshtml" />
     <Content Include="Views\Account\Edit.cshtml" />
+    <Content Include="Views\Home\About.cshtml" />
+    <Content Include="Views\Home\Statistics.cshtml" />
     <None Include="Views\Shared\Layout.cshtml" />
     <Content Include="Views\Shared\_PartialAside.cshtml" />
     <Content Include="Views\Shared\_PartialFooter.cshtml" />

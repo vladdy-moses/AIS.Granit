@@ -117,9 +117,7 @@ namespace UD_Granit.Controllers
         // GET: /Speciality/Delete/5
 
         public ActionResult Delete(string id)
-        {
-#warning Удалять только те, к которым не прикреплено что-либо (процедура)
-            
+        {            
             if(!CanControl())
                 return HttpNotFound();
 

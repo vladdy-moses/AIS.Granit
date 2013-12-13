@@ -21,6 +21,7 @@ table {
     border: 1px solid gray;
     border-collapse: collapse;
 	border-spacing: 0;
+	margin-bottom: 10px;
 }
 
 thead {
@@ -52,6 +53,15 @@ header {
     margin-bottom: 20px;
     padding: 5px;
     box-shadow: rgb(0,0,0) 0 0 10px;
+}
+
+header .logo {
+	float: left;
+	width: 64px;
+	height: 64px;
+	margin: 0 15px 0 0;
+	background-repeat: no-repeat;
+	background-image: url('/Content/logo-white.png');
 }
 
 #StyleChanger {
@@ -173,6 +183,21 @@ footer {
     margin: 0 auto;
 }
 
+#FooterLinks {
+	text-align: right;
+	float: right;
+	font-family: Arial, Verdana;
+}
+
+#FooterLinks a {
+	color: #ccc;
+	text-decoration: none;
+}
+
+#FooterLinks a:hover {
+	color: #999;
+}
+
 .cb {
     clear: both;
 }
@@ -225,3 +250,20 @@ footer {
         .control button:hover {
             background-color: #666;
         }
+
+.editor-field input[type="text"],
+.editor-field input[type="password"],
+.editor-field input[type="datetime"],
+.editor-field input[type="number"] {
+	min-width: 200px;
+}
+
+.editor-field textarea {
+	min-width: 600px;
+	min-height: 300px;
+}
+
+.PageImage {
+	float: left;
+	padding: 0 5px;
+}

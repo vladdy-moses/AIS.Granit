@@ -1,12 +1,15 @@
 ﻿@model UD_Granit.ViewModels.Account.RegisterMember
 
 @{
-    ViewBag.Title = "Регистрация члена диссертационного совета";
+    ViewBag.Title = "Регистрация";
 }
 
-<h2>@ViewBag.Title</h2>
+<h2>Регистрация в системе</h2>
+<p>Введите регистрационные данные в поля формы. При отправке формы, если Вы забыли указать обязательный реквизит, система предотвратит регистрацию и потребует ввести недостающие данные в соответствующие поля.</p>
+
 @using (Html.BeginForm("RegisterMember", "Account"))
 {
+    @Html.AntiForgeryToken()
     @Html.ValidationSummary(true)
 
     <fieldset>

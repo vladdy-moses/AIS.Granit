@@ -37,5 +37,21 @@ namespace UD_Granit.Controllers
             viewModel.SessionsWill = nextSessions;
             return View(viewModel);
         }
+
+        //
+        // GET: /Home/About
+
+        public ActionResult About()
+        {
+            return View();
+        }
+
+        //
+        // GET: /Home/Statistics
+
+        public ActionResult Statistics()
+        {
+            return View();
+        }
     }
 }

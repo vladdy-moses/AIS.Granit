@@ -289,14 +289,21 @@ namespace UD_Granit.Controllers
             db.SaveChanges();
 
             viewModel.File_Recording.SaveAs(Server.MapPath(Path.Combine("~/App_Data/", currentSession.Id + "_Recording" + currentSession.File_Recording)));
-
-#warning вставить транзакцию (добавление результата -- задание свойства в диссертации)
-
-            /*Dissertation currentDissertation = db.Dissertations.Find(currentSession.Dissertation.Id);
+            
+            Dissertation currentDissertation = db.Dissertations.Find(currentSession.Dissertation.Id);
             currentDissertation.Defensed = viewModel.Result;
             db.Entry<Dissertation>(currentDissertation).State = System.Data.Entity.EntityState.Modified;
-            db.SaveChanges();
-            */
+            try
+            {
+                db.Configuration.ValidateOnSaveEnabled = false;
+                db.SaveChanges();
+                db.Configuration.ValidateOnSaveEnabled = true;
+            }
+            catch (Exception ex)
+            {
+                ViewData.NotificationAdd(new NotificationManager.Notify() { Type = NotificationManager.Notify.NotifyType.Error, Message = ex.Message });
+                return View(viewModel);
+            }
 
             return RedirectToAction("Details", new { id = currentSession.Id });
         }
@@ -328,7 +335,7 @@ namespace UD_Granit.Controllers
                 return HttpNotFound();
 
             ViewModels.Session.Delete viewModel = new ViewModels.Session.Delete();
-            
+
             viewModel.Id = id;
             viewModel.Title = currentSession.Dissertation.Title;
             viewModel.Date = currentSession.Date;

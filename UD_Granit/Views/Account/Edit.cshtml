@@ -1,20 +1,22 @@
 ﻿@model UD_Granit.ViewModels.Account.Edit
 
 @{
-    ViewBag.Title = "Edit";
+    ViewBag.Title = "Редактирование пользователя";
 }
 
-<h2>Edit</h2>
+<h2>Изменение информации о пользователе</h2>
+<p>Чтобы изменить пароль, введите его в поле "Новый пароль", иначе оставьте поле пустым.</p>
 
-@using (Html.BeginForm()) {
+@using (Html.BeginForm())
+{
     @Html.AntiForgeryToken()
     @Html.ValidationSummary(true)
 
     @Html.HiddenFor(model => model.Id)
 
     <fieldset>
-        <legend>Edit</legend>
-        
+        <legend>Пароль</legend>
+
         <div class="editor-label">
             @Html.LabelFor(model => model.OldPassword)
         </div>
@@ -30,7 +32,10 @@
             @Html.PasswordFor(model => model.NewPassword)
             @Html.ValidationMessageFor(model => model.NewPassword)
         </div>
-
+    </fieldset>
+    
+    <fieldset>
+        <legend>Персональные данные</legend>
         <div class="editor-label">
             @Html.LabelFor(model => model.FirstName)
         </div>
@@ -54,13 +59,10 @@
             @Html.EditorFor(model => model.LastName)
             @Html.ValidationMessageFor(model => model.LastName)
         </div>
-
-        <div class="control">
-            <button>Сохранить изменения</button>
-        </div>
     </fieldset>
-}
 
-<div>
-    @Html.ActionLink("Back to List", "Index")
-</div>
+    <div class="control">
+        <button>Сохранить изменения</button>
+    </div>
+    
+}

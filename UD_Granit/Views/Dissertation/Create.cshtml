@@ -1,10 +1,10 @@
 ﻿@model UD_Granit.ViewModels.Dissertation.Create
 
 @{
-    ViewBag.Title = "Создать запись о диссертации";
+    ViewBag.Title = "Новая диссертация";
 }
 
-<h2>@ViewBag.Title</h2>
+<h2>Создать запись о диссертации</h2>
 <p>На этой странице Вы должны заполнить информацию о Вашей диссертации. Записи о диссертациях, в которые будет занесена неверная информация, будут удалены из системы.</p>
 
 @using (Html.BeginForm("Create", "Dissertation", FormMethod.Post, new { enctype = "multipart/form-data" }))

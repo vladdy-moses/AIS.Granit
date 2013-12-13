@@ -1,10 +1,13 @@
 ﻿@model UD_Granit.ViewModels.Account.Login
 
 @{
-    ViewBag.Title = "Login";
+    ViewBag.Title = "Авторизация";
 }
 
-<h2>Авторизация</h2>
+<h2>Вход в систему</h2>
+<div class="PageImage">
+    <img src="/Content/login.png" alt="" />
+</div>
 <p>Пожалуйста, введите свои учётные данные в поля ниже, затем нажмите на кнопку "Выполнить вход". При успешной авторазации вас должно перенаправить на главную страницу. Если этого не произошло, вы ввели некорректные данные.</p>
 
 @using (Html.BeginForm())
@@ -12,22 +15,24 @@
     @Html.AntiForgeryToken()
     @Html.ValidationSummary(true)
 
-   
-    <div class="editor-label">
-        @Html.LabelFor(model => model.Email)
-    </div>
-    <div class="editor-field">
-        @Html.EditorFor(model => model.Email)
-        @Html.ValidationMessageFor(model => model.Email)
-    </div>
-    
-    <div class="editor-label">
-        @Html.LabelFor(model => model.Password)
-    </div>
-    <div class="editor-field">
-        @Html.PasswordFor(model => model.Password)
-        @Html.ValidationMessageFor(model => model.Password)
-    </div>
+    <fieldset>
+        <legend>Данные для входа</legend>
+        <div class="editor-label">
+            @Html.LabelFor(model => model.Email)
+        </div>
+        <div class="editor-field">
+            @Html.EditorFor(model => model.Email)
+            @Html.ValidationMessageFor(model => model.Email)
+        </div>
+
+        <div class="editor-label">
+            @Html.LabelFor(model => model.Password)
+        </div>
+        <div class="editor-field">
+            @Html.PasswordFor(model => model.Password)
+            @Html.ValidationMessageFor(model => model.Password)
+        </div>
+    </fieldset>
     
     <div class="control">
         <button>Выполнить вход</button>
