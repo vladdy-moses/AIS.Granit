@@ -48,6 +48,10 @@ header {
 	padding: 10px;
 }
 
+#StyleChanger {
+	float: right;
+}
+
 hgroup {
 	padding: 20px 30px 0 30px;
 }

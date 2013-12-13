@@ -25,7 +25,7 @@ namespace UD_Granit.Controllers
                 {
                     var dissertations = from d in db.Dissertations where d.Applicant.Id == currentUser.Id select d;
                     if(dissertations.Count() == 0)
-                        ViewData.NotificationAdd(new NotificationManager.Notify() { Type = NotificationManager.Notify.NotifyType.Error, Message = "У Вас отсутствуют запись о Вашей диссертациях. Заведите запись о диссертации <a href=\"" + Url.Action("Create", "Dissertation") + "\">здесь</a>." });
+                        ViewData.NotificationAdd(new NotificationManager.Notify() { Type = NotificationManager.Notify.NotifyType.Error, Message = "У Вас отсутствуют запись о Вашей диссертации. Заведите запись о диссертации <a href=\"" + Url.Action("Create", "Dissertation") + "\">здесь</a>." });
                 }
             }
 
