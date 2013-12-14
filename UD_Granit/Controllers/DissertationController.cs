@@ -59,8 +59,8 @@ namespace UD_Granit.Controllers
                 User currentUser = Session.GetUser();
                 viewModel.CanEdit = RightsManager.Dissertation.Edit(currentUser, dissertation);
                 viewModel.CanCreateSession = RightsManager.Session.Create(currentUser);
-                viewModel.CanAddReplies = currentUser.Id == dissertation.Applicant.Id;
-                viewModel.CanEditReplies = currentUser.Id == dissertation.Applicant.Id;
+                viewModel.CanAddReplies = RightsManager.Reply.Control(currentUser, dissertation);
+                viewModel.CanEditReplies = RightsManager.Reply.Control(currentUser, dissertation);
 
                 return View(viewModel);
             }
@@ -213,7 +213,7 @@ namespace UD_Granit.Controllers
 #warning При удалении удалять также заседания (каскадно), если у него больше нет диссертаций и ФАЙЛЫ НА СЕРВЕРЕ
             Dissertation currentDissertation = db.Dissertations.Find(id);
 
-            if (!RightsManager.Reply.AddReply(Session.GetUser(), currentDissertation))
+            if (!RightsManager.Reply.Control(Session.GetUser(), currentDissertation))
                 return HttpNotFound();
 
             UD_Granit.ViewModels.Dissertation.Delete viewModel = new ViewModels.Dissertation.Delete();
@@ -277,24 +277,37 @@ namespace UD_Granit.Controllers
             if (!RightsManager.Dissertation.Show(Session.GetUser(), currentDisserrtation))
                 return HttpNotFound();
 
-            string fileName = string.Empty;
-
-            switch (type)
+            try
             {
-                case "Abstract":
-                    fileName = currentDisserrtation.Id + "_Abstract" + currentDisserrtation.File_Abstract;
-                    break;
-                case "Text":
-                    fileName = currentDisserrtation.Id + "_Text" + currentDisserrtation.File_Text;
-                    break;
-                case "Summary":
-                    fileName = currentDisserrtation.Id + "_Summary" + currentDisserrtation.File_Summary;
-                    break;
-            }
-            if (fileName.Length == 0)
-                return HttpNotFound();
+                string fileName = string.Empty;
 
-            return File("~/App_Data/" + fileName, "binary/octet-stream", fileName);
+                switch (type)
+                {
+                    case "Abstract":
+                        fileName = currentDisserrtation.Id + "_Abstract" + currentDisserrtation.File_Abstract;
+                        break;
+                    case "Text":
+                        fileName = currentDisserrtation.Id + "_Text" + currentDisserrtation.File_Text;
+                        break;
+                    case "Summary":
+                        fileName = currentDisserrtation.Id + "_Summary" + currentDisserrtation.File_Summary;
+                        break;
+                }
+                if (fileName.Length == 0)
+                    return HttpNotFound();
+
+                var result = File("~/App_Data/" + fileName, "binary/octet-stream", fileName);
+                if(System.IO.File.Exists(Server.MapPath(result.FileName)))
+                    return result;
+
+                ViewData.NotificationAdd(new NotificationManager.Notify() { Type = NotificationManager.Notify.NotifyType.Other, Message = "Извините, файл не найден на сервере. Пожалуйста, обратитесь к администратору системы." });
+                return Redirect(Request.UrlReferrer.AbsolutePath);
+            }
+            catch
+            {
+                ViewData.NotificationAdd(new NotificationManager.Notify() { Type = NotificationManager.Notify.NotifyType.Other, Message = "Извините, файл не найден на сервере. Пожалуйста, обратитесь к администратору системы." });
+                return Redirect(Request.UrlReferrer.AbsolutePath);
+            }
         }
     }
 }

@@ -26,7 +26,7 @@ namespace UD_Granit.Controllers
         public ActionResult Create(int id)
         {
             Dissertation dissertation = db.Dissertations.Find(id);
-            if (!RightsManager.Reply.AddReply(Session.GetUser(), dissertation))
+            if (!RightsManager.Reply.Control(Session.GetUser(), dissertation))
                 return HttpNotFound();
 
             UD_Granit.ViewModels.Reply.Create viewModel = new ViewModels.Reply.Create();
@@ -42,7 +42,7 @@ namespace UD_Granit.Controllers
         public ActionResult Create(ViewModels.Reply.Create viewModel)
         {
             Dissertation dissertation = db.Dissertations.Find(viewModel.Dissertation_Id);
-            if (!RightsManager.Reply.AddReply(Session.GetUser(), dissertation))
+            if (!RightsManager.Reply.Control(Session.GetUser(), dissertation))
                 return HttpNotFound();
 
             Reply currentReply = viewModel.Reply;
@@ -61,7 +61,7 @@ namespace UD_Granit.Controllers
             Reply currentReply = db.Replies.Find(id);
             Dissertation currentDissertation = currentReply.Dissertation;
 
-            if (!RightsManager.Reply.AddReply(Session.GetUser(), currentDissertation))
+            if (!RightsManager.Reply.Control(Session.GetUser(), currentDissertation))
                 return HttpNotFound();
 
             db.Replies.Remove(currentReply);
