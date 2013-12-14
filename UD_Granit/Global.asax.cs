@@ -20,6 +20,8 @@ namespace UD_Granit
             FilterConfig.RegisterGlobalFilters(GlobalFilters.Filters);
             RouteConfig.RegisterRoutes(RouteTable.Routes);
 
+            System.Data.Entity.Database.SetInitializer<UD_Granit.Models.DataContext>(new UD_Granit.Models.Initializer());
+
             UD_Granit.Models.DataContext db = new UD_Granit.Models.DataContext();
             HttpContext.Current.Application["Name"] = (db.Council.Count() == 0) ? "Гранит" : db.Council.First().Number;
         }
