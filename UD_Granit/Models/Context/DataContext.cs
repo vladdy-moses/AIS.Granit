@@ -173,6 +173,51 @@ COMMIT TRANSACTION;
 ";
                 cmd.ExecuteNonQuery();
 
+                // Функция для вывода статистики
+                cmd = context.Database.Connection.CreateCommand();
+                cmd.CommandText = @"
+CREATE FUNCTION [dbo].[StatisticsFunction] ()
+RETURNS @returntable TABLE
+(
+	Dissertations int,
+	DissertationsAdministrative int,
+	Users int,
+	Members int,
+	Applicants int,
+	Replies int,
+	Sessions int,
+	SessionsDefenced int,
+	ScientificDirectors int
+)
+AS
+BEGIN
+	DECLARE @Dissertations int
+	DECLARE @DissertationsAdministrative int
+	DECLARE @Users int
+	DECLARE @Members int
+	DECLARE @Applicants int
+	DECLARE @Replies int
+	DECLARE @Sessions int
+	DECLARE @SessionsDefenced int
+	DECLARE @ScientificDirectors int
+
+	SELECT @Dissertations = COUNT(*) FROM Dissertations
+	SELECT @DissertationsAdministrative = COUNT(*) FROM Dissertations WHERE Administrative_Use = 1
+	SELECT @Users = COUNT(*) FROM Users
+	SELECT @Members = COUNT(*) FROM guest.Members
+	SELECT @Applicants = COUNT(*) FROM Applicants
+	SELECT @Replies = COUNT(*) FROM Replies
+	SELECT @Sessions = COUNT(*) FROM Sessions
+	SELECT @SessionsDefenced = COUNT(*) FROM SessionsDefence WHERE Result = 1
+	SELECT @ScientificDirectors = COUNT(*) FROM ScientificDirectors
+
+	INSERT @returntable
+		SELECT @Dissertations, @DissertationsAdministrative, @Users, @Members, @Applicants, @Replies, @Sessions, @SessionsDefenced, @ScientificDirectors
+	RETURN
+END
+";
+                cmd.ExecuteNonQuery();
+
                 context.SaveChanges();
 
                 var createData = ConfigurationManager.AppSettings["LoadExampleDataOnCreate"];

@@ -152,6 +152,7 @@
     <Compile Include="Models\Context\DataContext.cs" />
     <Compile Include="Models\Dissertation.cs" />
     <Compile Include="Models\Reply.cs" />
+    <Compile Include="Models\Statistics.cs" />
     <Compile Include="Models\User\Administrator.cs" />
     <Compile Include="Models\User\Applicant\Applicant.cs" />
     <Compile Include="Models\User\Applicant\ApplicantCandidate.cs" />
@@ -181,6 +182,7 @@
     <Compile Include="ViewModels\Dissertation\Index.cs" />
     <Compile Include="ViewModels\Dissertation\Edit.cs" />
     <Compile Include="ViewModels\Home\Index.cs" />
+    <Compile Include="ViewModels\Home\Statistics.cs" />
     <Compile Include="ViewModels\Reply\Create.cs" />
     <Compile Include="ViewModels\Session\Create.cs" />
     <Compile Include="ViewModels\Session\Delete.cs" />

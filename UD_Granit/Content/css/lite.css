@@ -1,0 +1,40 @@
+﻿body {
+    background-color: #f0f0f0;
+    background-image: url('../background.png');
+}
+
+#MainWrapper {
+    margin: 30px auto;
+    padding: 5px;
+    box-shadow: rgba(0,0,0,0.4) 0 0 10px;
+	background-color: #fff;
+}
+
+header {
+	padding: 10px;
+}
+
+header .logo {
+	background-image: url('../logo.png');
+}
+
+hgroup {
+	padding: 20px 30px 0 30px;
+}
+
+hgroup h4 {
+    color: #999;
+}
+
+aside {
+    float: left;
+    padding-right: 5px;
+}
+
+article {
+    margin-left: 215px;
+}
+
+footer {
+    padding: 30px 20px;
+}

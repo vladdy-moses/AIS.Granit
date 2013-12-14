@@ -51,7 +51,9 @@ namespace UD_Granit.Controllers
 
         public ActionResult Statistics()
         {
-            return View();
+            ViewModels.Home.Statistics viewModel = new ViewModels.Home.Statistics();
+            viewModel.Current = db.Database.SqlQuery<Statistics>("SELECT * FROM [dbo].[StatisticsFunction]()").FirstOrDefault();
+            return View(viewModel);
         }
     }
 }
