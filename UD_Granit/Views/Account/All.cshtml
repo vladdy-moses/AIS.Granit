@@ -11,8 +11,17 @@
 <p>Вы можете использовать фильтрацию:</p>
 <ul>
     <li>@Html.ActionLink("Только администраторы", "All", new { filter = "administrators" }, null)</li>
-    <li>@Html.ActionLink("Только члены совета", "All", new { filter = "members" }, null)</li>
-    <li>@Html.ActionLink("Только соискатели", "All", new { filter = "applicants" }, null)</li>
+    <li>@Html.ActionLink("Только члены совета", "All", new { filter = "members" }, null)
+        <ul>
+            <li>@Html.ActionLink("Только рядовые члены", "All", new { filter = "members", subfilter = "only" }, null)</li>
+        </ul>
+    </li>
+    <li>@Html.ActionLink("Только соискатели", "All", new { filter = "applicants" }, null)
+        <ul>
+            <li>@Html.ActionLink("Только кандидаты на соискание степени кандидата", "All", new { filter = "applicants", subfilter = "candidates" }, null)</li>
+            <li>@Html.ActionLink("Только кандидаты на соискание степени доктора", "All", new { filter = "applicants", subfilter = "doctors" }, null)</li>
+        </ul>
+    </li>
     <li>@Html.ActionLink("Без фильтрации", "All")</li>
 </ul>
 
@@ -24,7 +33,6 @@
             <tr>
                 <td>Электронный адрес</td>
                 <td>Имя</td>
-                <td>Роль в системе</td>
                 <td>Управление</td>
             </tr>
         </thead>
@@ -34,7 +42,6 @@
                 <tr>
                     <td>@account.Email</td>
                     <td>@Html.ActionLink(account.Name, "Details", new { id = account.Id })</td>
-                    <td>@account.Role</td>
                     <td>@if ((account.CanEdit) || (account.CanRemove))
                         {
                             if (account.CanEdit)
@@ -61,7 +68,7 @@
             <tr>
                 <td>Электронный адрес</td>
                 <td>Имя</td>
-                <td>Роль в системе</td>
+                <td>Роль в совете</td>
                 <td>Управление</td>
             </tr>
         </thead>
@@ -71,7 +78,7 @@
                 <tr>
                     <td>@account.Email</td>
                     <td>@Html.ActionLink(account.Name, "Details", new { id = account.Id })</td>
-                    <td>@account.Role</td>
+                    <td>@account.Note</td>
                     <td>@if ((account.CanEdit) || (account.CanRemove))
                         {
                             if (account.CanEdit)
@@ -98,7 +105,7 @@
             <tr>
                 <td>Электронный адрес</td>
                 <td>Имя</td>
-                <td>Роль в системе</td>
+                <td>Степень соискания</td>
                 <td>Управление</td>
             </tr>
         </thead>
@@ -108,7 +115,7 @@
                 <tr>
                     <td>@account.Email</td>
                     <td>@Html.ActionLink(account.Name, "Details", new { id = account.Id })</td>
-                    <td>@account.Role</td>
+                    <td>@account.Note</td>
                     <td>@if ((account.CanEdit) || (account.CanRemove))
                         {
                             if (account.CanEdit)

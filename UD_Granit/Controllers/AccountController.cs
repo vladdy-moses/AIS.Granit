@@ -288,7 +288,7 @@ namespace UD_Granit.Controllers
         //
         // GET: /Account/All
 
-        public ActionResult All(string filter)
+        public ActionResult All(string filter, string subfilter)
         {
             User currentUser = Session.GetUser();
 
@@ -304,25 +304,43 @@ namespace UD_Granit.Controllers
                 q = from u in db.Administrators select u;
                 accountList = new List<ViewModels.Account.AccountViev>();
                 foreach (User u in q)
-                    accountList.Add(new UD_Granit.ViewModels.Account.AccountViev() { Name = u.GetFullName(), Id = u.Id, CanEdit = RightsManager.Account.Edit(currentUser, u), CanRemove = RightsManager.Account.Remove(currentUser, u), Email = u.Email, Role = u.GetRole() });
+                    accountList.Add(new UD_Granit.ViewModels.Account.AccountViev() { Name = u.GetFullName(), Id = u.Id, CanEdit = RightsManager.Account.Edit(currentUser, u), CanRemove = RightsManager.Account.Remove(currentUser, u), Email = u.Email });
                 viewModel.Administrators = accountList;
             }
 
             if ((filter == null) || (filter == "members"))
             {
-                q = from u in db.Members select u;
+                if ((subfilter == null) || (subfilter != "only"))
+                    q = from u in db.Members orderby u.Position descending select u;
+                else
+                    q = from u in db.Members where u.Position == MemberPosition.Member select u;
+
                 accountList = new List<ViewModels.Account.AccountViev>();
                 foreach (User u in q)
-                    accountList.Add(new UD_Granit.ViewModels.Account.AccountViev() { Name = u.GetFullName(), Id = u.Id, CanEdit = RightsManager.Account.Edit(currentUser, u), CanRemove = RightsManager.Account.Remove(currentUser, u), Email = u.Email, Role = u.GetRole() });
+                    accountList.Add(new UD_Granit.ViewModels.Account.AccountViev() { Name = u.GetFullName(), Id = u.Id, CanEdit = RightsManager.Account.Edit(currentUser, u), CanRemove = RightsManager.Account.Remove(currentUser, u), Email = u.Email, Note = u.GetPosition() });
                 viewModel.Members = accountList;
             }
 
             if ((filter == null) || (filter == "applicants"))
             {
-                q = from u in db.Applicants select u;
+                if (subfilter == null)
+                    q = from u in db.Applicants select u;
+                else
+                switch(subfilter) {
+                    case "candidates":
+                        q = from u in db.ApplicantCandidates select u;
+                        break;
+                    case "doctors":
+                        q = from u in db.ApplicantDoctors select u;
+                        break;
+                    default:
+                        q = from u in db.Applicants select u;
+                        break;
+                }
+                
                 accountList = new List<ViewModels.Account.AccountViev>();
                 foreach (User u in q)
-                    accountList.Add(new UD_Granit.ViewModels.Account.AccountViev() { Name = u.GetFullName(), Id = u.Id, CanEdit = RightsManager.Account.Edit(currentUser, u), CanRemove = RightsManager.Account.Remove(currentUser, u), Email = u.Email, Role = u.GetRole() });
+                    accountList.Add(new UD_Granit.ViewModels.Account.AccountViev() { Name = u.GetFullName(), Id = u.Id, CanEdit = RightsManager.Account.Edit(currentUser, u), CanRemove = RightsManager.Account.Remove(currentUser, u), Email = u.Email, Note = u.GetPosition() });
                 viewModel.Applicants = accountList;
             }
 

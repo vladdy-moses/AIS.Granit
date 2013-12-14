@@ -300,12 +300,10 @@ namespace UD_Granit.Controllers
                 if(System.IO.File.Exists(Server.MapPath(result.FileName)))
                     return result;
 
-                ViewData.NotificationAdd(new NotificationManager.Notify() { Type = NotificationManager.Notify.NotifyType.Other, Message = "Извините, файл не найден на сервере. Пожалуйста, обратитесь к администратору системы." });
                 return Redirect(Request.UrlReferrer.AbsolutePath);
             }
             catch
             {
-                ViewData.NotificationAdd(new NotificationManager.Notify() { Type = NotificationManager.Notify.NotifyType.Other, Message = "Извините, файл не найден на сервере. Пожалуйста, обратитесь к администратору системы." });
                 return Redirect(Request.UrlReferrer.AbsolutePath);
             }
         }

@@ -320,7 +320,12 @@ namespace UD_Granit.Controllers
                 return HttpNotFound();
 
             string fileName = currentSession.Id + "_Recording" + currentSession.File_Recording;
-            return File("~/App_Data/" + fileName, "binary/octet-stream", fileName);
+
+            var result = File("~/App_Data/" + fileName, "binary/octet-stream", fileName);
+            if (System.IO.File.Exists(Server.MapPath(result.FileName)))
+                return result;
+
+            return Redirect(Request.UrlReferrer.AbsolutePath);
         }
 
         //

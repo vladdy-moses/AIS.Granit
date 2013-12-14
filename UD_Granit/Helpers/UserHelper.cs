@@ -55,6 +55,10 @@ namespace UD_Granit.Helpers
         {
             if (user is Member)
                 return (user as Member).Position.ToDescription();
+            if (user is ApplicantCandidate)
+                return "Кандидат";
+            if (user is ApplicantDoctor)
+                return "Доктор";
             return String.Empty;
         }
     }

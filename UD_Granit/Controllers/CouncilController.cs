@@ -85,7 +85,7 @@ namespace UD_Granit.Controllers
 
             if (filter == null)
             {
-                var q = from m in db.Members orderby m.Position select m;
+                var q = from m in db.Members orderby m.Position descending select m;
                 List<UD_Granit.ViewModels.Council.MemberView> memberList = new List<ViewModels.Council.MemberView>();
                 foreach (Member m in q)
                 {

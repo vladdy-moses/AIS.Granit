@@ -9,8 +9,8 @@ namespace UD_Granit.ViewModels.Account
     {
         public int Id;
         public string Name;
-        public string Role;
         public string Email;
+        public string Note;
         public bool CanEdit;
         public bool CanRemove;
     }
