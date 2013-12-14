@@ -238,6 +238,36 @@ COMMIT TRANSACTION;
             };
             context.Dissertations.AddRange(dissertations);
             context.SaveChanges();
+
+            Session[] sessions = new Session[] {
+                new SessionConsideration() { Date = DateTime.Now.AddDays(-5), Dissertation = dissertations.ElementAt(0), Was = true, Result = "Диссертация не подходит по критериям.", Members = new Member[] { members.ElementAt(1), members.ElementAt(4), members.ElementAt(3) } },
+                new SessionConsideration() { Date = DateTime.Now.AddDays(-4), Dissertation = dissertations.ElementAt(0), Was = true, Result = "Диссертация не подходит по критериям.", Members = new Member[] { members.ElementAt(1), members.ElementAt(4), members.ElementAt(3) } },
+                new SessionConsideration() { Date = DateTime.Now.AddDays(-3), Dissertation = dissertations.ElementAt(0), Was = true, Result = "Диссертация не подходит по критериям.", Members = new Member[] { members.ElementAt(1), members.ElementAt(4), members.ElementAt(3) } },
+                new SessionConsideration() { Date = DateTime.Now.AddDays(30), Dissertation = dissertations.ElementAt(0), Was = false },
+                new SessionConsideration() { Date = DateTime.Now.AddDays(28), Dissertation = dissertations.ElementAt(1), Was = false },
+                new SessionConsideration() { Date = DateTime.Now.AddDays(27), Dissertation = dissertations.ElementAt(2), Was = false },
+                new SessionConsideration() { Date = DateTime.Now.AddDays(27).AddHours(-1), Dissertation = dissertations.ElementAt(3), Was = false },
+                new SessionDefence() { Date = DateTime.Now.AddDays(5), Dissertation = dissertations.ElementAt(4), Members = new Member[] { members.ElementAt(1), members.ElementAt(3), members.ElementAt(5), members.ElementAt(8), members.ElementAt(9) }, Was = false },
+                new SessionDefence() { Date = DateTime.Now.AddDays(-6), Dissertation = dissertations.ElementAt(5), Members = new Member[] { members.ElementAt(1), members.ElementAt(2), members.ElementAt(7), members.ElementAt(8), members.ElementAt(9), members.ElementAt(4) }, Was = false, Novelty = "Нет", Reliability = "Нет", Significance = "Нет", Result = true, File_Recording = ".txt", Vote_Result = 5 },
+                new SessionDefence() { Date = DateTime.Now.AddDays(-6).AddHours(1), Dissertation = dissertations.ElementAt(5), Members = new Member[] { members.ElementAt(1), members.ElementAt(2), members.ElementAt(7), members.ElementAt(8), members.ElementAt(9), members.ElementAt(4) }, Was = true, Novelty = "Научная новизна доказана", Reliability = "Есть", Significance = "Есть", Result = true, File_Recording = ".txt", Vote_Result = 5 }
+            };
+            context.Sessions.AddRange(sessions);
+            context.SaveChanges();
+
+            Reply[] replies = new Reply[] {
+                new Reply() { Author = "Кандаулов Валерий Михайлович", Degree = "кандидат технических наук", Organization = "Ульяновский Государственный Технический Университет", Departmant = "Кафедра измерительно-вычислительных комплексов", Dissertation = dissertations.ElementAt(0), Text = "Хорошая диссертация, удовлетворяет научным потребностям" },
+                new Reply() { Author = "Кандаулов Валерий Михайлович", Degree = "кандидат технических наук", Organization = "Ульяновский Государственный Технический Университет", Departmant = "Кафедра измерительно-вычислительных комплексов", Dissertation = dissertations.ElementAt(1), Text = "Хорошая диссертация, удовлетворяет научным потребностям" },
+                new Reply() { Author = "Кандаулов Валерий Михайлович", Degree = "кандидат технических наук", Organization = "Ульяновский Государственный Технический Университет", Departmant = "Кафедра измерительно-вычислительных комплексов", Dissertation = dissertations.ElementAt(2), Text = "Хорошая диссертация, удовлетворяет научным потребностям" },
+                new Reply() { Author = "Кандаулов Валерий Михайлович", Degree = "кандидат технических наук", Organization = "Ульяновский Государственный Технический Университет", Departmant = "Кафедра измерительно-вычислительных комплексов", Dissertation = dissertations.ElementAt(3), Text = "Нехорошая диссертация, не удовлетворяет научным потребностям" },
+                new Reply() { Author = "Коноплёва Ирина Викторовна", Degree = "доктор физико-математических наук", Organization = "Ульяновский Государственный Технический Университет", Departmant = "Кафедра математиики", Dissertation = dissertations.ElementAt(0), Text = "Хорошая диссертация, удовлетворяет научным потребностям" },
+                new Reply() { Author = "Коноплёва Ирина Викторовна", Degree = "доктор физико-математических наук", Organization = "Ульяновский Государственный Технический Университет", Departmant = "Кафедра математиики", Dissertation = dissertations.ElementAt(2), Text = "Нехорошая диссертация, не удовлетворяет научным потребностям" },
+                new Reply() { Author = "Коноплёва Ирина Викторовна", Degree = "доктор физико-математических наук", Organization = "Ульяновский Государственный Технический Университет", Departmant = "Кафедра математиики", Dissertation = dissertations.ElementAt(4), Text = "Хорошая диссертация, удовлетворяет научным потребностям" },
+                new Reply() { Author = "Потапов Игорь Камилевич", Degree = "кандидат физико-математических наук", Organization = "Саратовский Государственный Университет", Departmant = "Кафедра компьютерной безопасности", Dissertation = dissertations.ElementAt(5), Text = "Подход небезопасен!!!" },
+                new Reply() { Author = "Потапов Игорь Камилевич", Degree = "кандидат физико-математических наук", Organization = "Саратовский Государственный Университет", Departmant = "Кафедра компьютерной безопасности", Dissertation = dissertations.ElementAt(1), Text = "Подход небезопасен!!!" },
+                new Reply() { Author = "Потапов Игорь Камилевич", Degree = "кандидат физико-математических наук", Organization = "Саратовский Государственный Университет", Departmant = "Кафедра компьютерной безопасности", Dissertation = dissertations.ElementAt(3), Text = "Подход небезопасен!!!" }
+            };
+            context.Replies.AddRange(replies);
+            context.SaveChanges();
         }
     }
 }
