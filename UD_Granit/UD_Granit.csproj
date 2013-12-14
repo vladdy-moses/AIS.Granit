@@ -197,8 +197,9 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="App_Start\AdditionalScripts.sql" />
-    <Content Include="Content\css\basic\main.css" />
-    <Content Include="Content\css\lite\main.css" />
+    <Content Include="Content\css\basic.css" />
+    <Content Include="Content\css\lite.css" />
+    <Content Include="Content\css\main.css" />
     <Content Include="Content\js\script.js" />
     <Content Include="Content\themes\base\images\animated-overlay.gif" />
     <Content Include="Content\themes\base\images\ui-bg_flat_0_aaaaaa_40x100.png" />

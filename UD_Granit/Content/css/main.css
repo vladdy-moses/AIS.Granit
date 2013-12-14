@@ -160,11 +160,6 @@ footer {
     font-size: 0.9em;
 }
 
-.MainBlock {
-    width: 360px;
-    padding: 5px;
-}
-
 .editor-label {
     font-size: 1.1em;
     padding-top: 10px;
@@ -207,7 +202,17 @@ footer {
 	min-height: 300px;
 }
 
+.MainBlock {
+    width: 360px;
+    padding: 5px;
+}
+
 .PageImage {
 	float: left;
 	padding: 0 5px;
+}
+
+.Statistics {
+	font-size: 1.1em;
+	font-family: Arial, Vardana;
 }

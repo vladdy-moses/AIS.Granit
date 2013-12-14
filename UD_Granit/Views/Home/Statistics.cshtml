@@ -5,4 +5,10 @@
 }
 
 <h2>Статистика данной системы</h2>
-@Model.Current.Users
+<div class="PageImage">
+    <img src="/Content/statistics.png" alt="" />
+</div>
+<p class="Statistics">В данной системе зарегистрировано <strong>@Model.Current.Users</strong> пользователей, в том числе <strong>@Model.Current.Members</strong> членов диссертационного совета и <strong>@Model.Current.Applicants</strong> соискателей.</p>
+<p class="Statistics">Также в системе заведены записи о <strong>@Model.Current.Dissertations</strong> диссертациях, из которых <strong>@Model.Current.DissertationsAdministrative</strong> для внутреннего использования.</p>
+<p class="Statistics">Ещё было заведено <strong>@Model.Current.Replies</strong> записей об отзывах на диссертации, а также записи о <strong>@Model.Current.ScientificDirectors</strong> научных руководителях.</p>
+<p class="Statistics">В системе зарегистрировано <strong>@Model.Current.Sessions</strong> заседаний, на <strong>@Model.Current.SessionsDefenced</strong> из которых был вынесен положительный результат защиты диссертационной работы.</p>
