@@ -20,7 +20,7 @@
     if (Model.Council.FoundationDate != null)
     {
         <h3>@Html.LabelFor(model => model.Council.FoundationDate)</h3>
-        <p>@Model.Council.FoundationDate</p>
+        <p>@Html.DisplayFor(model => model.Council.FoundationDate)</p>
     }
 }
 else

@@ -14,6 +14,7 @@ namespace UD_Granit.Models
 
         [Required]
         [Display(Name = "Дата проведения заседания")]
+        [DisplayFormat(DataFormatString = "{0:dd.MM.yyyy HH:mm}", ApplyFormatInEditMode = true)]
         public DateTime Date { set; get; }
 
         [Required]

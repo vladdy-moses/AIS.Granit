@@ -14,9 +14,7 @@ namespace UD_Granit.Models
         [Required]
         [Display(Name = "Номер диссертационного совета")]
         public string Number { set; get; }
-
-        //идентификатор преседателя
-
+        
         [Required]
         [Display(Name = "Организация")]
         public string Organization { set; get; }
@@ -30,6 +28,7 @@ namespace UD_Granit.Models
         public string Address { set; get; }
 
         [Display(Name = "Дата основания")]
+        [DisplayFormat(DataFormatString = "{0:dd.MM.yyyy}", ApplyFormatInEditMode = true)]
         public DateTime? FoundationDate { set; get; }
     }
 }

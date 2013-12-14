@@ -24,6 +24,7 @@ namespace UD_Granit.Models
         public string Organization_Conclusion { set; get; }
 
         [Display(Name = "День рождения")]
+        [DisplayFormat(DataFormatString = "{0:dd.MM.yyyy}", ApplyFormatInEditMode = true)]
         public DateTime? Birthday { set; get; }
 
         [Display(Name = "Учёная степень")]
