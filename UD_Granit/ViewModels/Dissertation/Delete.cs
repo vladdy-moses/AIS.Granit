@@ -9,5 +9,6 @@ namespace UD_Granit.ViewModels.Dissertation
     {
         public int Id { set; get; }
         public string Title { set; get; }
+        public bool CanDelete { set; get; }
     }
 }

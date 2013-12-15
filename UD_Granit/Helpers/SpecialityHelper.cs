@@ -7,8 +7,10 @@ using UD_Granit.Models;
 
 namespace UD_Granit.Helpers
 {
+    // Помогает с выводом информации о специальности
     public static class SpecialityHelper
     {
+        // Добавляет метод, выводящий полную информацию о специальности
         public static string GetFullName(this Speciality speciality)
         {
             if (speciality != null)

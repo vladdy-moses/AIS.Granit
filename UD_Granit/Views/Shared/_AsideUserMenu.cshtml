@@ -11,19 +11,20 @@
                 <li>@Html.ActionLink("Заседания", "My", "Session")</li>
             }
 
-            @if (Session.GetUserPosition() == UD_Granit.Models.MemberPosition.Member)
+            @if ((Session.GetUserPosition() == UD_Granit.Models.MemberPosition.Member) ||
+            (Session.GetUserPosition() == UD_Granit.Models.MemberPosition.ViceChairman))
             {
                 <li>@Html.ActionLink("Заседания", "My", "Session")</li>
                 <li>@Html.ActionLink("Соискатели", "ShowApplicants", "Account")</li>
             }
             @if (Session.GetUserPosition() == UD_Granit.Models.MemberPosition.Secretary)
             {
+                <li>@Html.ActionLink("Зарегистрировать пользователя", "Register", "Account")</li>
                 <li>@Html.ActionLink("Заседания", "My", "Session")</li>
-                <li>@Html.ActionLink("Соискатели", "ShowApplicants", "Account")</li>
             }
-            @if ((Session.GetUserPosition() == UD_Granit.Models.MemberPosition.Chairman) ||
-            (Session.GetUserPosition() == UD_Granit.Models.MemberPosition.ViceChairman))
+            @if (Session.GetUserPosition() == UD_Granit.Models.MemberPosition.Chairman)
             {
+                <li>@Html.ActionLink("Пользователи", "All", "Account")</li>
                 <li>@Html.ActionLink("Заседания", "My", "Session")</li>
                 <li>@Html.ActionLink("Специальности", "Index", "Speciality")</li>
             }

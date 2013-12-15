@@ -8,18 +8,19 @@ using UD_Granit.Models;
 
 namespace UD_Granit.Controllers
 {
+    // Управляет логикой по работе со специальностями
     public class SpecialityController : Controller
     {
         private DataContext db = new DataContext();
 
-        //
+        // Показывает специальности
         // GET: /Speciality/[1]
 
         public ActionResult Index(int? err)
         {
             UD_Granit.ViewModels.Speciality.Index viewModel = new ViewModels.Speciality.Index();
             viewModel.Specialities = db.Specialities;
-            viewModel.CanControl = CanControl();
+            viewModel.CanControl = RightsManager.Speciality.Control(Session.GetUser());
 
             if (err.HasValue && (err.Value == 1))
                 ViewData.NotificationAdd(new NotificationManager.Notify() { Type = NotificationManager.Notify.NotifyType.Error, Message = "Специальность связана с диссертациями и (или) членами совета. Удаление невозможно." });
@@ -27,24 +28,24 @@ namespace UD_Granit.Controllers
             return View(viewModel);
         }
 
-        //
+        // Показывает форму добавления специальности
         // GET: /Speciality/Create
 
         public ActionResult Create()
         {
-            if (!CanControl())
+            if (!RightsManager.Speciality.Control(Session.GetUser()))
                 return HttpNotFound();
 
             return View();
         }
 
-        //
+        // Создаёт специальность
         // POST: /Speciality/Create
 
         [HttpPost]
         public ActionResult Create(UD_Granit.ViewModels.Speciality.Create viewModel)
         {
-            if (!CanControl())
+            if (!RightsManager.Speciality.Control(Session.GetUser()))
                 return HttpNotFound();
 
             try
@@ -72,12 +73,12 @@ namespace UD_Granit.Controllers
             }
         }
 
-        //
+        // Показывает форму изменения информации о специальности
         // GET: /Speciality/Edit/5
 
         public ActionResult Edit(string id)
         {
-            if (CanControl())
+            if (RightsManager.Speciality.Control(Session.GetUser()))
             {
                 UD_Granit.ViewModels.Speciality.Edit viewModel = new ViewModels.Speciality.Edit();
                 viewModel.Speciality = db.Specialities.Find(id);
@@ -87,13 +88,13 @@ namespace UD_Granit.Controllers
             return HttpNotFound();
         }
 
-        //
+        // Редактирует специальность
         // POST: /Speciality/Edit/5
 
         [HttpPost]
         public ActionResult Edit(UD_Granit.ViewModels.Speciality.Edit viewModel)
         {
-            if (!CanControl())
+            if (!RightsManager.Speciality.Control(Session.GetUser()))
                 return HttpNotFound();
 
             try
@@ -113,12 +114,12 @@ namespace UD_Granit.Controllers
             }
         }
 
-        //
+        // Удаляет специальность
         // GET: /Speciality/Delete/5
 
         public ActionResult Delete(string id)
-        {            
-            if(!CanControl())
+        {
+            if (!RightsManager.Speciality.Control(Session.GetUser()))
                 return HttpNotFound();
 
             Speciality currentSpeciality = db.Specialities.Find(id);
@@ -139,11 +140,6 @@ namespace UD_Granit.Controllers
             }
 
             return RedirectToAction("Index", new { err = err });
-        }
-
-        private bool CanControl()
-        {
-            return ((Session.GetUser() is Administrator) || (Session.GetUserPosition() == MemberPosition.Chairman)) ? true : false;
         }
     }
 }

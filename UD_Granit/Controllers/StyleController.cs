@@ -6,9 +6,10 @@ using System.Web.Mvc;
 
 namespace UD_Granit.Controllers
 {
+    // Управляет логикой по работе со стилями
     public class StyleController : Controller
     {
-        //
+        // Задаёт обычный стиль отображения
         // GET: /Style/Basic
 
         public ActionResult Basic()
@@ -20,7 +21,7 @@ namespace UD_Granit.Controllers
                 return Redirect("/");
         }
 
-        //
+        // Задаёт упрощённый стиль отображения
         // GET: /Style/Lite
 
         public ActionResult Lite()
@@ -30,7 +31,6 @@ namespace UD_Granit.Controllers
                 return Redirect(Request.UrlReferrer.OriginalString);
             else
                 return Redirect("/");
-            //return View();
         }
     }
 }

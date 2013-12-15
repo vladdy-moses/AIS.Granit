@@ -9,11 +9,12 @@ using System.IO;
 
 namespace UD_Granit.Controllers
 {
+    // Управляет логикой по работе с сессиями
     public class SessionController : Controller
     {
         private DataContext db = new DataContext();
 
-        //
+        // Показывает список доступных сессий
         // GET: /Session/
 
         public ActionResult Index()
@@ -40,7 +41,7 @@ namespace UD_Granit.Controllers
             return View(viewModel);
         }
 
-        //
+        // Показывает форму создания заседания по рассмотрению диссертации
         // GET: /Session/CreateConsideration
 
         public ActionResult CreateConsideration(int id)
@@ -65,7 +66,7 @@ namespace UD_Granit.Controllers
             return View("Create", viewModel);
         }
 
-        //
+        // Показывает форму создания заседания по защите
         // GET: /Session/CreateDefence
 
         public ActionResult CreateDefence(int id)
@@ -93,7 +94,7 @@ namespace UD_Granit.Controllers
             return View("Create", viewModel);
         }
 
-        //
+        // Создаёт заседание
         // POST: /Session/Create
 
         [HttpPost]
@@ -158,7 +159,7 @@ namespace UD_Granit.Controllers
             }
         }
 
-        //
+        // Показывает заседания, к которым прикреплён пользователь
         // GET: /Session/My
 
         public ActionResult My()
@@ -185,7 +186,7 @@ namespace UD_Granit.Controllers
             return View(viewModel);
         }
 
-        //
+        // Показыает подробности заседания
         // GET: /Session/Details/5
 
         public ActionResult Details(int id)
@@ -205,7 +206,7 @@ namespace UD_Granit.Controllers
             return View(viewModel);
         }
 
-        //
+        // Показывает форму заполнения результата заседания
         // GET: /Session/Result/5
 
         public ActionResult Result(int id)
@@ -239,7 +240,7 @@ namespace UD_Granit.Controllers
             return HttpNotFound();
         }
 
-        //
+        // Заполняет результат заседания по рассмотрению
         // POST: /Session/ResultConsideration
 
         [HttpPost]
@@ -262,7 +263,7 @@ namespace UD_Granit.Controllers
             return RedirectToAction("Details", new { id = currentSession.Id });
         }
 
-        //
+        // Заполняет результат заседания по защите
         // POST: /Session/ResultDefence
 
         [HttpPost]
@@ -308,7 +309,7 @@ namespace UD_Granit.Controllers
             return RedirectToAction("Details", new { id = currentSession.Id });
         }
 
-        //
+        // Загружает файл с аудиовидеозаписью заседания
         // GET: /Session/Download/5
 
         public ActionResult Download(int id)
@@ -328,7 +329,7 @@ namespace UD_Granit.Controllers
             return Redirect(Request.UrlReferrer.AbsolutePath);
         }
 
-        //
+        // Показывает форму удаления заседания
         // GET: /Dissertation/Delete/5
 
         public ActionResult Delete(int id)
@@ -348,7 +349,7 @@ namespace UD_Granit.Controllers
             return View(viewModel);
         }
 
-        //
+        // Удаляет заседание
         // POST: /Dissertation/Delete
 
         [HttpPost]

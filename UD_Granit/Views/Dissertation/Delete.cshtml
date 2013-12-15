@@ -11,10 +11,21 @@
     @Html.ValidationSummary(true)
     @Html.HiddenFor(model => model.Id)
 
+    if (Model.CanDelete)
+    {
     <p>Вы действительно хотите удалить запись о диссертации <b>@Model.Title</b>?</p>
     
     <div class="control">
         <button>Да</button>
         @Html.ActionLink("Отмена", "Details", new { Id = Model.Id })
     </div>
+    }
+    else
+    {
+    <p>Извините, возникли ошибки при разборе логической целостности базы данных. Возможно, существуют заседания, связанные с этой диссертацией. Удаление невозможно.</p>
+    
+    <div class="control">
+        @Html.ActionLink("Отмена", "Details", new { Id = Model.Id })
+    </div>
+    }
 }

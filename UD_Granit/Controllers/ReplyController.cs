@@ -8,19 +8,12 @@ using UD_Granit.Models;
 
 namespace UD_Granit.Controllers
 {
+    // Управляет логикой по работе с отзывами
     public class ReplyController : Controller
     {
         private DataContext db = new DataContext();
 
-        //
-        // GET: /Reply/
-
-        public ActionResult Index()
-        {
-            return HttpNotFound();
-        }
-
-        //
+        // Показывает форму добавления отзыва
         // GET: /Reply/Create/5
 
         public ActionResult Create(int id)
@@ -35,7 +28,7 @@ namespace UD_Granit.Controllers
             return View(viewModel);
         }
 
-        //
+        // Создаёт отзыв к диссертации
         // POST: /Reply/Create/5
 
         [HttpPost]
@@ -53,7 +46,7 @@ namespace UD_Granit.Controllers
             return RedirectToAction("Details", "Dissertation", new { id = dissertation.Id });
         }
 
-        //
+        // Удаляет отзыв к диссертации
         // GET: /Reply/Delete/5
 
         public ActionResult Delete(int id)

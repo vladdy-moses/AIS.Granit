@@ -10,11 +10,12 @@ using System.Data.SqlClient;
 
 namespace UD_Granit.Controllers
 {
+    // Управляет логикой по работе с диссертациями
     public class DissertationController : Controller
     {
         private DataContext db = new DataContext();
 
-        //
+        // Отображает список диссертаций
         // GET: /Dissertation/
 
         public ActionResult Index(string search)
@@ -34,7 +35,7 @@ namespace UD_Granit.Controllers
             {
                 dissertations = db.Database.SqlQuery<Dissertation>("GetDissertations");
             }
-            
+
             foreach (var currentDissertation in dissertations)
             {
                 if (RightsManager.Dissertation.Show(Session.GetUser(), currentDissertation))
@@ -45,7 +46,7 @@ namespace UD_Granit.Controllers
             return View(viewModel);
         }
 
-        //
+        // Показывает подробности о диссертации
         // GET: /Dissertation/Details/5
 
         public ActionResult Details(int id)
@@ -57,7 +58,7 @@ namespace UD_Granit.Controllers
                 viewModel.Dissertation = dissertation;
 
                 User currentUser = Session.GetUser();
-                viewModel.CanEdit = RightsManager.Dissertation.Edit(currentUser, dissertation);
+                viewModel.CanEdit = RightsManager.Dissertation.Edit(currentUser, dissertation) && (dissertation.Sessions.Count() == 0);
                 viewModel.CanCreateSession = RightsManager.Session.Create(currentUser);
                 viewModel.CanAddReplies = RightsManager.Reply.Control(currentUser, dissertation);
                 viewModel.CanEditReplies = RightsManager.Reply.Control(currentUser, dissertation);
@@ -67,7 +68,7 @@ namespace UD_Granit.Controllers
             return HttpNotFound();
         }
 
-        //
+        // Показывает форму создания диссертации
         // GET: /Dissertation/Create
 
         public ActionResult Create()
@@ -94,7 +95,7 @@ namespace UD_Granit.Controllers
             return HttpNotFound();
         }
 
-        //
+        // Создаёт запись о диссертации
         // POST: /Dissertation/Create
 
         [HttpPost]
@@ -127,12 +128,11 @@ namespace UD_Granit.Controllers
             return RedirectToAction("Details", new { id = currentDissertation.Id });
         }
 
-        //
+        // Показывает форму редактирования диссертации
         // GET: /Dissertation/Edit/5
 
         public ActionResult Edit(int id)
         {
-#warning только когда нет прикрепленных сессий
             Applicant currentUser = Session.GetUser() as Applicant;
             Dissertation currentDissertation = db.Dissertations.Find(id);
 
@@ -142,6 +142,9 @@ namespace UD_Granit.Controllers
             if (!RightsManager.Dissertation.Edit(currentUser, currentDissertation))
                 return HttpNotFound();
 
+            if (currentDissertation.Sessions.Count() > 0)
+                return HttpNotFound();
+
             UD_Granit.ViewModels.Dissertation.Edit viewModel = new ViewModels.Dissertation.Edit();
             viewModel.Dissertation = currentDissertation;
 
@@ -149,7 +152,7 @@ namespace UD_Granit.Controllers
             return View(viewModel);
         }
 
-        //
+        // Редактирует запись о диссертации
         // POST: /Dissertation/Edit/5
 
         [HttpPost]
@@ -205,12 +208,11 @@ namespace UD_Granit.Controllers
             }
         }
 
-        //
+        // Показывает форму удаления диссертации
         // GET: /Dissertation/Delete/5
 
         public ActionResult Delete(int id)
         {
-#warning При удалении удалять также заседания (каскадно), если у него больше нет диссертаций и ФАЙЛЫ НА СЕРВЕРЕ
             Dissertation currentDissertation = db.Dissertations.Find(id);
 
             if (!RightsManager.Reply.Control(Session.GetUser(), currentDissertation))
@@ -219,10 +221,11 @@ namespace UD_Granit.Controllers
             UD_Granit.ViewModels.Dissertation.Delete viewModel = new ViewModels.Dissertation.Delete();
             viewModel.Id = currentDissertation.Id;
             viewModel.Title = currentDissertation.Title;
+            viewModel.CanDelete = (currentDissertation.Sessions.Count() == 0);
             return View(viewModel);
         }
 
-        //
+        // Удаляет диссертацию
         // POST: /Dissertation/Delete/5
 
         [HttpPost]
@@ -230,12 +233,14 @@ namespace UD_Granit.Controllers
         {
             try
             {
-#warning При удалении удалять также заседания (каскадно), если у него больше нет диссертаций и ФАЙЛЫ НА СЕРВЕРЕ
                 Dissertation currentDissertation = db.Dissertations.Find(viewModel.Id);
                 if (currentDissertation == null)
                     return HttpNotFound();
 
                 if (!RightsManager.Dissertation.Edit(Session.GetUser(), currentDissertation))
+                    return HttpNotFound();
+
+                if (currentDissertation.Sessions.Count() > 0)
                     return HttpNotFound();
 
                 System.IO.File.Delete(Server.MapPath(Path.Combine("~/App_Data/", currentDissertation.Id + "_Abstract" + currentDissertation.File_Abstract)));
@@ -252,7 +257,7 @@ namespace UD_Granit.Controllers
             }
         }
 
-        //
+        // Показывает диссертацию соискателя
         // GET: /Dissertation/My
 
         public ActionResult My()
@@ -268,7 +273,7 @@ namespace UD_Granit.Controllers
             return RedirectToAction("Details", new { id = dissertations.Single().Id });
         }
 
-        //
+        // Загружает файл, относящийся к диссертации
         // GET: /Dissertation/Download/5?type=Summary
 
         public ActionResult Download(int id, string type)
@@ -297,7 +302,7 @@ namespace UD_Granit.Controllers
                     return HttpNotFound();
 
                 var result = File("~/App_Data/" + fileName, "binary/octet-stream", fileName);
-                if(System.IO.File.Exists(Server.MapPath(result.FileName)))
+                if (System.IO.File.Exists(Server.MapPath(result.FileName)))
                     return result;
 
                 return Redirect(Request.UrlReferrer.AbsolutePath);

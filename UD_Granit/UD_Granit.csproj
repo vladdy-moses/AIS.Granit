@@ -139,7 +139,7 @@
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
     <Compile Include="Helpers\RightsManager.cs" />
-    <Compile Include="Helpers\SessionHelper.cs" />
+    <Compile Include="Helpers\AccountHelper.cs" />
     <Compile Include="Helpers\NotifyManager.cs" />
     <Compile Include="Helpers\EnumHelper.cs" />
     <Compile Include="Helpers\SpecialityHelper.cs" />

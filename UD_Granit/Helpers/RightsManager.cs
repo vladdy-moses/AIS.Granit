@@ -6,8 +6,10 @@ using UD_Granit.Models;
 
 namespace UD_Granit.Helpers
 {
+    // Задаёт правила доступа к определённым действиям
     public static class RightsManager
     {
+        // Задаёт права доступа по работе с учётными записями
         public static class Account
         {
             public static bool RegisterApplicant(User user) { return ((user == null)  || ((user is Member) && ((user as Member).Position == MemberPosition.Secretary))); }
@@ -25,7 +27,7 @@ namespace UD_Granit.Helpers
             public static bool Remove(User user, User removedUser)
             {
                 if ((user == null) || (removedUser == null)) return false;
-                return ((user is Administrator) || (user.Id == removedUser.Id) || ((user is Member) && ((user as Member).Position == MemberPosition.Chairman)));
+                return ((user is Administrator) || (user.Id == removedUser.Id) || ((user is Member) && ((user as Member).Position == MemberPosition.Chairman) && !(removedUser is Administrator)));
             }
 
             public static bool ShowAdditionalInfo(User user) { return ((user is Member) || (user is Administrator)); }
@@ -36,11 +38,7 @@ namespace UD_Granit.Helpers
             }
         }
 
-        public static class Council
-        {
-
-        }
-
+        // Задаёт права доступа по работе с диссертациями
         public static class Dissertation
         {
             public static bool Show(User user, Models.Dissertation dissertation)
@@ -66,16 +64,19 @@ namespace UD_Granit.Helpers
             public static bool Edit(User user, Models.Dissertation dissertation) { return ((user is Applicant) && (user.Id == dissertation.Applicant.Id)); }
         }
 
+        // Задаёт права доступа по работе со специальностями
         public static class Speciality
         {
-
+            public static bool Control(User user) { return ((user is Administrator) || ((user is Member) && ((user as Member).Position == MemberPosition.Chairman))); }
         }
 
+        // Задаёт права доступа по работе с отзывами
         public static class Reply
         {
             public static bool Control(User user, Models.Dissertation dissertation) { return ((user is Applicant) && (dissertation != null) && ((user as Applicant).Id == dissertation.Id)); }
         }
 
+        // Задаёт права доступа по работе с заседаниями
         public static class Session
         {
             public static bool Create(User user) { return ((user is Administrator) || ((user is Member) && ((user as Member).Position == MemberPosition.Secretary))); }

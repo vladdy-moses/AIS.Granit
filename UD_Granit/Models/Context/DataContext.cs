@@ -10,6 +10,7 @@ using System.Web;
 
 namespace UD_Granit.Models
 {
+    // Контект подключения к базе данных
     public class DataContext : DbContext
     {
         public DataContext()
@@ -41,6 +42,7 @@ namespace UD_Granit.Models
 
         public DbSet<Speciality> Specialities { set; get; }
 
+        // Дополняет и переопределяет правила создания модели данных
         protected override void OnModelCreating(DbModelBuilder modelBuilder)
         {
             base.OnModelCreating(modelBuilder);
@@ -60,25 +62,9 @@ namespace UD_Granit.Models
 
             modelBuilder.Entity<Applicant>().HasOptional(t => t.Dissertation).WithRequired(t => t.Applicant);
         }
-
-        /*protected void InitDatabase()
-        {
-            Speciality s = new Speciality() { Number = "10.001.2001", Name = "Информатика и вычислительная техника", ScienceBranch = "Технические науки" };
-            this.Specialities.Add(s);
-            this.Specialities.Add(new Speciality() { Number = "15.001.2001", Name = "Конфликтология", ScienceBranch = "Философские науки" });
-            this.SaveChanges();
-
-            ScientificDirector sd = new ScientificDirector() { Degree = "Кандидат магических наук", FirstName = "Руководтелев", SecondName = "Руководитель", Organization = "СГУ", Organization_Department = "КНИиТ", Organization_Post = "Профессор" };
-            this.ScientificDirectors.Add(sd);
-
-            this.Users.Add(new Administrator() { Email = "admin", Password = "admin", FirstName = "Администраторов", SecondName = "Администратор", LastName = "Администраторович", LastIP = "", RegistrationDate = DateTime.Now });
-            this.Users.Add(new ApplicantCandidate() { Email = "applicant", Password = "applicant", FirstName = "Соискателев", SecondName = "Соискатель", Organization = "Тестовая", Organization_Depatment = "Тестовый", City = "Тестовый", Address = "Тестовая улица", RegistrationDate = DateTime.Now, Phone = "32-32-23", ScientificDirector = sd });
-            this.Users.Add(new Member() { Email = "member1", Password = "member", FirstName = "Родионов", SecondName = "Виктор", LastName = "Викторович", Position = MemberPosition.Member, Degree = "К.Маг.Н.", Speciality = s, Organization = "УлГТУ", Organization_Depatment = "ИВК", Organization_Position = "доцент", RegistrationDate = DateTime.Now });
-            this.Users.Add(new Member() { Email = "member2", Password = "member", FirstName = "Шишкин", SecondName = "Вадим", LastName = "Викторинович", Position = MemberPosition.Chairman, Degree = "К.Т.Н.", Speciality = s, Organization = "УлГТУ", Organization_Depatment = "ИВК", Organization_Position = "профессор", RegistrationDate = DateTime.Now, Phone = "32-22-23" });
-            this.SaveChanges();
-        }*/
     }
 
+    // Позволяет правильно обработать базу данных при её создании/пересоздании
     public class Initializer : IDatabaseInitializer<DataContext>
     {
         public void InitializeDatabase(DataContext context)
@@ -226,6 +212,7 @@ END
             }
         }
 
+        // Заполняет базу данных тестовыми данными
         private void FillExampleData(DataContext context)
         {
             Speciality[] specialities = new Speciality[] {

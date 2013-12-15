@@ -9,11 +9,12 @@ using UD_Granit.Helpers;
 
 namespace UD_Granit.Controllers
 {
+    // Управляет логикой по работе с учётными запимяси пользователей
     public class AccountController : Controller
     {
         private DataContext db = new DataContext();
 
-        //
+        // Показывает всех пользователей в системе
         // GET: /Account/
 
         public ActionResult Index()
@@ -21,7 +22,7 @@ namespace UD_Granit.Controllers
             return RedirectToAction("All");
         }
 
-        //
+        // Показывает форму авторизации
         // GET: /Account/Login/
 
         public ActionResult Login()
@@ -32,7 +33,7 @@ namespace UD_Granit.Controllers
             return View();
         }
 
-        //
+        // Авторизует пользователя в системе
         // POST: /Account/Login/
 
         [HttpPost]
@@ -59,19 +60,16 @@ namespace UD_Granit.Controllers
             return View();
         }
 
-        //
+        // Выполняет выход из учётной записи
         // GET: /Account/Logout/
 
         public ActionResult Logout()
         {
-            if (Session.GetUser() == null)
-                return HttpNotFound();
-
             Session.SetUser(null);
             return RedirectToAction("Index", "Home");
         }
 
-        //
+        // Выводит список ролей, доступных для регистрации
         // GET: /Account/Register/
 
         public ActionResult Register()
@@ -94,7 +92,7 @@ namespace UD_Granit.Controllers
             return View(viewModel);
         }
 
-        //
+        // Выводит форму для регистрации соискателя-кандидата
         // GET: /Account/RegisterApplicantCandidate/
 
         public ActionResult RegisterApplicantCandidate()
@@ -104,7 +102,7 @@ namespace UD_Granit.Controllers
             return View();
         }
 
-        //
+        // Выводит форму для регистрации соискателя-доктора
         // GET: /Account/RegisterApplicantDoctor/
 
         public ActionResult RegisterApplicantDoctor()
@@ -114,7 +112,7 @@ namespace UD_Granit.Controllers
             return View();
         }
 
-        //
+        // Выводит форму для регистрации члена совета
         // GET: /Account/RegisterMember/
 
         public ActionResult RegisterMember()
@@ -126,7 +124,7 @@ namespace UD_Granit.Controllers
             return View();
         }
 
-        //
+        // Выводит форму для регистрации администратора
         // GET: /Account/RegisterAdministrator/
 
         public ActionResult RegisterAdministrator()
@@ -136,7 +134,7 @@ namespace UD_Granit.Controllers
             return View();
         }
 
-        //
+        // Регистрирует соискателя-кандидата
         // POST: /Account/RegisterApplicantCandidate/
 
         [HttpPost]
@@ -175,7 +173,7 @@ namespace UD_Granit.Controllers
             }
         }
 
-        //
+        // Регистрирует соискателя-доктора
         // POST: /Account/RegisterApplicantDoctor/
 
         [HttpPost]
@@ -201,13 +199,20 @@ namespace UD_Granit.Controllers
 
                 db.ApplicantDoctors.Add(currentUser);
                 db.SaveChanges();
-                Session.SetUser(currentUser);
 
-                return RedirectToAction("Create", "Dissertation");
+                if (Session.GetUser() == null)
+                {
+                    Session.SetUser(currentUser);
+                    return RedirectToAction("Create", "Dissertation");
+                }
+                else
+                {
+                    return RedirectToAction("Details", new { id = currentUser.Id });
+                }
             }
         }
 
-        //
+        // Регистрирует члена совета
         // POST: /Account/RegisterMember/
 
         [HttpPost]
@@ -236,7 +241,7 @@ namespace UD_Granit.Controllers
             }
         }
 
-        //
+        // Регистрирует администратора
         // POST: /Account/RegisterAdministrator/
 
         [HttpPost]
@@ -263,7 +268,7 @@ namespace UD_Granit.Controllers
             }
         }
 
-        //
+        // Показывает детали учётной записи пользователя
         // GET: /Account/Details/[5]
 
         public ActionResult Details(int? id)
@@ -292,7 +297,7 @@ namespace UD_Granit.Controllers
             return View(viewModel);
         }
 
-        //
+        // Показывает всех пользователей в системе
         // GET: /Account/All
 
         public ActionResult All(string filter, string subfilter)
@@ -354,7 +359,7 @@ namespace UD_Granit.Controllers
             return View(viewModel);
         }
 
-        //
+        // Показывает форму удаления пользователя
         // GET: /Account/Delete/5
 
         public ActionResult Delete(int id)
@@ -392,7 +397,7 @@ namespace UD_Granit.Controllers
             return View(viewModel);
         }
 
-        //
+        // Удаляет пользователя
         // POST: /Account/Delete
 
         [HttpPost]
@@ -415,7 +420,7 @@ namespace UD_Granit.Controllers
             return Redirect(viewModel.Referer);
         }
 
-        //
+        // Показывает форму редактирования пользователя
         // GET: /Account/Edit
 
         public ActionResult Edit(int id)
@@ -436,7 +441,7 @@ namespace UD_Granit.Controllers
             return View(viewModel);
         }
 
-        //
+        // Редактирует информацию о пользователе
         // POST: /Account/Edit
 
         [HttpPost]

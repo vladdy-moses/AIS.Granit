@@ -17,5 +17,6 @@ namespace UD_Granit.ViewModels.Home
         public IEnumerable<Models.Session> SessionsWill { set; get; }
         public IEnumerable<Models.Session> SessionsWas { set; get; }
         public IEnumerable<MemberView> Members { set; get; }
+        public bool HaveExampleData { set; get; }
     }
 }

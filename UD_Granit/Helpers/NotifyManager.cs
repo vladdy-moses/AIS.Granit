@@ -6,8 +6,10 @@ using System.Web.Mvc;
 
 namespace UD_Granit.Helpers
 {
+    // Задаёт механизм уведомлений
     public class NotificationManager
     {
+        // Описывает уведомление
         public struct Notify
         {
             public enum NotifyType { Error, Info, Other };
@@ -34,8 +36,10 @@ namespace UD_Granit.Helpers
         public int Count { get { return Notifies.Count; } }
     }
 
+    // Помогает отоюражать уведомления в представлениях
     public static class NotificationHelper
     {
+        // Добавляет метод по добавлению уведомления
         public static NotificationManager NotificationAdd(this ViewDataDictionary viewData, NotificationManager.Notify notify)
         {
             NotificationManager nManager = (viewData["UserNotification"] != null) ? (viewData["UserNotification"] as NotificationManager) : new NotificationManager();
@@ -45,6 +49,7 @@ namespace UD_Granit.Helpers
             return nManager;
         }
 
+        // Выдаёт управляющий уведомлениями экземпляр класса
         public static NotificationManager Notifications(this HtmlHelper helper)
         {
             return (helper.ViewData["UserNotification"] as NotificationManager);

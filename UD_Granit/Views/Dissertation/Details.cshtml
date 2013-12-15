@@ -26,7 +26,7 @@
         </tr>
         <tr>
             <td>@Html.LabelFor(model => model.Dissertation.Defensed)</td>
-            <td>@Model.Dissertation.Defensed</td>
+            <td>@((Model.Dissertation.Defensed) ? "Да" : "Нет")</td>
         </tr>
         <tr>
             <td>@Html.LabelFor(model => model.Dissertation.Administrative_Use)</td>

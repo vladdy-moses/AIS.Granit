@@ -7,8 +7,10 @@ using UD_Granit.Models;
 
 namespace UD_Granit.Helpers
 {
+    // Помогает с выводом информации о пользователе
     public static class UserHelper
     {
+        // Добавляет метод, выводящий полное имя пользователя
         public static string GetFullName(this User user)
         {
             if (user != null)
@@ -23,6 +25,7 @@ namespace UD_Granit.Helpers
             return string.Empty;
         }
 
+        // Добавляет метод, выводящий фамилию и инициплы пользователя
         public static string GetFullNameWithInitials(this User user)
         {
             if (user != null)
@@ -37,6 +40,7 @@ namespace UD_Granit.Helpers
             return string.Empty;
         }
 
+        // Добавляет метод, выводящий роль пользователя в системе
         public static string GetRole(this User user)
         {
             if (user != null)
@@ -51,6 +55,7 @@ namespace UD_Granit.Helpers
             return string.Empty;
         }
 
+        // Добавляет метод, выводящий тип соискателя или роль члена совета
         public static string GetPosition(this User user)
         {
             if (user is Member)

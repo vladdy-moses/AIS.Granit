@@ -7,18 +7,22 @@ using UD_Granit.Models;
 
 namespace UD_Granit.Helpers
 {
-    public static class SessionHelper
+    // Помогает при работе с учётными записями
+    public static class AccountHelper
     {
+        // Добавляет метод по извлечению информации об авторизованном пользователе
         public static User GetUser(this HttpSessionStateBase session)
         {
             return (session["User"] as User);
         }
 
+        // Добавляет метод по заданию информации об авторизованном пользователе
         public static void SetUser(this HttpSessionStateBase session, User user)
         {
             session["User"] = user;
         }
 
+        // Добавляет метод по определению IP-адреса пользователя
         public static string GetUserIp(this HttpRequestBase request)
         {
             string ipList = request.ServerVariables["HTTP_X_FORWARDED_FOR"];
@@ -31,6 +35,7 @@ namespace UD_Granit.Helpers
             return request.ServerVariables["REMOTE_ADDR"];
         }
 
+        // Добавляет метод по извлечению роли члена совета в системе
         public static MemberPosition? GetUserPosition(this HttpSessionStateBase session)
         {
             if (session.GetUser() == null)

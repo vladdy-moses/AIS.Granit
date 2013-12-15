@@ -4,9 +4,11 @@
     ViewBag.Title = "Главная страница";
 }
 
-<h2>@ViewBag.Title</h2>
-
-<p>Добро пожаловать на главную страницу.</p>
+<div class="PageImage">
+    <img src="/Content/study.png" alt="" />
+</div>
+<h2>Добро пожаловать на главную страницу!</h2>
+<p>Вы попали на web-сайт автоматизированной системы управления работой диссертационного совета "Гранит". Здесь Вы можете посмотреть защищённые диссертации, а ьакж деятельность о данном диссертационном совете. Приятного просмотра!</p>
 
 <div style="overflow: hidden">
     <div style="float: left" class="MainBlock">
@@ -43,36 +45,49 @@
     </div>
 </div>
 
-<h3>Тестовый доступ к системе</h3>
-<p>Вы можете использовать следующие учетные данные для демонстрации функциональности системы:</p>
-<table>
-    <thead>
-        <tr>
-            <td>Электронный почтовый ящик</td>
-            <td>Пароль</td>
-            <td>Роль в системе</td>
-        </tr>
-    </thead>
-    <tbody>
-        <tr>
-            <td>admin</td>
-            <td>admin</td>
-            <td>Администратор системы</td>
-        </tr>
-        <tr>
-            <td>applicant</td>
-            <td>applicant</td>
-            <td>Соискатель (без диссертаций)</td>
-        </tr>
-        <tr>
-            <td>member1</td>
-            <td>member</td>
-            <td>Рядовой член совета</td>
-        </tr>
-        <tr>
-            <td>member2</td>
-            <td>member</td>
-            <td>Председатель совета</td>
-        </tr>
-    </tbody>
-</table>
+@if (Model.HaveExampleData)
+{
+    <h3>Тестовый доступ к системе</h3>
+    <p>Вы можете использовать следующие учетные данные для демонстрации функциональности системы:</p>
+    <table>
+        <thead>
+            <tr>
+                <td>Электронный почтовый ящик</td>
+                <td>Пароль</td>
+                <td>Роль в системе</td>
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+                <td>admin@@localhost</td>
+                <td>admin</td>
+                <td>Администратор системы</td>
+            </tr>
+            <tr>
+                <td>applicant[1..10]@@localhost</td>
+                <td>applicant</td>
+                <td>Соискатель</td>
+            </tr>
+            <tr>
+                <td>member9@@localhost</td>
+                <td>password</td>
+                <td>Рядовой член совета</td>
+            </tr>
+            <tr>
+                <td>member5@@localhost</td>
+                <td>password</td>
+                <td>Заместитель председателя</td>
+            </tr>
+            <tr>
+                <td>member4@@localhost</td>
+                <td>password</td>
+                <td>Учёный секреьарь</td>
+            </tr>
+            <tr>
+                <td>member8@@localhost</td>
+                <td>password</td>
+                <td>Председатель совета</td>
+            </tr>
+        </tbody>
+    </table>
+}

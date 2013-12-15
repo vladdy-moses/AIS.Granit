@@ -10,11 +10,12 @@ using System.Data.SqlClient;
 
 namespace UD_Granit.Controllers
 {
+    // Управляет логикой по работе с информацией о диссертационном совете
     public class CouncilController : Controller
     {
         private DataContext db = new DataContext();
 
-        //
+        // Показывает информацию о диссертационном совете
         // GET: /Council/
 
         public ActionResult Index()
@@ -28,7 +29,7 @@ namespace UD_Granit.Controllers
             return View(viewModel);
         }
 
-        //
+        // Показывает форму редактирования информации о диссертационном совете
         // GET: /Council/Edit
 
         public ActionResult Edit()
@@ -48,7 +49,7 @@ namespace UD_Granit.Controllers
             return HttpNotFound();
         }
 
-        //
+        // Редактирует информацию о диссертационном совете
         // POST: /Council/Edit
 
         [HttpPost]
@@ -76,7 +77,7 @@ namespace UD_Granit.Controllers
             }
         }
 
-        //
+        // Показывает членов диссертационного совета
         // GET: /Council/Members
 
         public ActionResult Members(string filter)
@@ -143,9 +144,7 @@ namespace UD_Granit.Controllers
                 }
             }
 
-            viewModel.CanControl = false;
-            if ((Session.GetUser() is Administrator) || (Session.GetUserPosition() == MemberPosition.Chairman))
-                viewModel.CanControl = true;
+            viewModel.CanControl = RightsManager.Account.Edit(Session.GetUser());
 
             return View(viewModel);
         }

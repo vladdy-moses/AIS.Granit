@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Configuration;
 using System.Data.SqlClient;
 using System.Linq;
 using System.Web;
@@ -9,11 +10,12 @@ using UD_Granit.Models;
 
 namespace UD_Granit.Controllers
 {
+    // Управляет логикой по отображению относительно статичных страниц
     public class HomeController : Controller
     {
         private DataContext db = new DataContext();
 
-        //
+        // Показывает главную страницу
         // GET: /Home/
 
         public ActionResult Index()
@@ -35,10 +37,15 @@ namespace UD_Granit.Controllers
             UD_Granit.ViewModels.Home.Index viewModel = new ViewModels.Home.Index();
             viewModel.SessionsWas = prevSessions;
             viewModel.SessionsWill = nextSessions;
+
+            var createData = ConfigurationManager.AppSettings["LoadExampleDataOnCreate"];
+            if ((createData != null) && (createData.ToLower() == "true"))
+                viewModel.HaveExampleData = true;
+
             return View(viewModel);
         }
 
-        //
+        // Показывает страницу "О системе"
         // GET: /Home/About
 
         public ActionResult About()
@@ -46,13 +53,21 @@ namespace UD_Granit.Controllers
             return View();
         }
 
-        //
+        // Показывает страницу со статистикой
         // GET: /Home/Statistics
 
         public ActionResult Statistics()
         {
             ViewModels.Home.Statistics viewModel = new ViewModels.Home.Statistics();
-            viewModel.Current = db.Database.SqlQuery<Statistics>("SELECT * FROM [dbo].[StatisticsFunction]()").FirstOrDefault();
+            try
+            {
+                viewModel.Current = db.Database.SqlQuery<Statistics>("SELECT * FROM [dbo].[StatisticsFunction]()").FirstOrDefault();
+            }
+            catch
+            {
+                ViewData.NotificationAdd(new NotificationManager.Notify() { Type = NotificationManager.Notify.NotifyType.Error, Message = "Произошла ошибка при получении статистических данных. Обратитесь к администратору системы." });
+                viewModel.Current = new Statistics();
+            }
             return View(viewModel);
         }
     }
