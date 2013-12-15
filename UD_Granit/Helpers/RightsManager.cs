@@ -64,6 +64,12 @@ namespace UD_Granit.Helpers
             public static bool Edit(User user, Models.Dissertation dissertation) { return ((user is Applicant) && (user.Id == dissertation.Applicant.Id)); }
         }
 
+        // Задаёт права доступа по работе с информацией о диссертационном совете
+        public static class Council
+        {
+            public static bool Edit(User user) { return ((user is Administrator) || ((user is Member) && ((user as Member).Position == MemberPosition.Chairman))); }
+        }
+
         // Задаёт права доступа по работе со специальностями
         public static class Speciality
         {

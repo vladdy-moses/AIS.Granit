@@ -38,15 +38,14 @@ namespace UD_Granit.Controllers
 
             if (currentUser == null)
                 return HttpNotFound();
-            if ((currentUser is Administrator) ||
-                (Session.GetUserPosition() == MemberPosition.Chairman))
-            {
-                UD_Granit.ViewModels.Council.Edit viewModel = new ViewModels.Council.Edit();
-                if (db.Council.Count() > 0)
-                    viewModel.Council = db.Council.First();
-                return View(viewModel);
-            }
-            return HttpNotFound();
+
+            if (!RightsManager.Council.Edit(currentUser))
+                return HttpNotFound();
+
+            UD_Granit.ViewModels.Council.Edit viewModel = new ViewModels.Council.Edit();
+            if (db.Council.Count() > 0)
+                viewModel.Council = db.Council.First();
+            return View(viewModel);
         }
 
         // Редактирует информацию о диссертационном совете
@@ -55,6 +54,14 @@ namespace UD_Granit.Controllers
         [HttpPost]
         public ActionResult Edit(UD_Granit.ViewModels.Council.Edit viewModel)
         {
+            User currentUser = Session.GetUser();
+
+            if (currentUser == null)
+                return HttpNotFound();
+
+            if (!RightsManager.Council.Edit(currentUser))
+                return HttpNotFound();
+
             try
             {
                 if (db.Council.Count() == 0)
@@ -73,7 +80,7 @@ namespace UD_Granit.Controllers
             }
             catch
             {
-                return View();
+                return View(viewModel);
             }
         }
 
