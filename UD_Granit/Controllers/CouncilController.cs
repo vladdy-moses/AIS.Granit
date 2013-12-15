@@ -21,11 +21,12 @@ namespace UD_Granit.Controllers
         public ActionResult Index()
         {
             UD_Granit.ViewModels.Council.Index viewModel = new ViewModels.Council.Index();
+
             viewModel.HaveInformation = (db.Council.Count() > 0);
             if (viewModel.HaveInformation)
                 viewModel.Council = db.Council.First();
-            if (Session.GetUser() is Administrator)
-                viewModel.CanControl = true;
+            viewModel.CanControl = RightsManager.Council.Edit(Session.GetUser());
+
             return View(viewModel);
         }
 
@@ -42,9 +43,25 @@ namespace UD_Granit.Controllers
             if (!RightsManager.Council.Edit(currentUser))
                 return HttpNotFound();
 
+            var chairman = db.Members.Where(m => (m.Position == MemberPosition.Chairman)).FirstOrDefault();
+            var viceCharman = db.Members.Where(m => (m.Position == MemberPosition.ViceChairman)).FirstOrDefault();
+            var secretary = db.Members.Where(m => (m.Position == MemberPosition.Secretary)).FirstOrDefault();
+
             UD_Granit.ViewModels.Council.Edit viewModel = new ViewModels.Council.Edit();
+
             if (db.Council.Count() > 0)
                 viewModel.Council = db.Council.First();
+            viewModel.CanDefineRoles = (db.Members.Count() >= 3);
+            viewModel.Chairman = (chairman != null) ? chairman.Id : 0;
+            viewModel.ViceChairman = (viceCharman != null) ? viceCharman.Id : 0;
+            viewModel.Secretary = (secretary != null) ? secretary.Id : 0;
+
+            viewModel.Members = new List<SelectListItem>();
+            viewModel.Members.Add(new SelectListItem() { Text = "== Выберите члена совета из списка ==", Value = "0" });
+            foreach (var currentMember in db.Members)
+                viewModel.Members.Add(new SelectListItem() { Text = currentMember.GetFullName(), Value = currentMember.Id.ToString() });
+
+            
             return View(viewModel);
         }
 
@@ -64,6 +81,49 @@ namespace UD_Granit.Controllers
 
             try
             {
+                viewModel.CanDefineRoles = (db.Members.Count() >= 3);
+                if(((viewModel.Chairman == viewModel.ViceChairman) && (viewModel.Chairman != 0)) ||
+                    ((viewModel.Chairman == viewModel.Secretary) && (viewModel.Chairman != 0)) ||
+                    ((viewModel.Secretary == viewModel.ViceChairman) && (viewModel.Secretary != 0)))
+                {
+                    throw new Exception("Член совета не может иметь две роли одновременно. Пожалуйста, измените свой выбор.");
+                }
+
+                // Удаление старых руководителей
+                var chairman = db.Members.Where(m => (m.Position == MemberPosition.Chairman)).FirstOrDefault();
+                var viceCharman = db.Members.Where(m => (m.Position == MemberPosition.ViceChairman)).FirstOrDefault();
+                var secretary = db.Members.Where(m => (m.Position == MemberPosition.Secretary)).FirstOrDefault();
+
+                if (chairman != null)
+                    chairman.Position = MemberPosition.Member;
+                if (viceCharman != null)
+                    viceCharman.Position = MemberPosition.Member;
+                if (secretary != null)
+                    secretary.Position = MemberPosition.Member;
+
+                db.Configuration.ValidateOnSaveEnabled = false;
+                db.SaveChanges();
+                db.Configuration.ValidateOnSaveEnabled = true;
+
+                // Добавление новых руководителей
+                chairman = db.Members.Find(viewModel.Chairman);
+                viceCharman = db.Members.Find(viewModel.ViceChairman);
+                secretary = db.Members.Find(viewModel.Secretary);
+
+                if (chairman != null)
+                    chairman.Position = MemberPosition.Chairman;
+                if (viceCharman != null)
+                    viceCharman.Position = MemberPosition.ViceChairman;
+                if (secretary != null)
+                    secretary.Position = MemberPosition.Secretary;
+
+                db.Configuration.ValidateOnSaveEnabled = false;
+                db.SaveChanges();
+                db.Configuration.ValidateOnSaveEnabled = true;
+
+                if (currentUser is Member)
+                    Session.SetUser(db.Members.Find(currentUser.Id));
+
                 if (db.Council.Count() == 0)
                 {
                     db.Council.Add(viewModel.Council);
@@ -78,8 +138,14 @@ namespace UD_Granit.Controllers
 
                 return RedirectToAction("Index");
             }
-            catch
+            catch (Exception ex)
             {
+                viewModel.Members = new List<SelectListItem>();
+                viewModel.Members.Add(new SelectListItem() { Text = "== Выберите члена совета из списка ==", Value = "0" });
+                foreach (var currentMember in db.Members)
+                    viewModel.Members.Add(new SelectListItem() { Text = currentMember.GetFullName(), Value = currentMember.Id.ToString() });
+
+                ViewData.NotificationAdd(new NotificationManager.Notify() { Type = NotificationManager.Notify.NotifyType.Error, Message = ex.Message });
                 return View(viewModel);
             }
         }

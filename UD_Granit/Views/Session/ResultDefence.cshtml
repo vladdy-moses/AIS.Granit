@@ -1,10 +1,10 @@
 ﻿@model UD_Granit.ViewModels.Session.ResultDefence
 
 @{
-    ViewBag.Title = "ResultDefence";
+    ViewBag.Title = "Результат заседания";
 }
 
-<h2>ResultDefence</h2>
+<h2>Результат заседания по защите диссертации</h2>
 <h3>@Model.DissertationTitle (@Model.Date)</h3>
 
 @using (Html.BeginForm("ResultDefence", "Session", FormMethod.Post, new { enctype = "multipart/form-data" }))
@@ -32,7 +32,7 @@
         @Html.LabelFor(model => model.Reliability)
     </div>
     <div class="editor-field">
-        @Html.TextAreaFor(model => model.Reliability)
+        @Html.TextAreaFor(model => model.Reliability)<br />
         @Html.ValidationMessageFor(model => model.Reliability)
     </div>
     
@@ -40,7 +40,7 @@
         @Html.LabelFor(model => model.Novelty)
     </div>
     <div class="editor-field">
-        @Html.TextAreaFor(model => model.Novelty)
+        @Html.TextAreaFor(model => model.Novelty)<br />
         @Html.ValidationMessageFor(model => model.Novelty)
     </div>
     
@@ -48,7 +48,7 @@
         @Html.LabelFor(model => model.Significance)
     </div>
     <div class="editor-field">
-        @Html.TextAreaFor(model => model.Significance)
+        @Html.TextAreaFor(model => model.Significance)<br />
         @Html.ValidationMessageFor(model => model.Significance)
     </div>
     

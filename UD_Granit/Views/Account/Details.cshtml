@@ -64,11 +64,11 @@
             @if (Model.User is UD_Granit.Models.Applicant)
             {
                 <tr>
-                    <td>Организация</td>
+                    <td>Организация (университет)</td>
                     <td>@((Model.User as UD_Granit.Models.Applicant).Organization)</td>
                 </tr>
                 <tr>
-                    <td>Подразделение</td>
+                    <td>Подразделение (кафедра)</td>
                     <td>@((Model.User as UD_Granit.Models.Applicant).Organization_Depatment)</td>
                 </tr>
                 <tr>
@@ -138,10 +138,13 @@
                 <td>Дата регистрации</td>
                 <td>@Model.User.RegistrationDate</td>
             </tr>
-            <tr>
-                <td>Контактный телефон</td>
-                <td>@Model.User.Phone</td>
-            </tr>
+            @if (Model.User.Phone != null)
+            {
+                <tr>
+                    <td>Контактный телефон</td>
+                    <td>@Model.User.Phone</td>
+                </tr>
+            }
             @if (Model.User is UD_Granit.Models.Administrator)
             {
                 <tr>
@@ -151,22 +154,30 @@
             }
             @if (Model.User is UD_Granit.Models.Applicant)
             {
+                if ((Model.User as UD_Granit.Models.Applicant).Organization_Conclusion != null)
+                {
                 <tr>
                     <td>Заключение организации</td>
-                    <td>@((Model.User as UD_Granit.Models.Applicant).Organization_Conclusion)</td>
+                    <td>
+                        <pre>@((Model.User as UD_Granit.Models.Applicant).Organization_Conclusion)</pre>
+                    </td>
                 </tr>
+                }
                 <tr>
                     <td>Адрес</td>
                     <td>@((Model.User as UD_Granit.Models.Applicant).Address)</td>
                 </tr>
                 <tr>
-                    <td>Обучался в аспирантуре</td>
-                    <td>@((Model.User as UD_Granit.Models.Applicant).WasInGraduateSchool)</td>
+                    <td>Обучался в аспирантуре/докторнатуре</td>
+                    <td>@((Model.User as UD_Granit.Models.Applicant).WasInGraduateSchool ? "Да" : "Нет")</td>
                 </tr>
+                if ((Model.User as UD_Granit.Models.Applicant).Birthday.HasValue)
+                {
                 <tr>
                     <td>Дата рождения</td>
                     <td>@((Model.User as UD_Granit.Models.Applicant).Birthday)</td>
                 </tr>
+                }
                 if ((Model.User as UD_Granit.Models.Applicant).WasInGraduateSchool)
                 {
                 <tr>
@@ -177,6 +188,24 @@
                     <td>Кафедра</td>
                     <td>@((Model.User as UD_Granit.Models.Applicant).University_Departmant)</td>
                 </tr>   
+                }
+                if (Model.User is UD_Granit.Models.ApplicantCandidate)
+                {
+                <tr>
+                    <td>Диплом об образовании</td>
+                    <td>@((Model.User as UD_Granit.Models.ApplicantCandidate).DocumentOfEducation)</td>
+                </tr>
+                <tr>
+                    <td>Свидетельство о сдаче кандидатских экзамнов</td>
+                    <td>@((Model.User as UD_Granit.Models.ApplicantCandidate).CandidateExams)</td>
+                </tr>
+                }
+                if (Model.User is UD_Granit.Models.ApplicantDoctor)
+                {
+                <tr>
+                    <td>Диплом кандидата наук</td>
+                    <td>@((Model.User as UD_Granit.Models.ApplicantDoctor).CandidateDiplom)</td>
+                </tr>
                 }
             }
         </tbody>

@@ -278,6 +278,12 @@ namespace UD_Granit.Controllers
             if (currentSession.Was)
                 return HttpNotFound();
 
+            if (viewModel.Vote_Result < 0)
+            {
+                ViewData.NotificationAdd(new NotificationManager.Notify() { Type = NotificationManager.Notify.NotifyType.Error, Message = "Число голосов не может быть отрицательным. Пожалуйста, измените значение поля." });
+                return View(viewModel);
+            }
+
             currentSession.Result = viewModel.Result;
             currentSession.Novelty = viewModel.Novelty;
             currentSession.Reliability = viewModel.Reliability;

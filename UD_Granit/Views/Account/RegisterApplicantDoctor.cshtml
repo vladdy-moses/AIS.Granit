@@ -117,7 +117,7 @@
         </div>
     </fieldset>
     <fieldset>
-        <legend>Сведения аб аспирантуре</legend>
+        <legend>Сведения аб докторнатуре</legend>
         <div class="editor-label">
             @Html.LabelFor(model => model.User.WasInGraduateSchool)
         </div>
@@ -140,6 +140,14 @@
         <div class="editor-field">
             @Html.EditorFor(model => model.User.University_Departmant)&nbsp;
             @Html.ValidationMessageFor(model => model.User.University_Departmant)
+        </div>
+
+        <div class="editor-label">
+            @Html.LabelFor(model => model.User.CandidateDiplom)
+        </div>
+        <div class="editor-field">
+            @Html.EditorFor(model => model.User.CandidateDiplom)&nbsp;
+            @Html.ValidationMessageFor(model => model.User.CandidateDiplom)
         </div>
     </fieldset>
     

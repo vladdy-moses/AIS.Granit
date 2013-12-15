@@ -56,11 +56,11 @@ namespace UD_Granit.Models
         public int Publications { set; get; }
 
         [Display(Name = "Дата последней публикации")]
-        [DisplayFormat(DataFormatString = "{0:dd.MM.yyyy}", ApplyFormatInEditMode = true)]
+        [DisplayFormat(DataFormatString = "{0:dd/MM/yyyy}", ApplyFormatInEditMode = true)]
         public DateTime? Date_Sending { set; get; }
 
         [Display(Name = "Дата предварительной защиты")]
-        [DisplayFormat(DataFormatString = "{0:dd.MM.yyyy}", ApplyFormatInEditMode = true)]
+        [DisplayFormat(DataFormatString = "{0:dd/MM/yyyy}", ApplyFormatInEditMode = true)]
         public DateTime? Date_Preliminary_Defense { set; get; }
 
         public virtual ICollection<Reply> Replies { set; get; }

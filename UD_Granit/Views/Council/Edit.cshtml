@@ -55,6 +55,36 @@
             @Html.ValidationMessageFor(model => model.Council.FoundationDate)
         </div>
     </fieldset>
+    if (Model.CanDefineRoles)
+    {
+    <fieldset>
+        <legend>Руководящий состав</legend>
+
+        <div class="editor-label">
+            @Html.LabelFor(model => model.Chairman)
+        </div>
+        <div class="editor-field">
+            @Html.DropDownListFor(model => model.Chairman, Model.Members)&nbsp;
+            @Html.ValidationMessageFor(model => model.Chairman)
+        </div>
+
+        <div class="editor-label">
+            @Html.LabelFor(model => model.ViceChairman)
+        </div>
+        <div class="editor-field">
+            @Html.DropDownListFor(model => model.ViceChairman, Model.Members)&nbsp;
+            @Html.ValidationMessageFor(model => model.ViceChairman)
+        </div>
+
+        <div class="editor-label">
+            @Html.LabelFor(model => model.Secretary)
+        </div>
+        <div class="editor-field">
+            @Html.DropDownListFor(model => model.Secretary, Model.Members)&nbsp;
+            @Html.ValidationMessageFor(model => model.Secretary)
+        </div>
+    </fieldset>
+    }
     
     <div class="control">
         <button>Принять изменения</button>

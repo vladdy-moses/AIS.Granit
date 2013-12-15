@@ -30,7 +30,7 @@
         </tr>
         <tr>
             <td>@Html.LabelFor(model => model.Dissertation.Administrative_Use)</td>
-            <td>@Model.Dissertation.Administrative_Use</td>
+            <td>@((Model.Dissertation.Administrative_Use) ? "Да" : "Нет")</td>
         </tr>
         @if (Model.Dissertation.References != null)
         {
@@ -45,14 +45,14 @@
         {
             <tr>
                 <td>@Html.LabelFor(model => model.Dissertation.Date_Sending)</td>
-                <td>@Model.Dissertation.Date_Sending</td>
+                <td>@Html.DisplayFor(model => model.Dissertation.Date_Sending)</td>
             </tr>
         }
         @if (Model.Dissertation.Date_Preliminary_Defense != null)
         {
             <tr>
                 <td>@Html.LabelFor(model => model.Dissertation.Date_Preliminary_Defense)</td>
-                <td>@Model.Dissertation.Date_Preliminary_Defense</td>
+                <td>@Html.DisplayFor(model => model.Dissertation.Date_Preliminary_Defense)</td>
             </tr>
         }
         <tr>

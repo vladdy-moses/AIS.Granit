@@ -11,7 +11,7 @@ namespace UD_Granit.Models
         [Display(Name = "Итог защиты")]
         public bool Result { set; get; }
 
-        [Display(Name = "Результат голосования")]
+        [Display(Name = "Число голосов за защиту")]
         public int Vote_Result { set; get; }
 
         [Display(Name = "Запись защиты")]
