@@ -199,13 +199,15 @@
     <Content Include="App_Start\AdditionalScripts.sql" />
     <Content Include="Content\background.png" />
     <Content Include="Content\css\basic.css" />
+    <Content Include="Content\css\jquery.simple-dtpicker.css" />
     <Content Include="Content\css\lite.css" />
     <Content Include="Content\css\main.css" />
-    <Content Include="Content\js\script.js" />
+    <Content Include="Content\js\jquery.simple-dtpicker.js" />
     <Content Include="Content\login.png" />
     <Content Include="Content\logo-white.png" />
     <Content Include="Content\logo.png" />
     <Content Include="Content\statistics.png" />
+    <Content Include="Content\study.png" />
     <Content Include="Content\themes\base\images\animated-overlay.gif" />
     <Content Include="Content\themes\base\images\ui-bg_flat_0_aaaaaa_40x100.png" />
     <Content Include="Content\themes\base\images\ui-bg_flat_75_ffffff_40x100.png" />

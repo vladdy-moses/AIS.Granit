@@ -175,7 +175,7 @@
                 {
                 <tr>
                     <td>Дата рождения</td>
-                    <td>@((Model.User as UD_Granit.Models.Applicant).Birthday)</td>
+                    <td>@Html.DisplayFor(model => (model.User as UD_Granit.Models.Applicant).Birthday)</td>
                 </tr>
                 }
                 if ((Model.User as UD_Granit.Models.Applicant).WasInGraduateSchool)
@@ -191,21 +191,30 @@
                 }
                 if (Model.User is UD_Granit.Models.ApplicantCandidate)
                 {
+                    if ((Model.User as UD_Granit.Models.ApplicantCandidate).DocumentOfEducation != null)
+                    {
                 <tr>
                     <td>Диплом об образовании</td>
                     <td>@((Model.User as UD_Granit.Models.ApplicantCandidate).DocumentOfEducation)</td>
                 </tr>
+                    }
+                    if ((Model.User as UD_Granit.Models.ApplicantCandidate).CandidateExams != null)
+                    {
                 <tr>
                     <td>Свидетельство о сдаче кандидатских экзамнов</td>
                     <td>@((Model.User as UD_Granit.Models.ApplicantCandidate).CandidateExams)</td>
                 </tr>
+                    }
                 }
                 if (Model.User is UD_Granit.Models.ApplicantDoctor)
                 {
+                    if ((Model.User as UD_Granit.Models.ApplicantDoctor).CandidateDiplom != null)
+                    {
                 <tr>
                     <td>Диплом кандидата наук</td>
                     <td>@((Model.User as UD_Granit.Models.ApplicantDoctor).CandidateDiplom)</td>
                 </tr>
+                    }
                 }
             }
         </tbody>

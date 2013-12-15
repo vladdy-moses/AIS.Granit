@@ -15,7 +15,7 @@
     @Html.HiddenFor(model => model.SessionType)
 
     <fieldset>
-        <legend>Session</legend>
+        <legend>Основная информация</legend>
 
         <div class="editor-label">
             @Html.LabelFor(model => model.Session.Date)
@@ -24,6 +24,10 @@
             @Html.EditorFor(model => model.Session.Date)
             @Html.ValidationMessageFor(model => model.Session.Date)
         </div>
+    </fieldset>
+    
+    <fieldset>
+        <legend>Информация о прикреплённых членах совета</legend>
 
         <div id="MembersContainer">
             @for (int i = 0; i < Model.MemberList.Count; i++)
@@ -35,20 +39,16 @@
             <a id="AddMemberButton" href="#">Добавить члена совета</a> | 
             <a id="DeleteMemberButton" href="#">Убрать члена совета</a>
         </div>
-
-        <div class="control">
-            <button>Создать заседание</button>
-        </div>
     </fieldset>
+    
+    <div class="control">
+        <button>Создать заседание</button>
+    </div>
 }
-
-<div>
-    @Html.ActionLink("Back to List", "Index")
-</div>
 
 <script>
     $(function () {
-        $("#Session_Date").datepicker({ changeYear: true });
+        $("#Session_Date").appendDtpicker({ locale: "ru", dateFormat: "DD/MM/YYYY hh:mm" });
         HideMembers();
 
         $('#AddMemberButton').click(AddMember);

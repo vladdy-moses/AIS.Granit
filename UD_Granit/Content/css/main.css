@@ -216,3 +216,7 @@ footer {
     font-size: 1.1em;
     font-family: Arial, Vardana;
 }
+
+#MembersControl {
+    padding: 5px;
+}
