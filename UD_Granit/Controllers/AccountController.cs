@@ -162,9 +162,16 @@ namespace UD_Granit.Controllers
 
                 db.ApplicantCandidates.Add(currentUser);
                 db.SaveChanges();
-                Session.SetUser(currentUser);
 
-                return RedirectToAction("Create", "Dissertation");
+                if (Session.GetUser() == null)
+                {
+                    Session.SetUser(currentUser);
+                    return RedirectToAction("Create", "Dissertation");
+                }
+                else
+                {
+                    return RedirectToAction("Details", new { id = currentUser.Id });
+                }
             }
         }
 

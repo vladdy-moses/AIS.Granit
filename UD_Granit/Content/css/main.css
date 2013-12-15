@@ -20,7 +20,7 @@ table {
     width: 100%;
     border: 1px solid gray;
     border-collapse: collapse;
-	margin-bottom: 10px;
+    margin-bottom: 10px;
 }
 
 thead {
@@ -42,28 +42,28 @@ header {
     margin-bottom: 20px;
 }
 
-header .logo {
-	float: left;
-	width: 64px;
-	height: 64px;
-	margin: 0 15px 0 0;
-	background-repeat: no-repeat;
-}
+    header .logo {
+        float: left;
+        width: 64px;
+        height: 64px;
+        margin: 0 15px 0 0;
+        background-repeat: no-repeat;
+    }
 
 #StyleChanger {
-	float: right;
+    float: right;
 }
 
-    hgroup * {
-        padding: 0;
-        margin: 0;
-        font-family: Arial, Verdana;
-    }
+hgroup * {
+    padding: 0;
+    margin: 0;
+    font-family: Arial, Verdana;
+}
 
-    hgroup h4 {
-        font-weight: normal;
-        font-style: italic;
-    }
+hgroup h4 {
+    font-weight: normal;
+    font-style: italic;
+}
 
 aside {
     width: 200px;
@@ -94,13 +94,13 @@ ul.menu {
 .notify-error {
     color: red;
     border: 1px dashed red;
-	background-color: #fff0f0;
+    background-color: #fff0f0;
 }
 
 .notify-info {
     color: blue;
     border: 1px dashed blue;
-	background-color: #f0f0ff;
+    background-color: #f0f0ff;
 }
 
 article {
@@ -138,8 +138,8 @@ footer {
     }
 
 #FooterLinks {
-	text-align: right;
-	float: right;
+    text-align: right;
+    float: right;
 }
 
 .cb {
@@ -153,7 +153,7 @@ footer {
     margin: 10px;
     padding: 10px;
     border: 1px dashed red;
-	background-color: #fff0f0;
+    background-color: #fff0f0;
 }
 
 #ui-datepicker-div {
@@ -194,12 +194,12 @@ footer {
 .editor-field input[type="password"],
 .editor-field input[type="datetime"],
 .editor-field input[type="number"] {
-	min-width: 200px;
+    min-width: 200px;
 }
 
 .editor-field textarea {
-	min-width: 600px;
-	min-height: 300px;
+    min-width: 600px;
+    min-height: 300px;
 }
 
 .MainBlock {
@@ -208,11 +208,11 @@ footer {
 }
 
 .PageImage {
-	float: left;
-	padding: 0 5px;
+    float: left;
+    padding: 0 5px;
 }
 
 .Statistics {
-	font-size: 1.1em;
-	font-family: Arial, Vardana;
+    font-size: 1.1em;
+    font-family: Arial, Vardana;
 }

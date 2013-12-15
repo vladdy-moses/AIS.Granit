@@ -7,24 +7,24 @@
     margin: 30px auto;
     padding: 5px;
     box-shadow: rgba(0,0,0,0.4) 0 0 10px;
-	background-color: #fff;
+    background-color: #fff;
 }
 
 header {
-	padding: 10px;
+    padding: 10px;
 }
 
-header .logo {
-	background-image: url('../logo.png');
-}
+    header .logo {
+        background-image: url('../logo.png');
+    }
 
 hgroup {
-	padding: 20px 30px 0 30px;
+    padding: 20px 30px 0 30px;
 }
 
-hgroup h4 {
-    color: #999;
-}
+    hgroup h4 {
+        color: #999;
+    }
 
 aside {
     float: left;
