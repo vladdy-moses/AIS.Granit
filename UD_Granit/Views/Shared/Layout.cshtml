@@ -3,7 +3,7 @@
 <head>
     <meta charset="utf-8" />
     <title>@ViewBag.Title</title>
-	@Styles.Render("~/Content/css/main.css")
+    @Styles.Render("~/Content/css/main.css")
     @Styles.Render("~/Content/css/basic.css")
     @Styles.Render("~/Content/themes/base/minified/jquery-ui.min.css")
     <script src="@Url.Content("~/Scripts/jquery-2.0.3.min.js")" type="text/javascript"></script>
@@ -13,18 +13,20 @@
     <script src="@Url.Content("~/Content/js/script.js")" type="text/javascript"></script>
 </head>
 <body>
-    <header>
-        @Html.Partial("_PartialHeader")
-    </header>
-    <div id="MainWrapper">
-        <aside>
-            @Html.Partial("_PartialAside")
-        </aside>
-        <article>
-            @Html.Partial("_PartialNotification")
-            @RenderBody()
-        </article>
-        <div class="cb"></div>
+    <div class="page-wrap">
+        <header>
+            @Html.Partial("_PartialHeader")
+        </header>
+        <div id="MainWrapper">
+            <aside>
+                @Html.Partial("_PartialAside")
+            </aside>
+            <article>
+                @Html.Partial("_PartialNotification")
+                @RenderBody()
+            </article>
+            <div class="cb"></div>
+        </div>
     </div>
     <footer>
         <div id="FooterWrapper">
