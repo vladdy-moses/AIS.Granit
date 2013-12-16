@@ -15,7 +15,6 @@
             (Session.GetUserPosition() == UD_Granit.Models.MemberPosition.ViceChairman))
             {
                 <li>@Html.ActionLink("Заседания", "My", "Session")</li>
-                <li>@Html.ActionLink("Соискатели", "ShowApplicants", "Account")</li>
             }
             @if (Session.GetUserPosition() == UD_Granit.Models.MemberPosition.Secretary)
             {

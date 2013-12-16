@@ -70,5 +70,21 @@ namespace UD_Granit.Controllers
             }
             return View(viewModel);
         }
+
+        // Показывает страницу с ошибкой
+        // GET: /Home/Error
+
+        public ActionResult Error()
+        {
+            return View();
+        }
+
+        // Показывает страницу с ошибкой, если страница не найдена
+        // GET: /Home/Error404
+
+        public ActionResult Error404()
+        {
+            return View();
+        }
     }
 }

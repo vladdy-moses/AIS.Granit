@@ -133,7 +133,7 @@ namespace UD_Granit.Controllers
 
         public ActionResult Edit(int id)
         {
-            Applicant currentUser = Session.GetUser() as Applicant;
+            User currentUser = Session.GetUser();
             Dissertation currentDissertation = db.Dissertations.Find(id);
 
             if (currentDissertation == null)

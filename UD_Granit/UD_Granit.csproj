@@ -181,6 +181,7 @@
     <Compile Include="ViewModels\Dissertation\Details.cs" />
     <Compile Include="ViewModels\Dissertation\Index.cs" />
     <Compile Include="ViewModels\Dissertation\Edit.cs" />
+    <Compile Include="ViewModels\Home\Error.cs" />
     <Compile Include="ViewModels\Home\Index.cs" />
     <Compile Include="ViewModels\Home\Statistics.cs" />
     <Compile Include="ViewModels\Reply\Create.cs" />
@@ -270,7 +271,6 @@
     <Content Include="Content\themes\base\minified\jquery.ui.tabs.min.css" />
     <Content Include="Content\themes\base\minified\jquery.ui.theme.min.css" />
     <Content Include="Content\themes\base\minified\jquery.ui.tooltip.min.css" />
-    <Content Include="Error\404.html" />
     <Content Include="Global.asax" />
     <None Include="Scripts\jquery-2.0.3.intellisense.js" />
     <Content Include="Scripts\jquery-2.0.3.js" />
@@ -343,6 +343,8 @@
     <Content Include="Views\Account\Edit.cshtml" />
     <Content Include="Views\Home\About.cshtml" />
     <Content Include="Views\Home\Statistics.cshtml" />
+    <Content Include="Views\Shared\Error.cshtml" />
+    <Content Include="Views\Shared\Error404.cshtml" />
     <None Include="Views\Shared\Layout.cshtml" />
     <Content Include="Views\Shared\_PartialAside.cshtml" />
     <Content Include="Views\Shared\_PartialFooter.cshtml" />

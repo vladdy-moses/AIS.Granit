@@ -1,0 +1,14 @@
+﻿@model System.Web.Mvc.HandleErrorInfo
+
+@{
+    ViewBag.Title = "Ошибка";
+}
+
+<h2>@Model.Exception.Message</h2>
+
+<h3>Подробная информация</h3>
+<p>Контроллер: @Model.ControllerName</p>
+<p>Действие: @Model.ActionName</p>
+
+<div class="error">Пожалуйста, обратитесь к администратору системы!</div>
+<!--<pre width="700px">@Model.Exception.StackTrace</pre>-->
