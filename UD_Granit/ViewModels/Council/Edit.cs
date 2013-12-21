@@ -12,6 +12,7 @@ namespace UD_Granit.ViewModels.Council
 
         public ICollection<System.Web.Mvc.SelectListItem> Members { set; get; }
         public bool CanDefineRoles { set; get; }
+        public bool CanDefineChairman { set; get; }
 
         [Display(Name="Председатель совета")]
         public int Chairman { set; get; }

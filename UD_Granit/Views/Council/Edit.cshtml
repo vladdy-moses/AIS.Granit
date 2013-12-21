@@ -60,13 +60,16 @@
     <fieldset>
         <legend>Руководящий состав</legend>
 
-        <div class="editor-label">
-            @Html.LabelFor(model => model.Chairman)
-        </div>
-        <div class="editor-field">
-            @Html.DropDownListFor(model => model.Chairman, Model.Members)&nbsp;
+        @if (Model.CanDefineChairman)
+        {
+            <div class="editor-label">
+                @Html.LabelFor(model => model.Chairman)
+            </div>
+            <div class="editor-field">
+                @Html.DropDownListFor(model => model.Chairman, Model.Members)&nbsp;
             @Html.ValidationMessageFor(model => model.Chairman)
-        </div>
+            </div>
+        }
 
         <div class="editor-label">
             @Html.LabelFor(model => model.ViceChairman)

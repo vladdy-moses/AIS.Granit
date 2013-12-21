@@ -68,6 +68,7 @@ namespace UD_Granit.Helpers
         public static class Council
         {
             public static bool Edit(User user) { return ((user is Administrator) || ((user is Member) && ((user as Member).Position == MemberPosition.Chairman))); }
+            public static bool ChangeChairman(User user) { return (user is Administrator); }
         }
 
         // Задаёт права доступа по работе со специальностями

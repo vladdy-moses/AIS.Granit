@@ -51,6 +51,7 @@ namespace UD_Granit.Controllers
 
             if (db.Council.Count() > 0)
                 viewModel.Council = db.Council.First();
+            viewModel.CanDefineChairman = RightsManager.Council.ChangeChairman(currentUser);
             viewModel.CanDefineRoles = (db.Members.Count() >= 3);
             viewModel.Chairman = (chairman != null) ? chairman.Id : 0;
             viewModel.ViceChairman = (viceCharman != null) ? viceCharman.Id : 0;
@@ -82,6 +83,10 @@ namespace UD_Granit.Controllers
             try
             {
                 viewModel.CanDefineRoles = (db.Members.Count() >= 3);
+                viewModel.CanDefineChairman = RightsManager.Council.ChangeChairman(currentUser);
+
+                viewModel.Chairman = (viewModel.CanDefineChairman) ? viewModel.Chairman : db.Members.Where(m => m.Position == MemberPosition.Chairman).FirstOrDefault().Id;
+
                 if(((viewModel.Chairman == viewModel.ViceChairman) && (viewModel.Chairman != 0)) ||
                     ((viewModel.Chairman == viewModel.Secretary) && (viewModel.Chairman != 0)) ||
                     ((viewModel.Secretary == viewModel.ViceChairman) && (viewModel.Secretary != 0)))
@@ -90,11 +95,11 @@ namespace UD_Granit.Controllers
                 }
 
                 // Удаление старых руководителей
-                var chairman = db.Members.Where(m => (m.Position == MemberPosition.Chairman)).FirstOrDefault();
+                var chairman = (viewModel.CanDefineChairman) ? db.Members.Where(m => (m.Position == MemberPosition.Chairman)).FirstOrDefault() : null;
                 var viceCharman = db.Members.Where(m => (m.Position == MemberPosition.ViceChairman)).FirstOrDefault();
                 var secretary = db.Members.Where(m => (m.Position == MemberPosition.Secretary)).FirstOrDefault();
 
-                if (chairman != null)
+                if ((chairman != null) && (viewModel.CanDefineChairman))
                     chairman.Position = MemberPosition.Member;
                 if (viceCharman != null)
                     viceCharman.Position = MemberPosition.Member;
@@ -106,11 +111,11 @@ namespace UD_Granit.Controllers
                 db.Configuration.ValidateOnSaveEnabled = true;
 
                 // Добавление новых руководителей
-                chairman = db.Members.Find(viewModel.Chairman);
+                chairman = (viewModel.CanDefineChairman) ? db.Members.Find(viewModel.Chairman) : null;
                 viceCharman = db.Members.Find(viewModel.ViceChairman);
                 secretary = db.Members.Find(viewModel.Secretary);
 
-                if (chairman != null)
+                if ((chairman != null) && (viewModel.CanDefineChairman))
                     chairman.Position = MemberPosition.Chairman;
                 if (viceCharman != null)
                     viceCharman.Position = MemberPosition.ViceChairman;
