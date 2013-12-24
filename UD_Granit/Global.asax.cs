@@ -24,8 +24,15 @@ namespace UD_Granit
 
             System.Data.Entity.Database.SetInitializer<UD_Granit.Models.DataContext>(new UD_Granit.Models.Initializer());
 
-            UD_Granit.Models.DataContext db = new UD_Granit.Models.DataContext();
-            HttpContext.Current.Application["Name"] = (db.Council.Count() == 0) ? "Гранит" : db.Council.First().Number;
+            try
+            {
+                UD_Granit.Models.DataContext db = new UD_Granit.Models.DataContext();
+                HttpContext.Current.Application["Name"] = (db.Council.Count() == 0) ? "Гранит" : db.Council.First().Number;
+            }
+            catch
+            {
+                HttpContext.Current.Application["Name"] = "Гранит";
+            }
         }
 
         protected void Application_Error(object sender, EventArgs e)
