@@ -126,6 +126,7 @@ namespace UD_Granit.Controllers
                 db.SaveChanges();
                 db.Configuration.ValidateOnSaveEnabled = true;
 
+
                 if (currentUser is Member)
                     Session.SetUser(db.Members.Find(currentUser.Id));
 

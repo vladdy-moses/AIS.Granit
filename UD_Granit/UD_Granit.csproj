@@ -126,6 +126,7 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="App_Start\BundleConfig.cs" />
     <Compile Include="Controllers\AccountController.cs" />
     <Compile Include="Controllers\CouncilController.cs" />
     <Compile Include="Controllers\DissertationController.cs" />
@@ -197,12 +198,12 @@
     <Compile Include="ViewModels\Speciality\Index.cs" />
   </ItemGroup>
   <ItemGroup>
-    <Content Include="App_Start\AdditionalScripts.sql" />
     <Content Include="Content\background.png" />
     <Content Include="Content\css\basic.css" />
     <Content Include="Content\css\jquery.simple-dtpicker.css" />
     <Content Include="Content\css\lite.css" />
     <Content Include="Content\css\main.css" />
+    <Content Include="Content\js\daterules.js" />
     <Content Include="Content\js\jquery.simple-dtpicker.js" />
     <Content Include="Content\login.png" />
     <Content Include="Content\logo-white.png" />

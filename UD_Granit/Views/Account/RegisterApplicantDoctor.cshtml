@@ -216,8 +216,10 @@
     </div>
 }
 
-<script>
-    $(function () {
-        $("#User_Birthday").appendDtpicker({ locale: "ru", dateOnly: true, dateFormat: "DD/MM/YYYY" });
-    });
-</script>
+@section scripts {
+	<script>
+		$(function () {
+			$("#User_Birthday").appendDtpicker({ locale: "ru", dateOnly: true, closeOnSelected: true, firstDayOfWeek: 1 });
+		});
+	</script>
+}

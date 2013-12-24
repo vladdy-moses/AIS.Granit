@@ -109,9 +109,11 @@
     </div>
 }
 
-<script>
-    $(function () {
-        $("#Dissertation_Date_Sending").appendDtpicker({ locale: "ru", dateOnly: true, dateFormat: "DD/MM/YYYY" });
-        $("#Dissertation_Date_Preliminary_Defense").appendDtpicker({ locale: "ru", dateOnly: true, dateFormat: "DD/MM/YYYY" });
-    });
-</script>
+@section scripts {
+	<script>
+		$(function () {
+			$("#Dissertation_Date_Sending").appendDtpicker({ locale: "ru", dateOnly: true, closeOnSelected: true, firstDayOfWeek: 1 });
+			$("#Dissertation_Date_Preliminary_Defense").appendDtpicker({ locale: "ru", dateOnly: true, closeOnSelected: true, firstDayOfWeek: 1 });
+		});
+	</script>
+}

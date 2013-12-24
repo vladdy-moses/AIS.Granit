@@ -46,35 +46,37 @@
     </div>
 }
 
-<script>
-    $(function () {
-        $("#Session_Date").appendDtpicker({ locale: "ru", dateFormat: "DD/MM/YYYY hh:mm" });
-        HideMembers();
+@section scripts {
+	<script>
+		$(function () {
+			$("#Session_Date").appendDtpicker({ locale: "ru", closeOnSelected: true, firstDayOfWeek: 1 });
+			HideMembers();
 
-        $('#AddMemberButton').click(AddMember);
-        $('#DeleteMemberButton').click(DeleteMember);
-    });
+			$('#AddMemberButton').click(AddMember);
+			$('#DeleteMemberButton').click(DeleteMember);
+		});
 
-    var membersCount = @(Model.MemberList.Count - 1);
-    var membersShowed = 0;
+		var membersCount = @(Model.MemberList.Count - 1);
+		var membersShowed = 0;
 
-    AddMember = function() {
-        if(membersShowed < membersCount) {
-            $('#Member' + membersShowed.toString()).show();
-            ++membersShowed;
-            $('#MembersCount').val(membersShowed);
-        }
-    }
+		AddMember = function() {
+			if(membersShowed < membersCount) {
+				$('#Member' + membersShowed.toString()).show();
+				++membersShowed;
+				$('#MembersCount').val(membersShowed);
+			}
+		}
 
-    DeleteMember = function() {
-        if(membersShowed > 0) {
-            $('#Member' + (--membersShowed).toString()).hide();
-            $('#MembersCount').val(membersShowed);
-        }
-    }
+		DeleteMember = function() {
+			if(membersShowed > 0) {
+				$('#Member' + (--membersShowed).toString()).hide();
+				$('#MembersCount').val(membersShowed);
+			}
+		}
 
-    HideMembers = function () {
-        $('#MembersContainer').children().hide();
-        $('#MembersCount').val(membersShowed);
-    }
-</script>
+		HideMembers = function () {
+			$('#MembersContainer').children().hide();
+			$('#MembersCount').val(membersShowed);
+		}
+	</script>
+}

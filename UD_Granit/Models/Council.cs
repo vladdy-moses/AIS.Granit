@@ -28,7 +28,7 @@ namespace UD_Granit.Models
         public string Address { set; get; }
 
         [Display(Name = "Дата основания")]
-        [DisplayFormat(DataFormatString = "{0:dd/MM/yyyy}", ApplyFormatInEditMode = true)]
+        [DisplayFormat(DataFormatString = "{0:dd.MM.yyyy}", ApplyFormatInEditMode = true)]
         public DateTime? FoundationDate { set; get; }
     }
 }
