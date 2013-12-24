@@ -38,10 +38,10 @@ namespace UD_Granit.Controllers
             User currentUser = Session.GetUser();
 
             if (currentUser == null)
-                return HttpNotFound();
+                throw new HttpException(404, "Not found");
 
             if (!RightsManager.Council.Edit(currentUser))
-                return HttpNotFound();
+                throw new HttpException(404, "Not found");
 
             var chairman = db.Members.Where(m => (m.Position == MemberPosition.Chairman)).FirstOrDefault();
             var viceCharman = db.Members.Where(m => (m.Position == MemberPosition.ViceChairman)).FirstOrDefault();
@@ -75,10 +75,10 @@ namespace UD_Granit.Controllers
             User currentUser = Session.GetUser();
 
             if (currentUser == null)
-                return HttpNotFound();
+                throw new HttpException(404, "Not found");
 
             if (!RightsManager.Council.Edit(currentUser))
-                return HttpNotFound();
+                throw new HttpException(404, "Not found");
 
             try
             {

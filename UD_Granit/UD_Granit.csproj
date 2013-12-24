@@ -203,6 +203,7 @@
     <Content Include="Content\css\jquery.simple-dtpicker.css" />
     <Content Include="Content\css\lite.css" />
     <Content Include="Content\css\main.css" />
+    <Content Include="Content\error.png" />
     <Content Include="Content\js\daterules.js" />
     <Content Include="Content\js\jquery.simple-dtpicker.js" />
     <Content Include="Content\login.png" />

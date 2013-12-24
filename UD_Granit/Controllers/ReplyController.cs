@@ -20,7 +20,7 @@ namespace UD_Granit.Controllers
         {
             Dissertation dissertation = db.Dissertations.Find(id);
             if (!RightsManager.Reply.Control(Session.GetUser(), dissertation))
-                return HttpNotFound();
+                throw new HttpException(404, "Not found");
 
             UD_Granit.ViewModels.Reply.Create viewModel = new ViewModels.Reply.Create();
             viewModel.Dissertation_Id = dissertation.Id;
@@ -36,7 +36,7 @@ namespace UD_Granit.Controllers
         {
             Dissertation dissertation = db.Dissertations.Find(viewModel.Dissertation_Id);
             if (!RightsManager.Reply.Control(Session.GetUser(), dissertation))
-                return HttpNotFound();
+                throw new HttpException(404, "Not found");
 
             Reply currentReply = viewModel.Reply;
             currentReply.Dissertation = dissertation;
@@ -55,7 +55,7 @@ namespace UD_Granit.Controllers
             Dissertation currentDissertation = currentReply.Dissertation;
 
             if (!RightsManager.Reply.Control(Session.GetUser(), currentDissertation))
-                return HttpNotFound();
+                throw new HttpException(404, "Not found");
 
             db.Replies.Remove(currentReply);
             db.SaveChanges();

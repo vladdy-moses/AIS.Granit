@@ -4,11 +4,21 @@
     ViewBag.Title = "Ошибка";
 }
 
-<h2>@Model.Exception.Message</h2>
+<div class="PageImage">
+    <img src="/Content/error.png" alt="" />
+</div>  
+<h2>Ой, ошибка!</h2>
+<p>Извините, в системе произошла ошибка @Model.Exception.GetType().ToString(). Если Вы можете связаться с администратором системы, передайте ему текст, расположенный ниже.</p>
+<p>Скорее всего, ошибка произошла не по Вашей вине. Попробуйте выполнить желаемое действие ещё раз. Если ошибка будет повторяться, обязательно обратитесь к администратору системы.</p>
 
-<h3>Подробная информация</h3>
-<p>Контроллер: @Model.ControllerName</p>
-<p>Действие: @Model.ActionName</p>
+<h3>Текст ошибки</h3>
+<p>@Model.Exception.Message</p>
 
-<div class="error">Пожалуйста, обратитесь к администратору системы!</div>
-<!--<pre width="700px">@Model.Exception.StackTrace</pre>-->
+<h3>Запрашиваемый контроллер</h3>
+<p>@Model.ControllerName</p>
+
+<h3>Запрашиваемое действие</h3>
+<p>@Model.ActionName</p>
+
+<h3>Стек вызова</h3>
+<pre style="border: 1px solid grey; margin: 10px; background-color: #fffbcb;">@Model.Exception.StackTrace</pre>

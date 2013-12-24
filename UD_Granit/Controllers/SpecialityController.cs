@@ -34,7 +34,7 @@ namespace UD_Granit.Controllers
         public ActionResult Create()
         {
             if (!RightsManager.Speciality.Control(Session.GetUser()))
-                return HttpNotFound();
+                throw new HttpException(404, "Not found");
 
             return View();
         }
@@ -46,7 +46,7 @@ namespace UD_Granit.Controllers
         public ActionResult Create(UD_Granit.ViewModels.Speciality.Create viewModel)
         {
             if (!RightsManager.Speciality.Control(Session.GetUser()))
-                return HttpNotFound();
+                throw new HttpException(404, "Not found");
 
             try
             {
@@ -85,7 +85,7 @@ namespace UD_Granit.Controllers
                 if (viewModel.Speciality != null)
                     return View(viewModel);
             }
-            return HttpNotFound();
+            throw new HttpException(404, "Not found");
         }
 
         // Редактирует специальность
@@ -95,7 +95,7 @@ namespace UD_Granit.Controllers
         public ActionResult Edit(UD_Granit.ViewModels.Speciality.Edit viewModel)
         {
             if (!RightsManager.Speciality.Control(Session.GetUser()))
-                return HttpNotFound();
+                throw new HttpException(404, "Not found");
 
             try
             {
@@ -120,13 +120,13 @@ namespace UD_Granit.Controllers
         public ActionResult Delete(string id)
         {
             if (!RightsManager.Speciality.Control(Session.GetUser()))
-                return HttpNotFound();
+                throw new HttpException(404, "Not found");
 
             Speciality currentSpeciality = db.Specialities.Find(id);
             int err;
 
             if(currentSpeciality == null)
-                return HttpNotFound();
+                throw new HttpException(404, "Not found");
 
             if ((db.Members.Where(m => m.Speciality.Number == id).Count() == 0) && (db.Dissertations.Where(d => d.Speciality.Number == id).Count() == 0))
             {

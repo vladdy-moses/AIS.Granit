@@ -50,7 +50,7 @@ namespace UD_Granit.Controllers
 
             Dissertation currentDissertation = db.Dissertations.Find(id);
             if (currentDissertation == null)
-                return HttpNotFound();
+                throw new HttpException(404, "Not found");
 
             viewModel.SessionType = "Consideration";
             viewModel.Dissertation_Id = id;
@@ -72,13 +72,13 @@ namespace UD_Granit.Controllers
         public ActionResult CreateDefence(int id)
         {
             if (!RightsManager.Session.Create(Session.GetUser()))
-                return HttpNotFound();
+                throw new HttpException(404, "Not found");
 
             UD_Granit.ViewModels.Session.Create viewModel = new ViewModels.Session.Create();
 
             Dissertation currentDissertation = db.Dissertations.Find(id);
             if (currentDissertation == null)
-                return HttpNotFound();
+                throw new HttpException(404, "Not found");
 
             viewModel.SessionType = "Defence";
             viewModel.Dissertation_Id = id;
@@ -101,11 +101,11 @@ namespace UD_Granit.Controllers
         public ActionResult Create(UD_Granit.ViewModels.Session.Create viewModel)
         {
             if (!RightsManager.Session.Create(Session.GetUser()))
-                return HttpNotFound();
+                throw new HttpException(404, "Not found");
 
             Dissertation currentDissertation = db.Dissertations.Find(viewModel.Dissertation_Id);
             if (currentDissertation == null)
-                return HttpNotFound();
+                throw new HttpException(404, "Not found");
 
             try
             {
@@ -166,10 +166,10 @@ namespace UD_Granit.Controllers
         {
             User currentUser = Session.GetUser() as User;
             if (currentUser == null)
-                return HttpNotFound();
+                throw new HttpException(404, "Not found");
 
             if (!(currentUser is Member) && !(currentUser is Applicant))
-                return HttpNotFound();
+                throw new HttpException(404, "Not found");
 
             UD_Granit.ViewModels.Session.My viewModel = new ViewModels.Session.My();
             if (currentUser is Member)
@@ -195,10 +195,10 @@ namespace UD_Granit.Controllers
             Session currentSession = db.Sessions.Find(id);
 
             if (currentSession == null)
-                return HttpNotFound();
+                throw new HttpException(404, "Not found");
 
             if (!RightsManager.Dissertation.Show(currentUser, currentSession.Dissertation))
-                return HttpNotFound();
+                throw new HttpException(404, "Not found");
 
             UD_Granit.ViewModels.Session.Details viewModel = new ViewModels.Session.Details();
             viewModel.Session = currentSession;
@@ -215,7 +215,7 @@ namespace UD_Granit.Controllers
             Session currentSession = db.Sessions.Find(id);
 
             if (!RightsManager.Session.Edit(currentUser))
-                return HttpNotFound();
+                throw new HttpException(404, "Not found");
 
             if (currentSession is SessionConsideration)
             {
@@ -237,7 +237,7 @@ namespace UD_Granit.Controllers
 
                 return View("ResultDefence", viewModel);
             }
-            return HttpNotFound();
+            throw new HttpException(404, "Not found");
         }
 
         // Заполняет результат заседания по рассмотрению
@@ -250,10 +250,10 @@ namespace UD_Granit.Controllers
             SessionConsideration currentSession = db.SessionsСonsideration.Find(viewModel.Id);
 
             if (!RightsManager.Session.Edit(currentUser))
-                return HttpNotFound();
+                throw new HttpException(404, "Not found");
 
             if (currentSession.Was)
-                return HttpNotFound();
+                throw new HttpException(404, "Not found");
 
             currentSession.Result = viewModel.Result;
             currentSession.Was = true;
@@ -273,10 +273,10 @@ namespace UD_Granit.Controllers
             SessionDefence currentSession = db.SessionsDefence.Find(viewModel.Id);
 
             if (!RightsManager.Session.Edit(currentUser))
-                return HttpNotFound();
+                throw new HttpException(404, "Not found");
 
             if (currentSession.Was)
-                return HttpNotFound();
+                throw new HttpException(404, "Not found");
 
             if (viewModel.Vote_Result < 0)
             {
@@ -324,7 +324,7 @@ namespace UD_Granit.Controllers
             SessionDefence currentSession = db.SessionsDefence.Find(id);
 
             if (!RightsManager.Dissertation.Show(currentUser, currentSession.Dissertation))
-                return HttpNotFound();
+                throw new HttpException(404, "Not found");
 
             string fileName = currentSession.Id + "_Recording" + currentSession.File_Recording;
 
@@ -344,7 +344,7 @@ namespace UD_Granit.Controllers
             Session currentSession = db.Sessions.Find(id);
 
             if (!RightsManager.Session.Edit(currentUser))
-                return HttpNotFound();
+                throw new HttpException(404, "Not found");
 
             ViewModels.Session.Delete viewModel = new ViewModels.Session.Delete();
 
@@ -365,7 +365,7 @@ namespace UD_Granit.Controllers
             Session currentSession = db.Sessions.Find(viewModel.Id);
 
             if (!RightsManager.Session.Edit(currentUser))
-                return HttpNotFound();
+                throw new HttpException(404, "Not found");
 
             if (currentSession is SessionDefence)
             {

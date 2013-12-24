@@ -28,7 +28,7 @@ namespace UD_Granit.Controllers
         public ActionResult Login()
         {
             if (Session.GetUser() != null)
-                return HttpNotFound();
+                throw new HttpException(404, "Not found");
 
             return View();
         }
@@ -40,7 +40,7 @@ namespace UD_Granit.Controllers
         public ActionResult Login(UD_Granit.ViewModels.Account.Login viewModel)
         {
             if (Session.GetUser() != null)
-                return HttpNotFound();
+                throw new HttpException(404, "Not found");
 
             var q = from u in db.Users where ((u.Email == viewModel.Email) && (u.Password == viewModel.Password)) select u;
             if (q.Count() != 0)
@@ -81,7 +81,7 @@ namespace UD_Granit.Controllers
             bool CanRegisterAdministrator = RightsManager.Account.RegisterAdministrator(currentUser);
 
             if (!CanRegisterAdministrator && !CanRegisterApplicant && !CanRegisterMember)
-                return HttpNotFound();
+                throw new HttpException(404, "Not found");
 
             UD_Granit.ViewModels.Account.Register viewModel = new ViewModels.Account.Register();
 
@@ -98,7 +98,7 @@ namespace UD_Granit.Controllers
         public ActionResult RegisterApplicantCandidate()
         {
             if (!RightsManager.Account.RegisterApplicant(Session.GetUser()))
-                return HttpNotFound();
+                throw new HttpException(404, "Not found");
             return View();
         }
 
@@ -108,7 +108,7 @@ namespace UD_Granit.Controllers
         public ActionResult RegisterApplicantDoctor()
         {
             if (!RightsManager.Account.RegisterApplicant(Session.GetUser()))
-                return HttpNotFound();
+                throw new HttpException(404, "Not found");
             return View();
         }
 
@@ -118,7 +118,7 @@ namespace UD_Granit.Controllers
         public ActionResult RegisterMember()
         {
             if (!RightsManager.Account.RegisterMember(Session.GetUser()))
-                return HttpNotFound();
+                throw new HttpException(404, "Not found");
 
             ViewData["Speciality"] = db.Specialities.Select(s => new SelectListItem { Text = s.Number + " " + s.Name, Value = s.Number });
             return View();
@@ -130,7 +130,7 @@ namespace UD_Granit.Controllers
         public ActionResult RegisterAdministrator()
         {
             if (!RightsManager.Account.RegisterAdministrator(Session.GetUser()))
-                return HttpNotFound();
+                throw new HttpException(404, "Not found");
             return View();
         }
 
@@ -141,7 +141,7 @@ namespace UD_Granit.Controllers
         public ActionResult RegisterApplicantCandidate(UD_Granit.ViewModels.Account.RegisterApplicantCandidate viewModel)
         {
             if (!RightsManager.Account.RegisterApplicant(Session.GetUser()))
-                return HttpNotFound();
+                throw new HttpException(404, "Not found");
 
             var q = from u in db.Users where u.Email == viewModel.User.Email select u;
             if (q.Count() > 0)
@@ -180,7 +180,7 @@ namespace UD_Granit.Controllers
         public ActionResult RegisterApplicantDoctor(UD_Granit.ViewModels.Account.RegisterApplicantDoctor viewModel)
         {
             if (!RightsManager.Account.RegisterApplicant(Session.GetUser()))
-                return HttpNotFound();
+                throw new HttpException(404, "Not found");
 
             var q = from u in db.Users where u.Email == viewModel.User.Email select u;
             if (q.Count() > 0)
@@ -219,7 +219,7 @@ namespace UD_Granit.Controllers
         public ActionResult RegisterMember(UD_Granit.ViewModels.Account.RegisterMember viewModel)
         {
             if (!RightsManager.Account.RegisterMember(Session.GetUser()))
-                return HttpNotFound();
+                throw new HttpException(404, "Not found");
 
             var q = from u in db.Users where u.Email == viewModel.User.Email select u;
             if (q.Count() > 0)
@@ -248,7 +248,7 @@ namespace UD_Granit.Controllers
         public ActionResult RegisterAdministrator(UD_Granit.ViewModels.Account.RegisterAdministrator viewModel)
         {
             if (!RightsManager.Account.RegisterAdministrator(Session.GetUser()))
-                return HttpNotFound();
+                throw new HttpException(404, "Not found");
 
             var q = from u in db.Users where u.Email == viewModel.User.Email select u;
             if (q.Count() > 0)
@@ -277,14 +277,14 @@ namespace UD_Granit.Controllers
             if (!id.HasValue)
             {
                 if (currentUser == null)
-                    return HttpNotFound();
+                    throw new HttpException(404, "Not found");
                 else
                     id = currentUser.Id;
             }
 
             var q = from u in db.Users where u.Id == id.Value select u;
             if (q.Count() == 0)
-                return HttpNotFound();
+                throw new HttpException(404, "Not found");
             User showedUser = q.First();
 
             UD_Granit.ViewModels.Account.Details viewModel = new UD_Granit.ViewModels.Account.Details();
@@ -305,7 +305,7 @@ namespace UD_Granit.Controllers
             User currentUser = Session.GetUser();
 
             if (!RightsManager.Account.Edit(currentUser))
-                return HttpNotFound();
+                throw new HttpException(404, "Not found");
 
             UD_Granit.ViewModels.Account.All viewModel = new ViewModels.Account.All();
             List<UD_Granit.ViewModels.Account.AccountViev> accountList = null;
@@ -368,7 +368,7 @@ namespace UD_Granit.Controllers
             User deletedUser = db.Users.Find(id);
 
             if (!RightsManager.Account.Remove(currentUser, deletedUser))
-                return HttpNotFound();
+                throw new HttpException(404, "Not found");
 
             ViewModels.Account.Delete viewModel = new ViewModels.Account.Delete();
             viewModel.CanDelete = true;
@@ -407,7 +407,7 @@ namespace UD_Granit.Controllers
             User deletedUser = db.Users.Find(viewModel.Id);
 
             if (!RightsManager.Account.Remove(currentUser, deletedUser))
-                return HttpNotFound();
+                throw new HttpException(404, "Not found");
 
             db.Users.Remove(deletedUser);
             db.SaveChanges();
@@ -429,7 +429,7 @@ namespace UD_Granit.Controllers
             User editedUser = db.Users.Find(id);
 
             if (!RightsManager.Account.Edit(currentUser, editedUser))
-                return HttpNotFound();
+                throw new HttpException(404, "Not found");
 
             ViewModels.Account.Edit viewModel = new ViewModels.Account.Edit()
             {
@@ -451,7 +451,7 @@ namespace UD_Granit.Controllers
             User editedUser = db.Users.Find(viewModel.Id);
 
             if (!RightsManager.Account.Edit(currentUser, editedUser))
-                return HttpNotFound();
+                throw new HttpException(404, "Not found");
 
             if (viewModel.OldPassword != currentUser.Password)
             {

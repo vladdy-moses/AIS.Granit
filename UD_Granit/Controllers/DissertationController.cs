@@ -65,7 +65,7 @@ namespace UD_Granit.Controllers
 
                 return View(viewModel);
             }
-            return HttpNotFound();
+            throw new HttpException(404, "Not found");
         }
 
         // Показывает форму создания диссертации
@@ -92,7 +92,7 @@ namespace UD_Granit.Controllers
                     }
                 }
             }
-            return HttpNotFound();
+            throw new HttpException(404, "Not found");
         }
 
         // Создаёт запись о диссертации
@@ -104,10 +104,10 @@ namespace UD_Granit.Controllers
             Applicant currentUser = Session.GetUser() as Applicant;
 
             if (currentUser == null)
-                return HttpNotFound();
+                throw new HttpException(404, "Not found");
 
             if (db.Dissertations.Where(d => d.Applicant.Id == currentUser.Id).Count() != 0)
-                return HttpNotFound();
+                throw new HttpException(404, "Not found");
 
             Dissertation currentDissertation = viewModel.Dissertation;
             currentDissertation.Type = (currentUser is ApplicantCandidate) ? DissertationType.Candidate : DissertationType.Doctor;
@@ -137,13 +137,13 @@ namespace UD_Granit.Controllers
             Dissertation currentDissertation = db.Dissertations.Find(id);
 
             if (currentDissertation == null)
-                return HttpNotFound();
+                throw new HttpException(404, "Not found");
 
             if (!RightsManager.Dissertation.Edit(currentUser, currentDissertation))
-                return HttpNotFound();
+                throw new HttpException(404, "Not found");
 
             if (currentDissertation.Sessions.Count() > 0)
-                return HttpNotFound();
+                throw new HttpException(404, "Not found");
 
             UD_Granit.ViewModels.Dissertation.Edit viewModel = new ViewModels.Dissertation.Edit();
             viewModel.Dissertation = currentDissertation;
@@ -216,7 +216,7 @@ namespace UD_Granit.Controllers
             Dissertation currentDissertation = db.Dissertations.Find(id);
 
             if (!RightsManager.Reply.Control(Session.GetUser(), currentDissertation))
-                return HttpNotFound();
+                throw new HttpException(404, "Not found");
 
             UD_Granit.ViewModels.Dissertation.Delete viewModel = new ViewModels.Dissertation.Delete();
             viewModel.Id = currentDissertation.Id;
@@ -235,13 +235,13 @@ namespace UD_Granit.Controllers
             {
                 Dissertation currentDissertation = db.Dissertations.Find(viewModel.Id);
                 if (currentDissertation == null)
-                    return HttpNotFound();
+                    throw new HttpException(404, "Not found");
 
                 if (!RightsManager.Dissertation.Edit(Session.GetUser(), currentDissertation))
-                    return HttpNotFound();
+                    throw new HttpException(404, "Not found");
 
                 if (currentDissertation.Sessions.Count() > 0)
-                    return HttpNotFound();
+                    throw new HttpException(404, "Not found");
 
                 System.IO.File.Delete(Server.MapPath(Path.Combine("~/App_Data/", currentDissertation.Id + "_Abstract" + currentDissertation.File_Abstract)));
                 System.IO.File.Delete(Server.MapPath(Path.Combine("~/App_Data/", currentDissertation.Id + "_Text" + currentDissertation.File_Text)));
@@ -265,7 +265,7 @@ namespace UD_Granit.Controllers
             User currentUser = Session.GetUser();
 
             if ((currentUser is Applicant) == false)
-                return HttpNotFound();
+                throw new HttpException(404, "Not found");
 
             var dissertations = db.Dissertations.Where(d => d.Applicant.Id == currentUser.Id);
             if (dissertations.Count() == 0)
@@ -280,7 +280,7 @@ namespace UD_Granit.Controllers
         {
             Dissertation currentDisserrtation = db.Dissertations.Find(id);
             if (!RightsManager.Dissertation.Show(Session.GetUser(), currentDisserrtation))
-                return HttpNotFound();
+                throw new HttpException(404, "Not found");
 
             try
             {
@@ -299,7 +299,7 @@ namespace UD_Granit.Controllers
                         break;
                 }
                 if (fileName.Length == 0)
-                    return HttpNotFound();
+                    throw new HttpException(404, "Not found");
 
                 var result = File("~/App_Data/" + fileName, "binary/octet-stream", fileName);
                 if (System.IO.File.Exists(Server.MapPath(result.FileName)))
